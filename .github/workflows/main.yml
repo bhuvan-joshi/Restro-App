@@ -19,7 +19,7 @@ jobs:
           node-version: '18'
           
       - name: Set PowerShell Execution Policy
-        run: Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process -Force
+        run: Set-ExecutionPolicy RemoteSigned -Scope LocalMachine -Force
         shell: powershell
 
       - name: Install Dependencies
