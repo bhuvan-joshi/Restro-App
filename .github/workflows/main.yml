@@ -17,10 +17,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-          
-      - name: Set PowerShell Execution Policy
-        run: Set-ExecutionPolicy RemoteSigned -Scope LocalMachine -Force
-        shell: powershell
 
       - name: Install Dependencies
         run: npm install
