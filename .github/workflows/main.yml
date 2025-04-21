@@ -24,22 +24,8 @@ jobs:
           npx update-browserslist-db@latest  # Fix browserslist warning
 
       - name: Build React App
-        run: |
-          # Fix ESLint warnings by modifying App.js before build
-          $appJsPath = "src/App.js"
-          $content = Get-Content $appJsPath -Raw
-          
-          # 1. Fix unused 'foodItems' warning by either using or removing it
-          $content = $content -replace "const \[foodItems, setFoodItems\] = useState\(\[\];", "const [, setFoodItems] = useState([]);"
-          
-          # 2. Fix useEffect missing dependency by adding fetchData to dependencies
-          $content = $content -replace "useEffect\(\(\) => {\s*fetchData\(\);", "useEffect(() => {`n    fetchData();`n  }, [fetchData]);"
-          
-          Set-Content -Path $appJsPath -Value $content
-          
-          # Run the build
-          npm run build
-        shell: pwsh
+        run: npm run build
+        working-directory: ./Restro-App
 
       - name: Deploy Build to IIS wwwroot
         run: |
