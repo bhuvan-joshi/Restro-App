@@ -1,0 +1,38 @@
+name: Deploy RESTRO-APP to IIS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted  # Or use labels: [self-hosted, windows, iis]
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build React App
+        run: npm run build
+
+      - name: Deploy Build to IIS wwwroot
+        run: |
+          $destination = "C:\inetpub\wwwroot\RestroApp"
+
+          Write-Output "Cleaning wwwroot..."
+          Remove-Item -Path "$destination\*" -Recurse -Force -ErrorAction SilentlyContinue
+
+          Write-Output "Copying build files..."
+          Copy-Item -Path "build\*" -Destination $destination -Recurse -Force
+
+          Write-Output "Deployment Complete!"
+        shell: pwsh
