@@ -20,7 +20,7 @@ jobs:
           
       - name: Set PowerShell Execution Policy
         run: Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process -Force
-        shell: pwsh
+        shell: powershell
 
       - name: Install Dependencies
         run: npm install
