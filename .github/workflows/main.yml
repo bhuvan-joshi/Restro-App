@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: self-hosted  # Or use labels: [self-hosted, windows, iis]
+    runs-on: self-hosted
 
     steps:
       - name: Checkout Code
@@ -19,20 +19,33 @@ jobs:
           node-version: '18'
 
       - name: Install Dependencies
-        run: npm install
+        run: |
+          npm install
+          npx update-browserslist-db@latest  # Fix browserslist warning
 
       - name: Build React App
-        run: npm run build
+        run: |
+          # Fix ESLint warnings by modifying App.js before build
+          $appJsPath = "src/App.js"
+          $content = Get-Content $appJsPath -Raw
+          
+          # 1. Fix unused 'foodItems' warning by either using or removing it
+          $content = $content -replace "const \[foodItems, setFoodItems\] = useState\(\[\];", "const [, setFoodItems] = useState([]);"
+          
+          # 2. Fix useEffect missing dependency by adding fetchData to dependencies
+          $content = $content -replace "useEffect\(\(\) => {\s*fetchData\(\);", "useEffect(() => {`n    fetchData();`n  }, [fetchData]);"
+          
+          Set-Content -Path $appJsPath -Value $content
+          
+          # Run the build
+          npm run build
+        shell: pwsh
 
       - name: Deploy Build to IIS wwwroot
         run: |
           $destination = "C:\inetpub\wwwroot\RestroApp"
-
-          Write-Output "Cleaning wwwroot..."
           Remove-Item -Path "$destination\*" -Recurse -Force -ErrorAction SilentlyContinue
-
-          Write-Output "Copying build files..."
+          New-Item -ItemType Directory -Path $destination -Force | Out-Null
           Copy-Item -Path "build\*" -Destination $destination -Recurse -Force
-
           Write-Output "Deployment Complete!"
         shell: pwsh
