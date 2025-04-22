@@ -37,11 +37,20 @@ jobs:
       - name: Install Backend Dependencies
         run: npm install
 
+      # Define the database path
+      - name: Set Database Path
+        shell: powershell
+        run: |
+          $dbFilePath = "C:\inetpub\wwwroot\RestroApp\data\inventory.db"
+          Write-Output "Database path is set to: $dbFilePath"
+          # Optionally, you can set this path as an environment variable if needed
+          [System.Environment]::SetEnvironmentVariable("DATABASE_PATH", $dbFilePath, [System.EnvironmentVariableTarget]::Machine)
+
       # Deploy both frontend and backend
       - name: Deploy to IIS folder (wwroot)
         shell: powershell
         run: |
-          $destination = "C:\inetpub\wwwroot\ReactApp"
+          $destination = "C:\inetpub\wwwroot\RestroApp"
 
           # Take ownership and set permissions
           takeown /F $destination /R /D Y | Out-Null
