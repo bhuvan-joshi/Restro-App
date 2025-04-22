@@ -69,14 +69,14 @@ jobs:
           Copy-Item "client\build" "$clientDestination\build" -Recurse -Force
 
           # Copy the backend's 'node_modules' folder to a separate folder (e.g., node_modules_backend)
-          $nodeModulesBackendDestination = "$destination\node_modules"
+          $nodeModulesBackendDestination = "$destination"
           if (-Not (Test-Path $nodeModulesBackendDestination)) {
               New-Item -ItemType Directory -Path $nodeModulesBackendDestination | Out-Null
           }
           Copy-Item "node_modules" "$nodeModulesBackendDestination" -Recurse -Force
 
           # Copy backend files to the destination, excluding 'client' and 'node_modules'
-          Get-ChildItem -Path "." -Exclude "client", ".git", ".github", "node_modules", "backend\node_modules" | ForEach-Object {
+          Get-ChildItem -Path "." -Exclude "client", ".git", ".github", "node_modules" | ForEach-Object {
               $source = $_.FullName
               $destinationPath = Join-Path $destination $_.Name
               Copy-Item $source -Destination $destinationPath -Recurse -Force
