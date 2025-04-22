@@ -23,8 +23,11 @@ jobs:
           npm install
           npx update-browserslist-db@latest  # Fix browserslist warning
 
-      - name: Build React App
-        run: CI=false npm run build
+      - name: Disable CI for npm build on Windows
+        run: |
+          $env:CI="false"
+          npm run build
+        shell: pwsh
 
       - name: Deploy Build to IIS wwwroot
         run: |
