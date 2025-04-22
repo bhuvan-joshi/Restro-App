@@ -21,18 +21,12 @@ jobs:
       # Frontend build
       - name: Install Frontend Dependencies
         working-directory: ./client
+        shell: cmd  # Use Windows Command Prompt instead
         run: |
-          # Clean cache and remove existing modules if needed
           npm cache clean --force
-          rm -rf node_modules package-lock.json
-          
-          # Install with legacy peer deps (best solution for React 18 conflicts)
+          rmdir /s /q node_modules
+          del package-lock.json
           npm install --legacy-peer-deps
-          
-          # Alternative if still having issues
-          # npm install --force
-          
-          # Update browserslist database
           npx update-browserslist-db@latest
 
       - name: Build Frontend
