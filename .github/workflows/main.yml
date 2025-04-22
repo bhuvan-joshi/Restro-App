@@ -37,15 +37,6 @@ jobs:
       - name: Install Backend Dependencies
         run: npm install
 
-      # Define the database path
-      - name: Set Database Path
-        shell: powershell
-        run: |
-          $dbFilePath = "C:\inetpub\wwwroot\RestroApp\data\inventory.db"
-          Write-Output "Database path is set to: $dbFilePath"
-          # Optionally, you can set this path as an environment variable if needed
-          [System.Environment]::SetEnvironmentVariable("DATABASE_PATH", $dbFilePath, [System.EnvironmentVariableTarget]::Machine)
-
       # Deploy both frontend and backend
       - name: Deploy to IIS folder (wwroot)
         shell: powershell
@@ -57,7 +48,7 @@ jobs:
           icacls $destination /grant "$($env:USERNAME):(OI)(CI)F" /T | Out-Null
 
           # Clear destination folder (but keep the ReactApp folder itself)
-          Remove-Item "$destination\*" -Recurse -Force -ErrorAction SilentlyContinue
+          Get-ChildItem "$destination" -Exclude "data" | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
 
           # Ensure the 'client' directory exists in the destination
           $clientDestination = "$destination\client"
