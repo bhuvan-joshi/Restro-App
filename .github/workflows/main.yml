@@ -1,0 +1,40 @@
+name: Deploy RESTRO-APP to IIS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install Dependencies
+        run: |
+          npm install
+          npx update-browserslist-db@latest  # Fix browserslist warning
+
+      - name: Disable CI for npm build on Windows CMD
+        run: |
+          set CI=false
+          npm run build
+        shell: cmd
+
+      - name: Deploy build to IIS folder
+        shell: powershell
+        run: |
+          $destination = "C:\inetpub\wwwroot\RestroApp"
+          takeown /F $destination /R /D Y | Out-Null
+          icacls $destination /grant "$($env:USERNAME):(OI)(CI)F" /T | Out-Null
+          Remove-Item "$destination\*" -Recurse -Force -ErrorAction SilentlyContinue
+          Copy-Item "build\*" $destination -Recurse -Force
+          Write-Output "✅ Deployment Complete!"
