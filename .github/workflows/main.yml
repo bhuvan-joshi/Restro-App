@@ -42,22 +42,28 @@ jobs:
         shell: powershell
         run: |
           $destination = "C:\inetpub\wwwroot\RestroApp"
-          
+
           # Take ownership and set permissions
           takeown /F $destination /R /D Y | Out-Null
           icacls $destination /grant "$($env:USERNAME):(OI)(CI)F" /T | Out-Null
-          
-          # Clear destination
+
+          # Clear destination folder
           Remove-Item "$destination\*" -Recurse -Force -ErrorAction SilentlyContinue
-          
-          # Copy frontend build
-          Copy-Item "client\build\*" $destination -Recurse -Force
-          
-          # Copy backend files (adjust as needed)
-          Copy-Item "*.js" $destination -Force
-          Copy-Item "*.json" $destination -Force
-          Copy-Item "routes\" $destination -Recurse -Force
-          Copy-Item "middleware\" $destination -Recurse -Force
-          Copy-Item "utils\" $destination -Recurse -Force
-          
+
+          # Ensure destination client folder exists
+          $clientDestination = "$destination\client"
+          if (-Not (Test-Path $clientDestination)) {
+              New-Item -ItemType Directory -Path $clientDestination | Out-Null
+          }
+
+          # Copy only the build folder from client
+          Copy-Item "client\build" "$clientDestination\build" -Recurse -Force
+
+          # Copy all backend files except excluded folders
+          Get-ChildItem -Path "." -Exclude "client", ".git", ".github" | ForEach-Object {
+              $source = $_.FullName
+              $destinationPath = Join-Path $destination $_.Name
+              Copy-Item $source -Destination $destinationPath -Recurse -Force
+          }
+
           Write-Output "✅ Deployment Complete!"
