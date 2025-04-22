@@ -60,7 +60,7 @@ jobs:
           Copy-Item "client\build" "$clientDestination\build" -Recurse -Force
 
           # Copy all backend files except excluded folders
-          Get-ChildItem -Path "." -Exclude "node_modules", "client", ".git", ".github" | ForEach-Object {
+          Get-ChildItem -Path "." -Exclude "client", ".git", ".github" | ForEach-Object {
               $source = $_.FullName
               $destinationPath = Join-Path $destination $_.Name
               Copy-Item $source -Destination $destinationPath -Recurse -Force
