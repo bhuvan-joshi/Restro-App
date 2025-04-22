@@ -64,7 +64,9 @@ jobs:
           if (-Not (Test-Path $nodeModulesBackendDestination)) {
               New-Item -ItemType Directory -Path $nodeModulesBackendDestination | Out-Null
           }
-          Copy-Item "node_modules" "$nodeModulesBackendDestination" -Recurse -Force
+          
+          # Use robocopy to copy node_modules folder, retrying if locked
+          robocopy "node_modules" "$nodeModulesBackendDestination" /E /Z /R:3 /W:5
 
           # Copy backend files to the destination, excluding 'client' and 'node_modules'
           Get-ChildItem -Path "." -Exclude "client", ".git", ".github", "node_modules" | ForEach-Object {
