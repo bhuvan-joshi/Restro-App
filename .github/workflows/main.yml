@@ -29,12 +29,12 @@ jobs:
           npm run build
         shell: cmd
 
-      - name: Deploy build to IIS folder (CMD)
-        shell: cmd
+      - name: Deploy build to IIS folder
+        shell: powershell
         run: |
           $destination = "C:\inetpub\wwwroot\RestroApp"
           takeown /F $destination /R /D Y | Out-Null
           icacls $destination /grant "$($env:USERNAME):(OI)(CI)F" /T | Out-Null
           Remove-Item "$destination\*" -Recurse -Force -ErrorAction SilentlyContinue
           Copy-Item "build\*" $destination -Recurse -Force
-          Write-Output "Deployment Complete!"
+          Write-Output "✅ Deployment Complete!"
