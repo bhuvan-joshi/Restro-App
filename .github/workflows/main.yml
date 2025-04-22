@@ -32,8 +32,9 @@ jobs:
       - name: Deploy build to IIS folder (CMD)
         shell: cmd
         run: |
-          set destination=C:\inetpub\wwwroot\RestroApp
-          if exist "%destination%" rmdir /s /q "%destination%"
-          mkdir "%destination%"
-          xcopy build "%destination%\" /s /e /y
-          echo Deployment Complete!
+          $destination = "C:\inetpub\wwwroot\RestroApp"
+          takeown /F $destination /R /D Y | Out-Null
+          icacls $destination /grant "$($env:USERNAME):(OI)(CI)F" /T | Out-Null
+          Remove-Item "$destination\*" -Recurse -Force -ErrorAction SilentlyContinue
+          Copy-Item "build\*" $destination -Recurse -Force
+          Write-Output "Deployment Complete!"
