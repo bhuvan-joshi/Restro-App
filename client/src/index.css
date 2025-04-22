@@ -1,0 +1,792 @@
+/* Root variables */
+:root {
+  /* Colors */
+  --primary: #0056b3;
+  --primary-dark: #004494;
+  --secondary: #6c757d;
+  --success: #28a745;
+  --danger: #dc3545;
+  --warning: #ffc107;
+  --info: #17a2b8;
+  --light: #f8f9fa;
+  --dark: #343a40;
+  --gray: #6c757d;
+  --gray-dark: #343a40;
+  --gray-light: #f8f9fa;
+  --white: #ffffff;
+  --black: #000000;
+  --accent: #e83e8c;
+  
+  /* Arper specific colors */
+  --arper-black: #222222;
+  --arper-light-gray: #f5f5f5;
+  --arper-medium-gray: #e0e0e0;
+  --arper-text: #333333;
+  
+  /* Typography */
+  --font-family-sans-serif: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  
+  /* Arper specific typography */
+  --arper-font-primary: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --arper-font-headings: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --arper-font-light: 300;
+  --arper-font-regular: 400;
+  --arper-font-medium: 500;
+  --arper-font-bold: 700;
+  
+  /* Spacing */
+  --spacer: 1rem;
+  --spacer-1: calc(var(--spacer) * 0.25);
+  --spacer-2: calc(var(--spacer) * 0.5);
+  --spacer-3: var(--spacer);
+  --spacer-4: calc(var(--spacer) * 1.5);
+  --spacer-5: calc(var(--spacer) * 3);
+  
+  /* Transitions */
+  --transition: all 0.3s ease;
+  
+  /* Font sizes */
+  --font-size-base: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-sm: 0.875rem;
+  --font-size-xs: 0.75rem;
+  
+  /* Arper specific font sizes */
+  --arper-font-size-base: 1rem;
+  --arper-font-size-lg: 1.125rem;
+  --arper-font-size-xl: 1.375rem;
+  --arper-font-size-xxl: 2rem;
+  --arper-font-size-xxxl: 2.5rem;
+  
+  /* Border radius */
+  --border-radius: 0.25rem;
+  --border-radius-lg: 0.5rem;
+  --border-radius-sm: 0.125rem;
+  
+  /* Shadows */
+  --shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  --shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
+  
+  /* Navbar height */
+  --navbar-height: 50px;
+}
+
+/* Global styles */
+body {
+  font-family: var(--arper-font-primary);
+  font-weight: var(--arper-font-regular);
+  color: var(--arper-text);
+  line-height: 1.5;
+  background-color: var(--white);
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--arper-font-headings);
+  font-weight: var(--arper-font-medium);
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+a:hover {
+  color: var(--primary-dark);
+  text-decoration: none;
+}
+
+/* Button styling to match Arper */
+.btn {
+  font-weight: var(--arper-font-medium);
+  letter-spacing: 0.5px;
+  border-radius: 0;
+  padding: 0.75rem 1.5rem;
+  transition: var(--transition);
+  text-transform: uppercase;
+  font-size: 0.875rem;
+}
+
+.btn-primary {
+  background-color: var(--arper-black);
+  border-color: var(--arper-black);
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+  background-color: #000 !important;
+  border-color: #000 !important;
+}
+
+/* Form controls to match Arper */
+.form-control {
+  border-radius: 0;
+  border: 1px solid var(--arper-medium-gray);
+  padding: 0.75rem 1rem;
+  font-size: var(--arper-font-size-base);
+}
+
+.form-control:focus {
+  box-shadow: none;
+  border-color: var(--arper-black);
+}
+
+.input-group-text {
+  border-radius: 0;
+  background-color: var(--arper-light-gray);
+  border-color: var(--arper-medium-gray);
+}
+
+/* Card styling to match Arper */
+.card {
+  border-radius: 0;
+  border: none;
+}
+
+/* Login Page Specific Styles */
+.login-page {
+  background: #fff;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: 100%;
+}
+
+/* Ensure the html and body take up full height */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+}
+
+.login-fullscreen {
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+}
+
+.login-wrapper {
+  min-height: 100vh;
+}
+
+.login-banner {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.2)), url('https://www.arper.com/media/wysiwyg/Homepage/Arper-Catifa-Carta.webp');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.login-banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.login-banner::after {
+  display: none;
+}
+
+.login-banner-content {
+  color: white;
+  text-align: center;
+  padding: 2rem;
+  max-width: 600px;
+  position: relative;
+  z-index: 2;
+}
+
+.login-banner-overlay {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 3rem;
+  border-radius: 0;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.login-banner h1 {
+  font-size: 2.5rem;
+  font-weight: var(--arper-font-light);
+  margin-bottom: 1.5rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  letter-spacing: 1px;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.login-banner p {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+  font-weight: var(--arper-font-light);
+  letter-spacing: 0.5px;
+}
+
+.login-form-container {
+  background: white;
+}
+
+.login-logo {
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+  transition: var(--transition);
+}
+
+.login-logo:hover {
+  transform: scale(1.05);
+}
+
+.login-title {
+  font-family: var(--arper-font-headings);
+  font-weight: var(--arper-font-light);
+  color: var(--arper-black);
+  margin-bottom: 0.25rem;
+  font-size: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.login-subtitle {
+  color: var(--arper-text);
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  font-weight: var(--arper-font-light);
+  text-transform: uppercase;
+}
+
+.login-card {
+  border: none;
+  border-radius: 0;
+  overflow: hidden;
+  transition: var(--transition);
+  box-shadow: none;
+}
+
+.login-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.05) !important;
+}
+
+.login-form .form-label {
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+  font-weight: var(--arper-font-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.login-form .form-control {
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border-radius: 0;
+}
+
+.login-form .form-control:focus {
+  box-shadow: none;
+  border-color: var(--arper-black);
+}
+
+.login-form .input-group-text {
+  padding-left: 1rem;
+  padding-right: 0.5rem;
+  border-radius: 0;
+}
+
+.login-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: white;
+}
+
+.spinner-container {
+  text-align: center;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+/* Dashboard */
+.dashboard-stats {
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background-color: var(--white);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  height: 100%;
+  transition: var(--transition);
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow);
+}
+
+.stat-card .stat-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: var(--primary);
+}
+
+.stat-card .stat-title {
+  font-size: var(--font-size-sm);
+  color: var(--gray);
+  margin-bottom: 0.5rem;
+}
+
+.stat-card .stat-value {
+  font-size: 1.75rem;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+
+.recent-activity {
+  background-color: var(--white);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 2rem;
+}
+
+.recent-activity .activity-title {
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--gray-light);
+}
+
+.activity-item {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--gray-light);
+}
+
+.activity-item:last-child {
+  border-bottom: none;
+}
+
+.activity-item .activity-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+}
+
+.activity-item .activity-icon i {
+  font-size: 1.25rem;
+  color: var(--primary);
+}
+
+.activity-item .activity-content {
+  flex: 1;
+}
+
+.activity-item .activity-title {
+  font-size: var(--font-size-base);
+  margin-bottom: 0.25rem;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.activity-item .activity-time {
+  font-size: var(--font-size-sm);
+  color: var(--gray);
+}
+
+/* Inventory */
+.inventory-filters {
+  background-color: var(--white);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 2rem;
+}
+
+.inventory-table {
+  background-color: var(--white);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.inventory-table .table {
+  margin-bottom: 0;
+}
+
+.inventory-table .table th {
+  border-top: none;
+  background-color: var(--light);
+  font-weight: 600;
+}
+
+.inventory-table .product-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: var(--border-radius-sm);
+}
+
+.inventory-table .actions {
+  width: 120px;
+}
+
+/* Product Detail */
+.product-detail {
+  background-color: var(--white);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.product-image-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--border-radius);
+  margin-bottom: 1.5rem;
+}
+
+.product-image-container img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.product-info h2 {
+  margin-bottom: 1rem;
+}
+
+.product-info .product-meta {
+  margin-bottom: 1.5rem;
+}
+
+.product-info .product-meta p {
+  margin-bottom: 0.5rem;
+}
+
+.product-info .product-description {
+  margin-bottom: 1.5rem;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.animate__animated {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+
+.animate__headShake {
+  animation-name: headShake;
+  animation-timing-function: ease-in-out;
+  animation-duration: 0.8s;
+}
+
+@keyframes headShake {
+  0% {
+    transform: translateX(0);
+  }
+  6.5% {
+    transform: translateX(-6px) rotateY(-9deg);
+  }
+  18.5% {
+    transform: translateX(5px) rotateY(7deg);
+  }
+  31.5% {
+    transform: translateX(-3px) rotateY(-5deg);
+  }
+  43.5% {
+    transform: translateX(2px) rotateY(3deg);
+  }
+  50% {
+    transform: translateX(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .main-container {
+    padding-top: 4.5rem;
+  }
+  
+  .stat-card {
+    margin-bottom: 1rem;
+  }
+  
+  .product-image-container {
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .inventory-table {
+    padding: 1rem;
+  }
+  
+  .inventory-table .table {
+    font-size: var(--font-size-sm);
+  }
+  
+  .inventory-table .product-image {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .inventory-table .actions {
+    width: 100px;
+  }
+}
+
+/* App Layout */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.content-wrapper {
+  flex: 1;
+  width: 100%;
+  padding-top: var(--navbar-height);
+}
+
+/* Full-screen pages */
+.fullscreen-page {
+  min-height: calc(100vh - var(--navbar-height));
+  width: 100%;
+  padding: 1.5rem;
+  background-color: var(--white);
+  margin-top: var(--navbar-height);
+  max-width: 100%;
+}
+
+.dashboard-header {
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.dashboard-header h1 {
+  font-family: var(--arper-font-headings);
+  font-weight: var(--arper-font-light);
+  font-size: 2.5rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  color: var(--arper-black);
+}
+
+.welcome-message {
+  font-size: 1.125rem;
+  font-weight: var(--arper-font-light);
+  color: var(--arper-text);
+  letter-spacing: 0.5px;
+}
+
+.dashboard-stats .stat-card {
+  height: 100%;
+  border: none;
+  border-radius: 0;
+  padding: 2rem;
+  text-align: center;
+  transition: var(--transition);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.dashboard-stats .stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-stats .stat-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--arper-black);
+}
+
+.dashboard-stats .stat-value {
+  font-size: 2.5rem;
+  font-weight: var(--arper-font-light);
+  margin-bottom: 0.5rem;
+  color: var(--arper-black);
+}
+
+.dashboard-stats .stat-title {
+  font-size: 0.875rem;
+  font-weight: var(--arper-font-medium);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--arper-text);
+}
+
+.recent-activity {
+  border: none;
+  border-radius: 0;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.recent-activity .card-header {
+  background-color: var(--white);
+  border-bottom: 1px solid var(--arper-light-gray);
+  font-family: var(--arper-font-headings);
+  font-weight: var(--arper-font-medium);
+  font-size: 1rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 1.25rem 1.5rem;
+}
+
+.recent-activity .table {
+  margin-bottom: 0;
+}
+
+.recent-activity .table thead th {
+  font-size: 0.75rem;
+  font-weight: var(--arper-font-medium);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  border-top: none;
+  border-bottom: 1px solid var(--arper-light-gray);
+  padding: 1rem 1.5rem;
+}
+
+.recent-activity .table tbody td {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--arper-light-gray);
+  vertical-align: middle;
+}
+
+/* Navbar */
+.arper-navbar {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  padding: 0.5rem 0;
+  z-index: 1030;
+}
+
+.navbar-container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 1400px;
+  display: flex;
+  align-items: center;
+}
+
+.arper-navbar .brand-text {
+  font-size: 1.5rem;
+  font-weight: var(--arper-font-bold);
+  letter-spacing: 2px;
+  color: var(--arper-black);
+  margin-right: 0.25rem;
+}
+
+.arper-navbar .brand-subtitle {
+  font-size: 0.75rem;
+  font-weight: var(--arper-font-regular);
+  letter-spacing: 1px;
+  color: var(--arper-black);
+  opacity: 0.7;
+}
+
+/* Fix for nav links alignment */
+.arper-navbar .nav-item {
+  display: flex;
+  align-items: center;
+}
+
+.arper-navbar .nav-link {
+  font-size: 0.8125rem;
+  font-weight: var(--arper-font-medium);
+  letter-spacing: 1px;
+  padding: 0.5rem 1rem;
+  color: var(--arper-text) !important;
+  position: relative;
+  text-align: center;
+  display: inline-block;
+  width: 100%;
+}
+
+/* Active nav link styling */
+.arper-navbar .nav-link.active {
+  color: var(--arper-black) !important;
+  font-weight: var(--arper-font-bold);
+  position: relative;
+}
+
+/* Underline for active nav link */
+.arper-navbar .nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: var(--arper-black);
+}
+
+.arper-navbar .nav-link:hover {
+  color: var(--arper-black) !important;
+}
+
+.arper-badge {
+  font-size: 0.625rem;
+  font-weight: var(--arper-font-medium);
+  letter-spacing: 0.5px;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0;
+}
+
+.arper-button {
+  background-color: var(--arper-black);
+  color: var(--white) !important;
+  border: none;
+  padding: 0.5rem 1.5rem;
+  font-size: 0.75rem;
+  font-weight: var(--arper-font-medium);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: var(--transition);
+}
+
+.arper-button:hover {
+  background-color: #333;
+}

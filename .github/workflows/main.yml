@@ -18,23 +18,44 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Install Dependencies
+      # Frontend build
+      - name: Install Frontend Dependencies
+        working-directory: ./client
         run: |
           npm install
-          npx update-browserslist-db@latest  # Fix browserslist warning
+          npx update-browserslist-db@latest
 
-      - name: Disable CI for npm build on Windows CMD
+      - name: Build Frontend
+        working-directory: ./client
         run: |
           set CI=false
           npm run build
-        shell: cmd
 
-      - name: Deploy build to IIS folder
+      # Backend setup (if needed)
+      - name: Install Backend Dependencies
+        run: npm install
+
+      # Deploy both frontend and backend
+      - name: Deploy to IIS folder
         shell: powershell
         run: |
           $destination = "C:\inetpub\wwwroot\RestroApp"
+          
+          # Take ownership and set permissions
           takeown /F $destination /R /D Y | Out-Null
           icacls $destination /grant "$($env:USERNAME):(OI)(CI)F" /T | Out-Null
+          
+          # Clear destination
           Remove-Item "$destination\*" -Recurse -Force -ErrorAction SilentlyContinue
-          Copy-Item "build\*" $destination -Recurse -Force
+          
+          # Copy frontend build
+          Copy-Item "client\build\*" $destination -Recurse -Force
+          
+          # Copy backend files (adjust as needed)
+          Copy-Item "*.js" $destination -Force
+          Copy-Item "*.json" $destination -Force
+          Copy-Item "routes\" $destination -Recurse -Force
+          Copy-Item "middleware\" $destination -Recurse -Force
+          Copy-Item "utils\" $destination -Recurse -Force
+          
           Write-Output "✅ Deployment Complete!"

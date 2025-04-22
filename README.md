@@ -1,70 +1,137 @@
-# Getting Started with Create React App
+# Arper Inventory Management System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A comprehensive inventory management system for Arper, designed to track products, inventory levels, and transactions across multiple locations.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **Product Management**: Create, update, and delete products with details like SKU, price, cost, and category
+- **Category Management**: Organize products with hierarchical categories
+- **Location Management**: Manage multiple warehouses and storage locations
+- **Inventory Tracking**: Track inventory levels across locations with min/max quantities
+- **Transaction History**: Record all inventory movements with detailed audit trail
+- **User Management**: Role-based access control (Admin, Manager, Staff)
+- **Reporting**: Generate reports on inventory status, value, and movement
 
-### `npm start`
+## Technology Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Backend**: Node.js with Express
+- **Database**: SQLite (easy to set up, can be migrated to PostgreSQL/MySQL for production)
+- **Authentication**: JWT (JSON Web Tokens)
+- **Frontend**: React (to be implemented)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Getting Started
 
-### `npm test`
+### Prerequisites
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Node.js (v14 or higher)
+- npm (v6 or higher)
 
-### `npm run build`
+### Installation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Clone the repository
+   ```
+   git clone https://github.com/arper/inventory-management.git
+   cd inventory-management
+   ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. Install dependencies
+   ```
+   npm install
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. Initialize the database with sample data
+   ```
+   npm run init-db
+   ```
 
-### `npm run eject`
+4. Start the server
+   ```
+   npm start
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+The server will start on port 5000 by default. You can change this by setting the PORT environment variable.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Default Admin User
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+After initializing the database, a default admin user will be created:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- Username: `admin`
+- Password: `admin123`
 
-## Learn More
+**Important**: Change the default password after first login in a production environment.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## API Endpoints
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Authentication
 
-### Code Splitting
+- `POST /api/users/login` - Login and get JWT token
+- `GET /api/users/me` - Get current user info
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Users
 
-### Analyzing the Bundle Size
+- `POST /api/users/register` - Register a new user (Admin only)
+- `GET /api/users` - Get all users (Admin only)
+- `GET /api/users/:id` - Get user by ID
+- `PUT /api/users/:id` - Update user
+- `PUT /api/users/:id/password` - Change user password
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Categories
 
-### Making a Progressive Web App
+- `GET /api/categories` - Get all categories
+- `GET /api/categories/:id` - Get category by ID
+- `POST /api/categories` - Create a new category
+- `PUT /api/categories/:id` - Update a category
+- `DELETE /api/categories/:id` - Delete a category
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Products
 
-### Advanced Configuration
+- `GET /api/products` - Get all products with pagination
+- `GET /api/products/:id` - Get product by ID
+- `POST /api/products` - Create a new product
+- `PUT /api/products/:id` - Update a product
+- `DELETE /api/products/:id` - Delete a product
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Locations
 
-### Deployment
+- `GET /api/locations` - Get all locations
+- `GET /api/locations/:id` - Get location by ID
+- `POST /api/locations` - Create a new location
+- `PUT /api/locations/:id` - Update a location
+- `DELETE /api/locations/:id` - Delete a location
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### Inventory
 
-### `npm run build` fails to minify
+- `GET /api/inventory` - Get inventory levels
+- `GET /api/inventory/:id` - Get inventory item by ID
+- `POST /api/inventory` - Create a new inventory record
+- `PUT /api/inventory/:id` - Update inventory settings
+- `POST /api/inventory/adjust` - Adjust inventory quantity
+- `POST /api/inventory/transfer` - Transfer inventory between locations
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Transactions
+
+- `GET /api/transactions` - Get all transactions
+- `GET /api/transactions/:id` - Get transaction by ID
+- `GET /api/transactions/summary/daily` - Get daily transaction summary
+- `GET /api/transactions/summary/product` - Get product transaction summary
+- `GET /api/transactions/summary/user` - Get user transaction summary
+
+### Reports
+
+- `GET /api/reports/inventory/status` - Get inventory status report
+- `GET /api/reports/inventory/value` - Get inventory value report
+- `GET /api/reports/inventory/movement` - Get inventory movement report
+- `GET /api/reports/activity/user` - Get user activity report
+
+## Environment Variables
+
+The application can be configured using the following environment variables:
+
+- `PORT` - Server port (default: 5000)
+- `JWT_SECRET` - Secret key for JWT signing (default: 'arper_inventory_secret_key')
+- `DB_FILENAME` - SQLite database file path (default: './data/inventory.db')
+- `NODE_ENV` - Environment mode ('development' or 'production')
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details. 
