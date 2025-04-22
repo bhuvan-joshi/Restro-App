@@ -29,11 +29,11 @@ jobs:
           npm run build
         shell: cmd
 
-      - name: Deploy Build to IIS wwwroot
+      - name: Deploy build to IIS folder (CMD)
+        shell: cmd
         run: |
-          $destination = "C:\inetpub\wwwroot\RestroApp"
-          Remove-Item -Path "$destination\*" -Recurse -Force -ErrorAction SilentlyContinue
-          New-Item -ItemType Directory -Path $destination -Force | Out-Null
-          Copy-Item -Path "build\*" -Destination $destination -Recurse -Force
-          Write-Output "Deployment Complete!"
-        shell: pwsh
+          set destination=C:\inetpub\wwwroot\RestroApp
+          if exist "%destination%" rmdir /s /q "%destination%"
+          mkdir "%destination%"
+          xcopy build "%destination%\" /s /e /y
+          echo Deployment Complete!
