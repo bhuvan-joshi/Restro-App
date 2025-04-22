@@ -38,7 +38,7 @@ jobs:
         run: npm install
 
       # Deploy both frontend and backend
-      - name: Deploy to IIS folder
+      - name: Deploy to IIS folder (wwroot)
         shell: powershell
         run: |
           $destination = "C:\inetpub\wwwroot\RestroApp"
