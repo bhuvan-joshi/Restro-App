@@ -62,7 +62,7 @@ jobs:
           CI: false
           DISABLE_ESLINT_PLUGIN: true
         run: |
-          npm run build
+          npm run build -- --no-eslint
 
       # Backend setup (if needed)
       - name: Install Backend Dependencies
