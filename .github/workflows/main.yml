@@ -57,10 +57,11 @@ jobs:
 
       - name: Build Frontend
         working-directory: ./client
-        shell: cmd  # Explicitly use CMD for Windows runner
+        shell: cmd
+        env:
+          CI: false
+          DISABLE_ESLINT_PLUGIN: true
         run: |
-          set CI=false
-          set DISABLE_ESLINT_PLUGIN=true
           npm run build
 
       # Backend setup (if needed)
