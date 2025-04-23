@@ -1,9 +1,11 @@
 name: Deploy RESTRO-APP to IIS
 
 on:
-  push:
+  pull_request:
     branches:
-      - main
+      - develop
+    types:
+      - closed  # Trigger when a PR is closed
 
 jobs:
   deploy:
@@ -38,7 +40,7 @@ jobs:
         run: npm install
 
       # Deploy both frontend and backend
-      - name: Deploy to IIS folder (wwroot)
+      - name: Deploy to IIS folder
         shell: powershell
         run: |
           $destination = "C:\inetpub\wwwroot\RestroApp"
