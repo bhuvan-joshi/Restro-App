@@ -3,12 +3,13 @@ name: Deploy RESTRO-APP to IIS
 on:
   pull_request:
     branches:
-      - main
+      - develop
     types:
       - closed  # Trigger when a PR is closed
 
 jobs:
   deploy:
+    if: github.event.pull_request.merged == true  # ✅ Only run if PR was merged
     runs-on: self-hosted
 
     steps:
