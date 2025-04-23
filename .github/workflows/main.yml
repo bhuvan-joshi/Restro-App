@@ -3,7 +3,7 @@ name: Deploy RESTRO-APP to IIS
 on:
   pull_request:
     branches:
-      - develop
+      - main
     types:
       - closed  # Trigger when a PR is closed
 
