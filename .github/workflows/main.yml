@@ -9,9 +9,13 @@ on:
       - synchronize
       - closed
 
+  push:
+    branches:
+      - main
+
 jobs:
   build:
-    if: github.event.action != 'closed'  # Build only if PR is not closed
+    if: github.event_name == 'pull_request' && github.event.action != 'closed'
     runs-on: ubuntu-latest
 
     steps:
@@ -40,7 +44,7 @@ jobs:
         run: npm install
 
   deploy:
-    if: github.event.pull_request.merged == true  # ✅ Only run if PR was merged
+    if: github.event_name == 'push'
     runs-on: self-hosted
     needs: build
 
