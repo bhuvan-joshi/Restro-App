@@ -18,14 +18,14 @@ const BarcodeScanner = ({ show, onHide, onScan }) => {
   const canvasRef = useRef(null);
   const imageRef = useRef(null);
 
-  const stopScanner = () => {
+  const stopScanner = useCallback(() => {
     try {
       Quagga.offDetected(handleBarcodeDetected);
       Quagga.stop();
     } catch (e) {
-      console.log("Error stopping Quagga:", e);
+      console.error("Error stopping Quagga:", e);
     }
-  };
+  }, [handleBarcodeDetected]);
 
   const startScanner = () => {
     if (!scannerRef.current) return;
@@ -106,14 +106,14 @@ const BarcodeScanner = ({ show, onHide, onScan }) => {
       stopScanner();
       setScanning(false);
     }
-  }, [show]);
+  }, [show, stopScanner]);
 
   // Clean up resources when component unmounts
   useEffect(() => {
     return () => {
       stopScanner();
     };
-  }, []);
+  }, [stopScanner]);
 
   // Start/stop scanner based on tab and visibility
   useEffect(() => {
@@ -126,7 +126,7 @@ const BarcodeScanner = ({ show, onHide, onScan }) => {
     return () => {
       stopScanner();
     };
-  }, [show, activeTab, scanning]);
+  }, [show, activeTab, scanning,startScanner]);
 
   const handleBarcodeDetected = (result) => {
     if (!result || !result.codeResult) return;
