@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Alert, Spinner, Tabs, Tab, Form, Row, Col, Table, Badge } from 'react-bootstrap';
 import axios from 'axios';
-import { format } from 'date-fns';
 
 // Get API URL from environment variable or use default
 const API_URL = process.env.REACT_APP_API_URL || '/api';
@@ -154,14 +153,14 @@ const Reports = () => {
     });
   };
 
-  /*const formatCurrency = (value) => {
+  const formatCurrency = (value) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD'
     }).format(value || 0);
   };
 
-  const formatDate = (dateString) => {
+  /*const formatDate = (dateString) => {
     try {
       const date = new Date(dateString);
       return format(date, 'MMM d, yyyy');
