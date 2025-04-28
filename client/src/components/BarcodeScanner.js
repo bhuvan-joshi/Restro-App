@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Modal, Button, Alert, Tabs, Tab, Form, Spinner } from 'react-bootstrap';
 import Quagga from 'quagga';
 import jsQR from 'jsqr';
