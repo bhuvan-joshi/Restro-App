@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { Table, Button, Card, Alert, Spinner, Form, InputGroup, Row, Col, Modal } from 'react-bootstrap';
 import axios from 'axios';
 import Barcode from 'react-barcode';
@@ -69,6 +69,40 @@ const Products = () => {
   // Barcode scanner state
   const [showScannerModal, setShowScannerModal] = useState(false);
 
+  const fetchProducts = useCallback(async (page = 1) => {
+    try {
+      const params = {
+        page,
+        limit: pagination.limit,
+        search: search || undefined,
+        categoryId: selectedCategory || undefined,
+        _t: new Date().getTime() // Prevent caching
+      };
+  
+      const res = await axios.get(`${API_URL}/products`, {
+        params,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      console.log('Products response:', res.data);
+  
+      setProducts(res.data.products || []);
+      setPagination({
+        page: res.data.pagination.page,
+        limit: res.data.pagination.limit,
+        totalPages: res.data.pagination.totalPages,
+        totalProducts: res.data.pagination.totalProducts
+      });
+  
+      setError(null);
+    } catch (err) {
+      console.error('Error fetching products:', err);
+      setError('Failed to load products. Please try again later.');
+    }
+  }, [pagination.limit, search, selectedCategory, token]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -101,40 +135,7 @@ const Products = () => {
     };
     
     fetchData();
-  }, [token]);
-
-  const fetchProducts = async (page = 1) => {
-    try {
-      const params = {
-        page,
-        limit: pagination.limit,
-        search: search || undefined,
-        categoryId: selectedCategory || undefined,
-        _t: new Date().getTime() // Add timestamp to prevent caching
-      };
-      
-      const res = await axios.get(`${API_URL}/products`, {
-        params,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      console.log('Products response:', res.data);
-      
-      setProducts(res.data.products || []);
-      setPagination({
-        page: res.data.pagination.page,
-        limit: res.data.pagination.limit,
-        totalPages: res.data.pagination.totalPages,
-        totalProducts: res.data.pagination.totalProducts
-      });
-      
-      setError(null);
-    } catch (err) {
-      console.error('Error fetching products:', err);
-      setError('Failed to load products. Please try again later.');
-    }
-  };
+  }, [token, fetchProducts]);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -293,7 +294,7 @@ const Products = () => {
         formData.append('image', editFormData.image);
       }
       
-      const response = await axios.put(
+     /* const response = await axios.put(
         `${API_URL}/products/${selectedProduct.product_id}`,
         formData,
         {
@@ -302,7 +303,7 @@ const Products = () => {
             Authorization: `Bearer ${token}`,
           }
         }
-      );
+      );*/
       
       setUpdateMessage('Product updated successfully');
       setTimeout(() => {
@@ -348,7 +349,7 @@ const Products = () => {
         formData.append('image', addFormData.image);
       }
       
-      const response = await axios.post(
+     /* const response = await axios.post(
         `${API_URL}/products`,
         formData,
         {
@@ -357,7 +358,7 @@ const Products = () => {
             Authorization: `Bearer ${token}`,
           }
         }
-      );
+      );*/
       
       setAddMessage('Product added successfully');
       setTimeout(() => {

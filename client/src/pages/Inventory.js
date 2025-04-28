@@ -82,7 +82,7 @@ const Inventory = () => {
     };
     
     fetchData();
-  }, []);
+  });
 
   const fetchReasons = async () => {
     try {

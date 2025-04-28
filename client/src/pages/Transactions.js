@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Container, Table, Card, Alert, Spinner, Form, Button, Row, Col, Badge, InputGroup } from 'react-bootstrap';
+import { Table, Card, Alert, Spinner, Form, Button, Row, Col, Badge } from 'react-bootstrap';
 import axios from 'axios';
 import { format } from 'date-fns';
 
@@ -91,7 +91,7 @@ const Transactions = () => {
       setError('Failed to load transactions. Please try again later.');
       setLoading(false);
     }
-  }, [filters, pagination.limit, products.length, locations.length]);
+  }, [filters, pagination.limit,pagination.page, products.length, locations.length]);
 
   // Initial data fetch
   useEffect(() => {

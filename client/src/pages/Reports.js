@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Card, Alert, Spinner, Tabs, Tab, Form, Button, Row, Col, Table, Badge } from 'react-bootstrap';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Card, Alert, Spinner, Tabs, Tab, Form, Row, Col, Table, Badge } from 'react-bootstrap';
 import axios from 'axios';
-import { format } from 'date-fns';
 
 // Get API URL from environment variable or use default
 const API_URL = process.env.REACT_APP_API_URL || '/api';
@@ -40,6 +39,63 @@ const Reports = () => {
     endDate: ''
   });
 
+  const fetchInventoryMovement = useCallback(async () => {
+    setLoading(true);
+    try {
+      const params = {
+        ...movementFilters
+      };
+  
+      const res = await axios.get(`${API_URL}/reports/inventory/movement`, { params });
+      setInventoryMovementData(res.data);
+      setError(null);
+    } catch (err) {
+      console.error('Error fetching inventory movement report:', err);
+      setError('Failed to load inventory movement report. Please try again later.');
+      setInventoryMovementData(null);
+    } finally {
+      setLoading(false);
+    }
+  }, [movementFilters]);
+
+  const fetchInventoryStatus = useCallback(async () => {
+    setLoading(true);
+    try {
+      const params = {
+        ...statusFilters
+      };
+  
+      const res = await axios.get(`${API_URL}/reports/inventory/status`, { params });
+      setInventoryStatusData(res.data);
+      setError(null);
+    } catch (err) {
+      console.error('Error fetching inventory status report:', err);
+      setError('Failed to load inventory status report. Please try again later.');
+      setInventoryStatusData(null);
+    } finally {
+      setLoading(false);
+    }
+  }, [statusFilters]);
+
+  const fetchInventoryValue = useCallback(async () => {
+    setLoading(true);
+    try {
+      const params = {
+        ...valueFilters
+      };
+  
+      const res = await axios.get(`${API_URL}/reports/inventory/value`, { params });
+      setInventoryValueData(res.data);
+      setError(null);
+    } catch (err) {
+      console.error('Error fetching inventory value report:', err);
+      setError('Failed to load inventory value report. Please try again later.');
+      setInventoryValueData(null);
+    } finally {
+      setLoading(false);
+    }
+  }, [valueFilters]);
+
   // Load reference data on mount
   useEffect(() => {
     fetchReferenceData();
@@ -54,7 +110,7 @@ const Reports = () => {
     } else if (activeTab === 'inventory-movement') {
       fetchInventoryMovement();
     }
-  }, [activeTab, statusFilters, valueFilters, movementFilters]);
+  }, [fetchInventoryStatus, fetchInventoryValue, fetchInventoryMovement, activeTab, statusFilters, valueFilters, movementFilters]);
 
   const fetchReferenceData = async () => {
     try {
@@ -70,63 +126,6 @@ const Reports = () => {
     } catch (err) {
       console.error('Error fetching reference data:', err);
       setError('Failed to load reference data. Please try again later.');
-    }
-  };
-
-  const fetchInventoryStatus = async () => {
-    setLoading(true);
-    try {
-      const params = {
-        ...statusFilters
-      };
-      
-      const res = await axios.get(`${API_URL}/reports/inventory/status`, { params });
-      setInventoryStatusData(res.data);
-      setError(null);
-    } catch (err) {
-      console.error('Error fetching inventory status report:', err);
-      setError('Failed to load inventory status report. Please try again later.');
-      setInventoryStatusData(null);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchInventoryValue = async () => {
-    setLoading(true);
-    try {
-      const params = {
-        ...valueFilters
-      };
-      
-      const res = await axios.get(`${API_URL}/reports/inventory/value`, { params });
-      setInventoryValueData(res.data);
-      setError(null);
-    } catch (err) {
-      console.error('Error fetching inventory value report:', err);
-      setError('Failed to load inventory value report. Please try again later.');
-      setInventoryValueData(null);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchInventoryMovement = async () => {
-    setLoading(true);
-    try {
-      const params = {
-        ...movementFilters
-      };
-      
-      const res = await axios.get(`${API_URL}/reports/inventory/movement`, { params });
-      setInventoryMovementData(res.data);
-      setError(null);
-    } catch (err) {
-      console.error('Error fetching inventory movement report:', err);
-      setError('Failed to load inventory movement report. Please try again later.');
-      setInventoryMovementData(null);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -161,14 +160,14 @@ const Reports = () => {
     }).format(value || 0);
   };
 
-  const formatDate = (dateString) => {
+  /*const formatDate = (dateString) => {
     try {
       const date = new Date(dateString);
       return format(date, 'MMM d, yyyy');
     } catch (err) {
       return dateString;
     }
-  };
+  };*/
 
   const renderInventoryStatusReport = () => {
     if (!inventoryStatusData) return null;
@@ -385,7 +384,7 @@ const Reports = () => {
   const renderInventoryMovementReport = () => {
     if (!inventoryMovementData) return null;
     
-    const { movements, productSummary, locationSummary, typeSummary, overallSummary } = inventoryMovementData;
+    const { productSummary, locationSummary, typeSummary, overallSummary } = inventoryMovementData;
     
     return (
       <>

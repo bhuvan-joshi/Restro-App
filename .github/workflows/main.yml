@@ -5,12 +5,39 @@ on:
     branches:
       - main
     types:
-      - closed  # Trigger when a PR is closed
+      - opened
+      - synchronize
+      - closed
 
 jobs:
+  build:
+    if: github.event.action != 'closed'  # Build only if PR is not closed
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install Frontend Dependencies
+        working-directory: ./client
+        run: npm install --force
+
+      - name: Build Frontend
+        working-directory: ./client
+        run: npm run build
+
+      - name: Install Backend Dependencies
+        run: npm install
+
   deploy:
     if: github.event.pull_request.merged == true  # ✅ Only run if PR was merged
     runs-on: self-hosted
+    needs: build
 
     steps:
       - name: Checkout Code
@@ -30,11 +57,12 @@ jobs:
 
       - name: Build Frontend
         working-directory: ./client
-        shell: cmd  # Explicitly use CMD for Windows runner
+        shell: cmd
+        env:
+          CI: false
+          DISABLE_ESLINT_PLUGIN: true
         run: |
-          set CI=false
-          set DISABLE_ESLINT_PLUGIN=true
-          npm run build
+          npm run build -- --no-eslint
 
       # Backend setup (if needed)
       - name: Install Backend Dependencies

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Modal, Button, Alert, Tabs, Tab, Form, Spinner } from 'react-bootstrap';
 import Quagga from 'quagga';
 import jsQR from 'jsqr';
@@ -18,40 +18,41 @@ const BarcodeScanner = ({ show, onHide, onScan }) => {
   const canvasRef = useRef(null);
   const imageRef = useRef(null);
 
-  // Reset state when modal is shown
-  useEffect(() => {
-    if (show) {
-      setScanning(true);
-      setError(null);
-      setProcessedSuccessfully(false);
-    } else {
-      // Clean up when modal is hidden
+
+    const stopScanner = useCallback(() => {
+      try {
+       // Quagga.offDetected(handleBarcodeDetected);
+        Quagga.stop();
+      } catch (e) {
+        console.error("Error stopping Quagga:", e);
+      }
+    }, []);
+
+    const handleBarcodeDetected = useCallback((result) => {
+    if (!result || !result.codeResult) return;
+  
+    const code = result.codeResult.code;
+    console.log("Quagga detected:", code);
+  
+    // Check if it's a valid barcode (numeric with 8-13 digits, matching Arper's format)
+    if (/^\d+$/.test(code) && code.length >= 8 && code.length <= 13) {
+      console.log("Valid barcode detected:", code);
+  
+      // Stop scanning and update state
       stopScanner();
       setScanning(false);
+      setError(null);
+      setProcessedSuccessfully(true);
+  
+      // Add a small delay to ensure UI updates before closing
+      setTimeout(() => {
+        onScan(code);
+        onHide();
+      }, 300);
     }
-  }, [show]);
+  }, [stopScanner, onScan, onHide]);
 
-  // Clean up resources when component unmounts
-  useEffect(() => {
-    return () => {
-      stopScanner();
-    };
-  }, []);
-
-  // Start/stop scanner based on tab and visibility
-  useEffect(() => {
-    if (show && activeTab === 'camera' && scanning) {
-      startScanner();
-    } else {
-      stopScanner();
-    }
-    
-    return () => {
-      stopScanner();
-    };
-  }, [show, activeTab, scanning]);
-
-  const startScanner = () => {
+  const startScanner = useCallback(() => {
     if (!scannerRef.current) return;
     
     setError(null);
@@ -117,40 +118,40 @@ const BarcodeScanner = ({ show, onHide, onScan }) => {
       // Add result listener
       Quagga.onDetected(handleBarcodeDetected);
     });
-  };
+  }, [stopScanner, handleBarcodeDetected]);
 
-  const stopScanner = () => {
-    try {
-      Quagga.offDetected(handleBarcodeDetected);
-      Quagga.stop();
-    } catch (e) {
-      console.log("Error stopping Quagga:", e);
-    }
-  };
-
-  const handleBarcodeDetected = (result) => {
-    if (!result || !result.codeResult) return;
-    
-    const code = result.codeResult.code;
-    console.log("Quagga detected:", code);
-    
-    // Check if it's a valid barcode (numeric with 8-13 digits, matching Arper's format)
-    if (/^\d+$/.test(code) && code.length >= 8 && code.length <= 13) {
-      console.log("Valid barcode detected:", code);
-      
-      // Stop scanning and return the result
+  // Reset state when modal is shown
+  useEffect(() => {
+    if (show) {
+      setScanning(true);
+      setError(null);
+      setProcessedSuccessfully(false);
+    } else {
+      // Clean up when modal is hidden
       stopScanner();
       setScanning(false);
-      setError(null);
-      setProcessedSuccessfully(true);
-      
-      // Add a small delay to ensure UI updates before closing
-      setTimeout(() => {
-        onScan(code);
-        onHide();
-      }, 300);
     }
-  };
+  }, [stopScanner, show]);
+
+  // Clean up resources when component unmounts
+  useEffect(() => {
+    return () => {
+      stopScanner();
+    };
+  }, [stopScanner]);
+
+  // Start/stop scanner based on tab and visibility
+  useEffect(() => {
+    if (show && activeTab === 'camera' && scanning) {
+      startScanner();
+    } else {
+      stopScanner();
+    }
+    
+    return () => {
+      stopScanner();
+    };
+  }, [show, activeTab, scanning, startScanner, stopScanner]);
 
   const resetScanner = () => {
     setError(null);
@@ -260,7 +261,7 @@ const BarcodeScanner = ({ show, onHide, onScan }) => {
         hints.set(DecodeHintType.TRY_HARDER, true);
         
         const reader = new BrowserMultiFormatReader(hints);
-        const img = await createImageElement(imageUrl);
+       // const img = await createImageElement(imageUrl);
         
         const result = await reader.decodeFromImage(undefined, imageUrl);
         if (result && result.getText()) {
@@ -358,14 +359,14 @@ const BarcodeScanner = ({ show, onHide, onScan }) => {
   };
   
   // Helper function to create an image element from URL
-  const createImageElement = (url) => {
+  /*const createImageElement = (url) => {
     return new Promise((resolve, reject) => {
       const img = new Image();
       img.onload = () => resolve(img);
       img.onerror = reject;
       img.src = url;
     });
-  };
+  };*/
 
   const handleManualSubmit = (e) => {
     e.preventDefault();
