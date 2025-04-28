@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Card, Alert, Spinner, Tabs, Tab, Form, Button, Row, Col, Table, Badge } from 'react-bootstrap';
+import { Card, Alert, Spinner, Tabs, Tab, Form, Row, Col, Table, Badge } from 'react-bootstrap';
 import axios from 'axios';
 import { format } from 'date-fns';
 
@@ -54,7 +54,7 @@ const Reports = () => {
     } else if (activeTab === 'inventory-movement') {
       fetchInventoryMovement();
     }
-  }, [activeTab, statusFilters, valueFilters, movementFilters]);
+  }, [activeTab, statusFilters, valueFilters, movementFilters, fetchInventoryMovement, fetchInventoryStatus, fetchInventoryValue]);
 
   const fetchReferenceData = async () => {
     try {
@@ -161,14 +161,14 @@ const Reports = () => {
     }).format(value || 0);
   };
 
-  const formatDate = (dateString) => {
+  /*const formatDate = (dateString) => {
     try {
       const date = new Date(dateString);
       return format(date, 'MMM d, yyyy');
     } catch (err) {
       return dateString;
     }
-  };
+  };*/
 
   const renderInventoryStatusReport = () => {
     if (!inventoryStatusData) return null;
@@ -385,7 +385,7 @@ const Reports = () => {
   const renderInventoryMovementReport = () => {
     if (!inventoryMovementData) return null;
     
-    const { movements, productSummary, locationSummary, typeSummary, overallSummary } = inventoryMovementData;
+    const { productSummary, locationSummary, typeSummary, overallSummary } = inventoryMovementData;
     
     return (
       <>
