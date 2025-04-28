@@ -36,7 +36,7 @@ const BarcodeScanner = ({ show, onHide, onScan }) => {
     return () => {
       stopScanner();
     };
-  }, [stopScanner]);
+  }, []);
 
   // Start/stop scanner based on tab and visibility
   useEffect(() => {
@@ -49,7 +49,7 @@ const BarcodeScanner = ({ show, onHide, onScan }) => {
     return () => {
       stopScanner();
     };
-  }, [show, activeTab, scanning, startScanner]);
+  }, [show, activeTab, scanning]);
 
   const startScanner = () => {
     if (!scannerRef.current) return;
