@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { Table, Button, Card, Alert, Spinner, Form, InputGroup, Row, Col, Modal } from 'react-bootstrap';
 import axios from 'axios';
 import Barcode from 'react-barcode';
@@ -69,24 +69,25 @@ const Products = () => {
   // Barcode scanner state
   const [showScannerModal, setShowScannerModal] = useState(false);
 
-  const fetchProducts = async (page = 1) => {
+  const fetchProducts = useCallback(async (page = 1) => {
     try {
       const params = {
         page,
         limit: pagination.limit,
         search: search || undefined,
         categoryId: selectedCategory || undefined,
-        _t: new Date().getTime() // Add timestamp to prevent caching
+        _t: new Date().getTime() // Prevent caching
       };
-      
+  
       const res = await axios.get(`${API_URL}/products`, {
         params,
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+  
       console.log('Products response:', res.data);
-      
+  
       setProducts(res.data.products || []);
       setPagination({
         page: res.data.pagination.page,
@@ -94,13 +95,13 @@ const Products = () => {
         totalPages: res.data.pagination.totalPages,
         totalProducts: res.data.pagination.totalProducts
       });
-      
+  
       setError(null);
     } catch (err) {
       console.error('Error fetching products:', err);
       setError('Failed to load products. Please try again later.');
     }
-  };
+  }, [pagination.limit, search, selectedCategory, token]);
 
   useEffect(() => {
     const fetchData = async () => {

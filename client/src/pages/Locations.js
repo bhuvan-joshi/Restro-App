@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Table, Button, Card, Alert, Spinner, Modal, Form, Col, Row } from 'react-bootstrap';
+import { Table, Button, Card, Alert, Spinner, Modal, Form, Col, Row } from 'react-bootstrap';
 import axios from 'axios';
 
 // Get API URL from environment variable or use default
