@@ -1,4 +1,4 @@
-name: Deploy RESTRO-APP to IIS
+name: Build and Deploy RESTRO-APP to IIS
 
 on:
   pull_request:
@@ -7,46 +7,39 @@ on:
     types:
       - opened
       - synchronize
-      - closed
-
   push:
     branches:
       - main
 
 jobs:
   build:
-    if: github.event_name == 'pull_request' && github.event.action != 'closed'
+    if: github.event_name == 'pull_request'  # ✅ Only for pull request events
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-        if: github.event.action != 'closed' # ❗ Only checkout if PR is not closed
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
-        if: github.event.action != 'closed'
         with:
           node-version: '18'
 
       - name: Install Frontend Dependencies
-        if: github.event.action != 'closed'
         working-directory: ./client
         run: npm install --force
 
       - name: Build Frontend
-        if: github.event.action != 'closed'
         working-directory: ./client
         run: npm run build
 
       - name: Install Backend Dependencies
-        if: github.event.action != 'closed'
         run: npm install
 
   deploy:
-    if: github.event_name == 'push'
+    if: github.event_name == 'push'  # ✅ Only when main branch gets updated (i.e., merged)
     runs-on: self-hosted
-    needs: build
+    needs: []
 
     steps:
       - name: Checkout Code
@@ -57,7 +50,6 @@ jobs:
         with:
           node-version: '18'
 
-      # Frontend build
       - name: Install Frontend Dependencies
         working-directory: ./client
         run: |
@@ -73,40 +65,32 @@ jobs:
         run: |
           npm run build -- --no-eslint
 
-      # Backend setup (if needed)
       - name: Install Backend Dependencies
         run: npm install
 
-      # Deploy both frontend and backend
       - name: Deploy to IIS folder
         shell: powershell
         run: |
           $destination = "C:\inetpub\wwwroot\RestroApp"
 
-          # Take ownership and set permissions
           takeown /F $destination /R /D Y | Out-Null
           icacls $destination /grant "$($env:USERNAME):(OI)(CI)F" /T | Out-Null
 
-          # Clear destination folder (but keep the ReactApp folder itself)
           Get-ChildItem "$destination" -Exclude "data" | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
 
-          # Ensure the 'client' directory exists in the destination
           $clientDestination = "$destination\client"
           if (-Not (Test-Path $clientDestination)) {
               New-Item -ItemType Directory -Path $clientDestination | Out-Null
           }
 
-          # Copy the build folder from client to the destination
           Copy-Item "client\build" "$clientDestination\build" -Recurse -Force
 
-          # Copy the backend's 'node_modules' folder to a separate folder (e.g., node_modules_backend)
           $nodeModulesBackendDestination = "$destination"
           if (-Not (Test-Path $nodeModulesBackendDestination)) {
               New-Item -ItemType Directory -Path $nodeModulesBackendDestination | Out-Null
           }
           Copy-Item "node_modules" "$nodeModulesBackendDestination" -Recurse -Force
 
-          # Copy backend files to the destination, excluding 'client' and 'node_modules'
           Get-ChildItem -Path "." -Exclude "client", ".git", ".github", "node_modules" | ForEach-Object {
               $source = $_.FullName
               $destinationPath = Join-Path $destination $_.Name
