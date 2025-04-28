@@ -29,7 +29,7 @@ const BarcodeScanner = ({ show, onHide, onScan }) => {
       stopScanner();
       setScanning(false);
     }
-  }, [show]);
+  }, [show, stopScanner]);
 
   // Clean up resources when component unmounts
   useEffect(() => {
@@ -49,7 +49,7 @@ const BarcodeScanner = ({ show, onHide, onScan }) => {
     return () => {
       stopScanner();
     };
-  }, [show, activeTab, scanning]);
+  }, [show, activeTab, scanning, startScanner]);
 
   const startScanner = () => {
     if (!scannerRef.current) return;
@@ -358,14 +358,14 @@ const BarcodeScanner = ({ show, onHide, onScan }) => {
   };
   
   // Helper function to create an image element from URL
-  const createImageElement = (url) => {
+  /*const createImageElement = (url) => {
     return new Promise((resolve, reject) => {
       const img = new Image();
       img.onload = () => resolve(img);
       img.onerror = reject;
       img.src = url;
     });
-  };
+  };*/
 
   const handleManualSubmit = (e) => {
     e.preventDefault();
