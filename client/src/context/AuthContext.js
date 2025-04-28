@@ -12,6 +12,16 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const logout = useCallback(() => {
+    // Remove token from localStorage
+    localStorage.removeItem('token');
+    setToken(null);
+    setUser(null);
+    
+    // Remove auth header
+    delete axios.defaults.headers.common['x-auth-token'];
+  }, []);
+  
   const fetchUserData = useCallback(async () => {
     setLoading(true);
     try {
@@ -63,15 +73,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const logout = () => {
-    // Remove token from localStorage
-    localStorage.removeItem('token');
-    setToken(null);
-    setUser(null);
-    
-    // Remove auth header
-    delete axios.defaults.headers.common['x-auth-token'];
-  };
 
   return (
     <AuthContext.Provider

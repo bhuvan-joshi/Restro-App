@@ -18,38 +18,14 @@ const BarcodeScanner = ({ show, onHide, onScan }) => {
   const canvasRef = useRef(null);
   const imageRef = useRef(null);
 
-  // Reset state when modal is shown
-  useEffect(() => {
-    if (show) {
-      setScanning(true);
-      setError(null);
-      setProcessedSuccessfully(false);
-    } else {
-      // Clean up when modal is hidden
-      stopScanner();
-      setScanning(false);
+  const stopScanner = () => {
+    try {
+      Quagga.offDetected(handleBarcodeDetected);
+      Quagga.stop();
+    } catch (e) {
+      console.log("Error stopping Quagga:", e);
     }
-  }, [show]);
-
-  // Clean up resources when component unmounts
-  useEffect(() => {
-    return () => {
-      stopScanner();
-    };
-  }, []);
-
-  // Start/stop scanner based on tab and visibility
-  useEffect(() => {
-    if (show && activeTab === 'camera' && scanning) {
-      startScanner();
-    } else {
-      stopScanner();
-    }
-    
-    return () => {
-      stopScanner();
-    };
-  }, [show, activeTab, scanning]);
+  };
 
   const startScanner = () => {
     if (!scannerRef.current) return;
@@ -119,14 +95,38 @@ const BarcodeScanner = ({ show, onHide, onScan }) => {
     });
   };
 
-  const stopScanner = () => {
-    try {
-      Quagga.offDetected(handleBarcodeDetected);
-      Quagga.stop();
-    } catch (e) {
-      console.log("Error stopping Quagga:", e);
+  // Reset state when modal is shown
+  useEffect(() => {
+    if (show) {
+      setScanning(true);
+      setError(null);
+      setProcessedSuccessfully(false);
+    } else {
+      // Clean up when modal is hidden
+      stopScanner();
+      setScanning(false);
     }
-  };
+  }, [show]);
+
+  // Clean up resources when component unmounts
+  useEffect(() => {
+    return () => {
+      stopScanner();
+    };
+  }, []);
+
+  // Start/stop scanner based on tab and visibility
+  useEffect(() => {
+    if (show && activeTab === 'camera' && scanning) {
+      startScanner();
+    } else {
+      stopScanner();
+    }
+    
+    return () => {
+      stopScanner();
+    };
+  }, [show, activeTab, scanning]);
 
   const handleBarcodeDetected = (result) => {
     if (!result || !result.codeResult) return;
