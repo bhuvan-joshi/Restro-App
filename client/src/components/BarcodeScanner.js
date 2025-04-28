@@ -41,8 +41,8 @@ const BarcodeScanner = ({ show, onHide, onScan }) => {
         onHide();
       }, 300);
     }
-  }, [onScan, onHide]);
-  
+  }, [stopScanner, onScan, onHide]);
+
   const stopScanner = useCallback(() => {
     try {
       Quagga.offDetected(handleBarcodeDetected);
