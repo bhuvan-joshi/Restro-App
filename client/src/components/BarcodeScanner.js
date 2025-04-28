@@ -118,7 +118,7 @@ const BarcodeScanner = ({ show, onHide, onScan }) => {
       // Add result listener
       Quagga.onDetected(handleBarcodeDetected);
     });
-  }, [stopScanner]);
+  }, [stopScanner, handleBarcodeDetected]);
 
   // Reset state when modal is shown
   useEffect(() => {
