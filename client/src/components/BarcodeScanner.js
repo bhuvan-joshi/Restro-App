@@ -29,14 +29,14 @@ const BarcodeScanner = ({ show, onHide, onScan }) => {
       stopScanner();
       setScanning(false);
     }
-  }, [show, stopScanner]);
+  }, [show]);
 
   // Clean up resources when component unmounts
   useEffect(() => {
     return () => {
       stopScanner();
     };
-  }, []);
+  }, [stopScanner]);
 
   // Start/stop scanner based on tab and visibility
   useEffect(() => {
