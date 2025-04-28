@@ -29,14 +29,14 @@ const BarcodeScanner = ({ show, onHide, onScan }) => {
       stopScanner();
       setScanning(false);
     }
-  }, [show]);
+  }, [show, stopScanner]);
 
   // Clean up resources when component unmounts
   useEffect(() => {
     return () => {
       stopScanner();
     };
-  }, []);
+  }, [stopScanner]);
 
   // Start/stop scanner based on tab and visibility
   useEffect(() => {
@@ -49,7 +49,7 @@ const BarcodeScanner = ({ show, onHide, onScan }) => {
     return () => {
       stopScanner();
     };
-  }, [show, activeTab, scanning]);
+  }, [show, activeTab, scanning, startScanner, stopScanner]);
 
   const startScanner = () => {
     if (!scannerRef.current) return;
@@ -260,7 +260,7 @@ const BarcodeScanner = ({ show, onHide, onScan }) => {
         hints.set(DecodeHintType.TRY_HARDER, true);
         
         const reader = new BrowserMultiFormatReader(hints);
-        const img = await createImageElement(imageUrl);
+       // const img = await createImageElement(imageUrl);
         
         const result = await reader.decodeFromImage(undefined, imageUrl);
         if (result && result.getText()) {
