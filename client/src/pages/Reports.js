@@ -110,7 +110,7 @@ const Reports = () => {
     } else if (activeTab === 'inventory-movement') {
       fetchInventoryMovement();
     }
-  }, [activeTab, statusFilters, valueFilters, movementFilters, fetchInventoryStatus, fetchInventoryValue, fetchInventoryMovement]);
+  }, [fetchInventoryStatus, fetchInventoryValue, fetchInventoryMovement, activeTab, statusFilters, valueFilters, movementFilters]);
 
   const fetchReferenceData = async () => {
     try {

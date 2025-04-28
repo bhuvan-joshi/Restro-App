@@ -69,40 +69,6 @@ const Products = () => {
   // Barcode scanner state
   const [showScannerModal, setShowScannerModal] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        // Fetch categories
-        const categoriesRes = await axios.get(`${API_URL}/categories`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setCategories(categoriesRes.data.categories || []);
-        
-        // Fetch rack locations
-        const locationsRes = await axios.get(`${API_URL}/locations?type=Rack`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setRackLocations(locationsRes.data.locations || []);
-        
-        // Fetch products
-        await fetchProducts();
-        
-        setLoading(false);
-      } catch (err) {
-        console.error('Error fetching data:', err);
-        setError('Failed to load data. Please try again later.');
-        setLoading(false);
-      }
-    };
-    
-    fetchData();
-  }, [token]);
-
   const fetchProducts = async (page = 1) => {
     try {
       const params = {
@@ -135,6 +101,40 @@ const Products = () => {
       setError('Failed to load products. Please try again later.');
     }
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        // Fetch categories
+        const categoriesRes = await axios.get(`${API_URL}/categories`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setCategories(categoriesRes.data.categories || []);
+        
+        // Fetch rack locations
+        const locationsRes = await axios.get(`${API_URL}/locations?type=Rack`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setRackLocations(locationsRes.data.locations || []);
+        
+        // Fetch products
+        await fetchProducts();
+        
+        setLoading(false);
+      } catch (err) {
+        console.error('Error fetching data:', err);
+        setError('Failed to load data. Please try again later.');
+        setLoading(false);
+      }
+    };
+    
+    fetchData();
+  }, [token, fetchProducts]);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -293,7 +293,7 @@ const Products = () => {
         formData.append('image', editFormData.image);
       }
       
-      const response = await axios.put(
+     /* const response = await axios.put(
         `${API_URL}/products/${selectedProduct.product_id}`,
         formData,
         {
@@ -302,7 +302,7 @@ const Products = () => {
             Authorization: `Bearer ${token}`,
           }
         }
-      );
+      );*/
       
       setUpdateMessage('Product updated successfully');
       setTimeout(() => {
@@ -348,7 +348,7 @@ const Products = () => {
         formData.append('image', addFormData.image);
       }
       
-      const response = await axios.post(
+     /* const response = await axios.post(
         `${API_URL}/products`,
         formData,
         {
@@ -357,7 +357,7 @@ const Products = () => {
             Authorization: `Bearer ${token}`,
           }
         }
-      );
+      );*/
       
       setAddMessage('Product added successfully');
       setTimeout(() => {
