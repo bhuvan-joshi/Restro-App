@@ -18,6 +18,30 @@ const BarcodeScanner = ({ show, onHide, onScan }) => {
   const canvasRef = useRef(null);
   const imageRef = useRef(null);
 
+  const handleBarcodeDetected = (result) => {
+    if (!result || !result.codeResult) return;
+    
+    const code = result.codeResult.code;
+    console.log("Quagga detected:", code);
+    
+    // Check if it's a valid barcode (numeric with 8-13 digits, matching Arper's format)
+    if (/^\d+$/.test(code) && code.length >= 8 && code.length <= 13) {
+      console.log("Valid barcode detected:", code);
+      
+      // Stop scanning and return the result
+      stopScanner();
+      setScanning(false);
+      setError(null);
+      setProcessedSuccessfully(true);
+      
+      // Add a small delay to ensure UI updates before closing
+      setTimeout(() => {
+        onScan(code);
+        onHide();
+      }, 300);
+    }
+  };
+  
   const stopScanner = useCallback(() => {
     try {
       Quagga.offDetected(handleBarcodeDetected);
@@ -27,7 +51,7 @@ const BarcodeScanner = ({ show, onHide, onScan }) => {
     }
   }, [handleBarcodeDetected]);
 
-  const startScanner = () => {
+  const startScanner = useCallback(() => {
     if (!scannerRef.current) return;
     
     setError(null);
@@ -93,7 +117,7 @@ const BarcodeScanner = ({ show, onHide, onScan }) => {
       // Add result listener
       Quagga.onDetected(handleBarcodeDetected);
     });
-  };
+  }, []);
 
   // Reset state when modal is shown
   useEffect(() => {
