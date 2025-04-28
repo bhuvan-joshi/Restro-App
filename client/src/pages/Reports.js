@@ -40,36 +40,22 @@ const Reports = () => {
     endDate: ''
   });
 
-  // Load reference data on mount
-  useEffect(() => {
-    fetchReferenceData();
-  }, []);
-  
-  // Load report data when tab changes or filters change
-  useEffect(() => {
-    if (activeTab === 'inventory-status') {
-      fetchInventoryStatus();
-    } else if (activeTab === 'inventory-value') {
-      fetchInventoryValue();
-    } else if (activeTab === 'inventory-movement') {
-      fetchInventoryMovement();
-    }
-  }, [activeTab, statusFilters, valueFilters, movementFilters, fetchInventoryMovement, fetchInventoryStatus, fetchInventoryValue]);
-
-  const fetchReferenceData = async () => {
+  const fetchInventoryMovement = async () => {
+    setLoading(true);
     try {
-      const [productsRes, locationsRes, categoriesRes] = await Promise.all([
-        axios.get(`${API_URL}/products`),
-        axios.get(`${API_URL}/locations`),
-        axios.get(`${API_URL}/categories`)
-      ]);
+      const params = {
+        ...movementFilters
+      };
       
-      setProducts(productsRes.data.products || []);
-      setLocations(locationsRes.data.locations || []);
-      setCategories(categoriesRes.data.categories || []);
+      const res = await axios.get(`${API_URL}/reports/inventory/movement`, { params });
+      setInventoryMovementData(res.data);
+      setError(null);
     } catch (err) {
-      console.error('Error fetching reference data:', err);
-      setError('Failed to load reference data. Please try again later.');
+      console.error('Error fetching inventory movement report:', err);
+      setError('Failed to load inventory movement report. Please try again later.');
+      setInventoryMovementData(null);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -111,22 +97,36 @@ const Reports = () => {
     }
   };
 
-  const fetchInventoryMovement = async () => {
-    setLoading(true);
+  // Load reference data on mount
+  useEffect(() => {
+    fetchReferenceData();
+  }, []);
+  
+  // Load report data when tab changes or filters change
+  useEffect(() => {
+    if (activeTab === 'inventory-status') {
+      fetchInventoryStatus();
+    } else if (activeTab === 'inventory-value') {
+      fetchInventoryValue();
+    } else if (activeTab === 'inventory-movement') {
+      fetchInventoryMovement();
+    }
+  }, [activeTab, statusFilters, valueFilters, movementFilters, fetchInventoryStatus, fetchInventoryValue, fetchInventoryMovement]);
+
+  const fetchReferenceData = async () => {
     try {
-      const params = {
-        ...movementFilters
-      };
+      const [productsRes, locationsRes, categoriesRes] = await Promise.all([
+        axios.get(`${API_URL}/products`),
+        axios.get(`${API_URL}/locations`),
+        axios.get(`${API_URL}/categories`)
+      ]);
       
-      const res = await axios.get(`${API_URL}/reports/inventory/movement`, { params });
-      setInventoryMovementData(res.data);
-      setError(null);
+      setProducts(productsRes.data.products || []);
+      setLocations(locationsRes.data.locations || []);
+      setCategories(categoriesRes.data.categories || []);
     } catch (err) {
-      console.error('Error fetching inventory movement report:', err);
-      setError('Failed to load inventory movement report. Please try again later.');
-      setInventoryMovementData(null);
-    } finally {
-      setLoading(false);
+      console.error('Error fetching reference data:', err);
+      setError('Failed to load reference data. Please try again later.');
     }
   };
 
@@ -154,14 +154,14 @@ const Reports = () => {
     });
   };
 
-  const formatCurrency = (value) => {
+  /*const formatCurrency = (value) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD'
     }).format(value || 0);
   };
 
-  /*const formatDate = (dateString) => {
+  const formatDate = (dateString) => {
     try {
       const date = new Date(dateString);
       return format(date, 'MMM d, yyyy');
