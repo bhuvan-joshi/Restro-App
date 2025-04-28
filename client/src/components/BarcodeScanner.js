@@ -25,8 +25,8 @@ const BarcodeScanner = ({ show, onHide, onScan }) => {
     } catch (e) {
       console.error("Error stopping Quagga:", e);
     }
-  }, [handleBarcodeDetected]);
-  
+  }, []);
+
   const handleBarcodeDetected = useCallback((result) => {
     if (!result || !result.codeResult) return;
   
