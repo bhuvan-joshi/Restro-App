@@ -131,7 +131,7 @@ const BarcodeScanner = ({ show, onHide, onScan }) => {
       stopScanner();
       setScanning(false);
     }
-  }, [show, stopScanner]);
+  }, [stopScanner, show]);
 
   // Clean up resources when component unmounts
   useEffect(() => {
