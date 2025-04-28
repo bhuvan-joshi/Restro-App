@@ -18,16 +18,8 @@ const BarcodeScanner = ({ show, onHide, onScan }) => {
   const canvasRef = useRef(null);
   const imageRef = useRef(null);
 
-  const stopScanner = useCallback(() => {
-    try {
-      Quagga.offDetected(handleBarcodeDetected);
-      Quagga.stop();
-    } catch (e) {
-      console.error("Error stopping Quagga:", e);
-    }
-  }, [handleBarcodeDetected]);
 
-  const handleBarcodeDetected = useCallback((result) => {
+    const handleBarcodeDetected = useCallback((result) => {
     if (!result || !result.codeResult) return;
   
     const code = result.codeResult.code;
@@ -49,7 +41,16 @@ const BarcodeScanner = ({ show, onHide, onScan }) => {
         onHide();
       }, 300);
     }
-  }, [stopScanner, onScan, onHide]);
+  }, [onScan, onHide]);
+  
+  const stopScanner = useCallback(() => {
+    try {
+      Quagga.offDetected(handleBarcodeDetected);
+      Quagga.stop();
+    } catch (e) {
+      console.error("Error stopping Quagga:", e);
+    }
+  }, [handleBarcodeDetected]);
 
   const startScanner = useCallback(() => {
     if (!scannerRef.current) return;
