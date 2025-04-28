@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Card, Alert, Spinner, Tabs, Tab, Form, Row, Col, Table, Badge } from 'react-bootstrap';
 import axios from 'axios';
 
@@ -39,13 +39,13 @@ const Reports = () => {
     endDate: ''
   });
 
-  const fetchInventoryMovement = async () => {
+  const fetchInventoryMovement = useCallback(async () => {
     setLoading(true);
     try {
       const params = {
         ...movementFilters
       };
-      
+  
       const res = await axios.get(`${API_URL}/reports/inventory/movement`, { params });
       setInventoryMovementData(res.data);
       setError(null);
@@ -56,15 +56,15 @@ const Reports = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [movementFilters]);
 
-  const fetchInventoryStatus = async () => {
+  const fetchInventoryStatus = useCallback(async () => {
     setLoading(true);
     try {
       const params = {
         ...statusFilters
       };
-      
+  
       const res = await axios.get(`${API_URL}/reports/inventory/status`, { params });
       setInventoryStatusData(res.data);
       setError(null);
@@ -75,15 +75,15 @@ const Reports = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [statusFilters]);
 
-  const fetchInventoryValue = async () => {
+  const fetchInventoryValue = useCallback(async () => {
     setLoading(true);
     try {
       const params = {
         ...valueFilters
       };
-      
+  
       const res = await axios.get(`${API_URL}/reports/inventory/value`, { params });
       setInventoryValueData(res.data);
       setError(null);
@@ -94,7 +94,7 @@ const Reports = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [valueFilters]);
 
   // Load reference data on mount
   useEffect(() => {

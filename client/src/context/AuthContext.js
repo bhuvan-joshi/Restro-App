@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
 // Get API URL from environment variable or use default
@@ -12,6 +12,19 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const fetchUserData = useCallback(async () => {
+    setLoading(true);
+    try {
+      const res = await axios.get(`${API_URL}/users/me`);
+      setUser(res.data);
+    } catch (err) {
+      console.error('Error fetching user data:', err);
+      logout();
+    } finally {
+      setLoading(false);
+    }
+  }, [logout]);
+
   useEffect(() => {
     // If token exists, set auth header and fetch user data
     if (token) {
@@ -20,20 +33,7 @@ export const AuthProvider = ({ children }) => {
     } else {
       setLoading(false);
     }
-  }, [token]);
-
-  const fetchUserData = async () => {
-    try {
-      setLoading(true);
-      const res = await axios.get(`${API_URL}/users/me`);
-      setUser(res.data);
-      setLoading(false);
-    } catch (err) {
-      console.error('Error fetching user data:', err);
-      logout();
-      setLoading(false);
-    }
-  };
+  }, [token, fetchUserData]);
 
   const login = async (username, password) => {
     try {
