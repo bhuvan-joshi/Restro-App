@@ -1,0 +1,1722 @@
+{
+  "Version": 1,
+  "Hash": "ltYRjLEMRGOkDAeRdi/UY3uYKYaggPJPMgbHfmbOHmI=",
+  "Source": "ChattyWidget.API",
+  "BasePath": "_content/ChattyWidget.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "ChattyWidget.API\\wwwroot",
+      "Source": "ChattyWidget.API",
+      "ContentRoot": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\wwwroot\\",
+      "BasePath": "_content/ChattyWidget.API",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\obj\\Release\\net9.0\\compressed\\52vqktr4my-lxxjlrzt8t.gz",
+      "SourceId": "ChattyWidget.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\obj\\Release\\net9.0\\compressed\\",
+      "BasePath": "_content/ChattyWidget.API",
+      "RelativePath": "widget#[.{fingerprint=lxxjlrzt8t}]?.js.gz",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\wwwroot\\widget.js",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "Fingerprint": "nsngsq49ai",
+      "Integrity": "iV8TnuMNrJPkVBsmbat//Wbc8gmMYFFcOTz7xJ5kaS0=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\wwwroot\\widget.js"
+    },
+    {
+      "Identity": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\obj\\Release\\net9.0\\compressed\\apqe845km7-wnmj6fnzy3.gz",
+      "SourceId": "ChattyWidget.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\obj\\Release\\net9.0\\compressed\\",
+      "BasePath": "_content/ChattyWidget.API",
+      "RelativePath": "js/chatty-widget#[.{fingerprint=wnmj6fnzy3}]?.js.gz",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\wwwroot\\js\\chatty-widget.js",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "Fingerprint": "m7yv2hrzdh",
+      "Integrity": "DqsmUKnhk4nA/LvXlr+zPJZV2lPcfzWWQDq0GWRSW4g=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\wwwroot\\js\\chatty-widget.js"
+    },
+    {
+      "Identity": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\obj\\Release\\net9.0\\compressed\\ga6dgcc83w-rol5wgiqs2.gz",
+      "SourceId": "ChattyWidget.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\obj\\Release\\net9.0\\compressed\\",
+      "BasePath": "_content/ChattyWidget.API",
+      "RelativePath": "css/widget#[.{fingerprint=rol5wgiqs2}]?.css.gz",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\wwwroot\\css\\widget.css",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "Fingerprint": "9zkaolwl1k",
+      "Integrity": "tVRMAlUmquNMv7AMrZw2Z0pg/2wraSA23/waWk8Tzm8=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\wwwroot\\css\\widget.css"
+    },
+    {
+      "Identity": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\obj\\Release\\net9.0\\compressed\\krizu72lq1-b2yyb0a0xt.gz",
+      "SourceId": "ChattyWidget.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\obj\\Release\\net9.0\\compressed\\",
+      "BasePath": "_content/ChattyWidget.API",
+      "RelativePath": "widget#[.{fingerprint=b2yyb0a0xt}]?.css.gz",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\wwwroot\\widget.css",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "Fingerprint": "gmc3qrrwzf",
+      "Integrity": "WEcmpaa8WGGzJujoIaKcIFXl63AbvASE7W/kVFxGWk4=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\wwwroot\\widget.css"
+    },
+    {
+      "Identity": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\obj\\Release\\net9.0\\compressed\\xm6o7d50fi-zem7zgm0xu.gz",
+      "SourceId": "ChattyWidget.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\obj\\Release\\net9.0\\compressed\\",
+      "BasePath": "_content/ChattyWidget.API",
+      "RelativePath": "widget-demo#[.{fingerprint=zem7zgm0xu}]?.html.gz",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\wwwroot\\widget-demo.html",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "Fingerprint": "h2pc9fygxw",
+      "Integrity": "F5F7d27eVy2vBLDTEQCZMDsBufr5tgtNoMVv8RqOnd4=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\wwwroot\\widget-demo.html"
+    },
+    {
+      "Identity": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\wwwroot\\css\\widget.css",
+      "SourceId": "ChattyWidget.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\wwwroot\\",
+      "BasePath": "_content/ChattyWidget.API",
+      "RelativePath": "css/widget#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "rol5wgiqs2",
+      "Integrity": "9QI4+VSqJWWGHOs5i38yGf4UC/JCNRMaCI8L+d9j/hc=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\widget.css"
+    },
+    {
+      "Identity": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\wwwroot\\js\\chatty-widget.js",
+      "SourceId": "ChattyWidget.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\wwwroot\\",
+      "BasePath": "_content/ChattyWidget.API",
+      "RelativePath": "js/chatty-widget#[.{fingerprint}]?.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "wnmj6fnzy3",
+      "Integrity": "fIti2UUQicRZizCqLrscuAbn4eSYJWAJDHhAgC1P12s=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\chatty-widget.js"
+    },
+    {
+      "Identity": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\wwwroot\\widget-demo.html",
+      "SourceId": "ChattyWidget.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\wwwroot\\",
+      "BasePath": "_content/ChattyWidget.API",
+      "RelativePath": "widget-demo#[.{fingerprint}]?.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "zem7zgm0xu",
+      "Integrity": "OxBVajUOyh8GS8F2tafw0iQ48WA2oQ4INvX5ndGdOAw=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\widget-demo.html"
+    },
+    {
+      "Identity": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\wwwroot\\widget.css",
+      "SourceId": "ChattyWidget.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\wwwroot\\",
+      "BasePath": "_content/ChattyWidget.API",
+      "RelativePath": "widget#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "b2yyb0a0xt",
+      "Integrity": "DZRRPopQOeTsCFy9JeyIZ34L6iqY2ZpF7BIKZcKavj8=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\widget.css"
+    },
+    {
+      "Identity": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\wwwroot\\widget.js",
+      "SourceId": "ChattyWidget.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\wwwroot\\",
+      "BasePath": "_content/ChattyWidget.API",
+      "RelativePath": "widget#[.{fingerprint}]?.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "lxxjlrzt8t",
+      "Integrity": "iSMwfAiKezIzXEGrTs1YALepngfMpjwGGct1+j1pllk=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\widget.js"
+    }
+  ],
+  "Endpoints": [
+    {
+      "Route": "css/widget.css",
+      "AssetFile": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\obj\\Release\\net9.0\\compressed\\ga6dgcc83w-rol5wgiqs2.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000714285714"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1399"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"tVRMAlUmquNMv7AMrZw2Z0pg/2wraSA23/waWk8Tzm8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 08 May 2025 05:00:57 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"9QI4+VSqJWWGHOs5i38yGf4UC/JCNRMaCI8L+d9j/hc=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-9QI4+VSqJWWGHOs5i38yGf4UC/JCNRMaCI8L+d9j/hc="
+        }
+      ]
+    },
+    {
+      "Route": "css/widget.css",
+      "AssetFile": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\wwwroot\\css\\widget.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "5382"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"9QI4+VSqJWWGHOs5i38yGf4UC/JCNRMaCI8L+d9j/hc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 08 May 2025 05:00:57 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-9QI4+VSqJWWGHOs5i38yGf4UC/JCNRMaCI8L+d9j/hc="
+        }
+      ]
+    },
+    {
+      "Route": "css/widget.css.gz",
+      "AssetFile": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\obj\\Release\\net9.0\\compressed\\ga6dgcc83w-rol5wgiqs2.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1399"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"tVRMAlUmquNMv7AMrZw2Z0pg/2wraSA23/waWk8Tzm8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 08 May 2025 05:00:57 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-tVRMAlUmquNMv7AMrZw2Z0pg/2wraSA23/waWk8Tzm8="
+        }
+      ]
+    },
+    {
+      "Route": "css/widget.rol5wgiqs2.css",
+      "AssetFile": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\obj\\Release\\net9.0\\compressed\\ga6dgcc83w-rol5wgiqs2.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000714285714"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1399"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"tVRMAlUmquNMv7AMrZw2Z0pg/2wraSA23/waWk8Tzm8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 08 May 2025 05:00:57 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"9QI4+VSqJWWGHOs5i38yGf4UC/JCNRMaCI8L+d9j/hc=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "rol5wgiqs2"
+        },
+        {
+          "Name": "label",
+          "Value": "css/widget.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-9QI4+VSqJWWGHOs5i38yGf4UC/JCNRMaCI8L+d9j/hc="
+        }
+      ]
+    },
+    {
+      "Route": "css/widget.rol5wgiqs2.css",
+      "AssetFile": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\wwwroot\\css\\widget.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "5382"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"9QI4+VSqJWWGHOs5i38yGf4UC/JCNRMaCI8L+d9j/hc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 08 May 2025 05:00:57 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "rol5wgiqs2"
+        },
+        {
+          "Name": "label",
+          "Value": "css/widget.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-9QI4+VSqJWWGHOs5i38yGf4UC/JCNRMaCI8L+d9j/hc="
+        }
+      ]
+    },
+    {
+      "Route": "css/widget.rol5wgiqs2.css.gz",
+      "AssetFile": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\obj\\Release\\net9.0\\compressed\\ga6dgcc83w-rol5wgiqs2.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1399"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"tVRMAlUmquNMv7AMrZw2Z0pg/2wraSA23/waWk8Tzm8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 08 May 2025 05:00:57 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "rol5wgiqs2"
+        },
+        {
+          "Name": "label",
+          "Value": "css/widget.css.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-tVRMAlUmquNMv7AMrZw2Z0pg/2wraSA23/waWk8Tzm8="
+        }
+      ]
+    },
+    {
+      "Route": "js/chatty-widget.js",
+      "AssetFile": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\obj\\Release\\net9.0\\compressed\\apqe845km7-wnmj6fnzy3.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000383729854"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2605"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"DqsmUKnhk4nA/LvXlr+zPJZV2lPcfzWWQDq0GWRSW4g=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 08 May 2025 05:00:57 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"fIti2UUQicRZizCqLrscuAbn4eSYJWAJDHhAgC1P12s=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-fIti2UUQicRZizCqLrscuAbn4eSYJWAJDHhAgC1P12s="
+        }
+      ]
+    },
+    {
+      "Route": "js/chatty-widget.js",
+      "AssetFile": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\wwwroot\\js\\chatty-widget.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "11257"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"fIti2UUQicRZizCqLrscuAbn4eSYJWAJDHhAgC1P12s=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 08 May 2025 05:00:57 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-fIti2UUQicRZizCqLrscuAbn4eSYJWAJDHhAgC1P12s="
+        }
+      ]
+    },
+    {
+      "Route": "js/chatty-widget.js.gz",
+      "AssetFile": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\obj\\Release\\net9.0\\compressed\\apqe845km7-wnmj6fnzy3.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2605"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"DqsmUKnhk4nA/LvXlr+zPJZV2lPcfzWWQDq0GWRSW4g=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 08 May 2025 05:00:57 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-DqsmUKnhk4nA/LvXlr+zPJZV2lPcfzWWQDq0GWRSW4g="
+        }
+      ]
+    },
+    {
+      "Route": "js/chatty-widget.wnmj6fnzy3.js",
+      "AssetFile": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\obj\\Release\\net9.0\\compressed\\apqe845km7-wnmj6fnzy3.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000383729854"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2605"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"DqsmUKnhk4nA/LvXlr+zPJZV2lPcfzWWQDq0GWRSW4g=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 08 May 2025 05:00:57 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"fIti2UUQicRZizCqLrscuAbn4eSYJWAJDHhAgC1P12s=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "wnmj6fnzy3"
+        },
+        {
+          "Name": "label",
+          "Value": "js/chatty-widget.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-fIti2UUQicRZizCqLrscuAbn4eSYJWAJDHhAgC1P12s="
+        }
+      ]
+    },
+    {
+      "Route": "js/chatty-widget.wnmj6fnzy3.js",
+      "AssetFile": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\wwwroot\\js\\chatty-widget.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "11257"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"fIti2UUQicRZizCqLrscuAbn4eSYJWAJDHhAgC1P12s=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 08 May 2025 05:00:57 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "wnmj6fnzy3"
+        },
+        {
+          "Name": "label",
+          "Value": "js/chatty-widget.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-fIti2UUQicRZizCqLrscuAbn4eSYJWAJDHhAgC1P12s="
+        }
+      ]
+    },
+    {
+      "Route": "js/chatty-widget.wnmj6fnzy3.js.gz",
+      "AssetFile": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\obj\\Release\\net9.0\\compressed\\apqe845km7-wnmj6fnzy3.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2605"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"DqsmUKnhk4nA/LvXlr+zPJZV2lPcfzWWQDq0GWRSW4g=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 08 May 2025 05:00:57 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "wnmj6fnzy3"
+        },
+        {
+          "Name": "label",
+          "Value": "js/chatty-widget.js.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-DqsmUKnhk4nA/LvXlr+zPJZV2lPcfzWWQDq0GWRSW4g="
+        }
+      ]
+    },
+    {
+      "Route": "widget-demo.html",
+      "AssetFile": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\obj\\Release\\net9.0\\compressed\\xm6o7d50fi-zem7zgm0xu.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000540540541"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1849"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"F5F7d27eVy2vBLDTEQCZMDsBufr5tgtNoMVv8RqOnd4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 08 May 2025 05:00:57 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"OxBVajUOyh8GS8F2tafw0iQ48WA2oQ4INvX5ndGdOAw=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-OxBVajUOyh8GS8F2tafw0iQ48WA2oQ4INvX5ndGdOAw="
+        }
+      ]
+    },
+    {
+      "Route": "widget-demo.html",
+      "AssetFile": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\wwwroot\\widget-demo.html",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6641"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"OxBVajUOyh8GS8F2tafw0iQ48WA2oQ4INvX5ndGdOAw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 08 May 2025 05:00:57 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-OxBVajUOyh8GS8F2tafw0iQ48WA2oQ4INvX5ndGdOAw="
+        }
+      ]
+    },
+    {
+      "Route": "widget-demo.html.gz",
+      "AssetFile": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\obj\\Release\\net9.0\\compressed\\xm6o7d50fi-zem7zgm0xu.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1849"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"F5F7d27eVy2vBLDTEQCZMDsBufr5tgtNoMVv8RqOnd4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 08 May 2025 05:00:57 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-F5F7d27eVy2vBLDTEQCZMDsBufr5tgtNoMVv8RqOnd4="
+        }
+      ]
+    },
+    {
+      "Route": "widget-demo.zem7zgm0xu.html",
+      "AssetFile": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\obj\\Release\\net9.0\\compressed\\xm6o7d50fi-zem7zgm0xu.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000540540541"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1849"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"F5F7d27eVy2vBLDTEQCZMDsBufr5tgtNoMVv8RqOnd4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 08 May 2025 05:00:57 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"OxBVajUOyh8GS8F2tafw0iQ48WA2oQ4INvX5ndGdOAw=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "zem7zgm0xu"
+        },
+        {
+          "Name": "label",
+          "Value": "widget-demo.html"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-OxBVajUOyh8GS8F2tafw0iQ48WA2oQ4INvX5ndGdOAw="
+        }
+      ]
+    },
+    {
+      "Route": "widget-demo.zem7zgm0xu.html",
+      "AssetFile": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\wwwroot\\widget-demo.html",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "6641"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"OxBVajUOyh8GS8F2tafw0iQ48WA2oQ4INvX5ndGdOAw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 08 May 2025 05:00:57 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "zem7zgm0xu"
+        },
+        {
+          "Name": "label",
+          "Value": "widget-demo.html"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-OxBVajUOyh8GS8F2tafw0iQ48WA2oQ4INvX5ndGdOAw="
+        }
+      ]
+    },
+    {
+      "Route": "widget-demo.zem7zgm0xu.html.gz",
+      "AssetFile": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\obj\\Release\\net9.0\\compressed\\xm6o7d50fi-zem7zgm0xu.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1849"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"F5F7d27eVy2vBLDTEQCZMDsBufr5tgtNoMVv8RqOnd4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 08 May 2025 05:00:57 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "zem7zgm0xu"
+        },
+        {
+          "Name": "label",
+          "Value": "widget-demo.html.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-F5F7d27eVy2vBLDTEQCZMDsBufr5tgtNoMVv8RqOnd4="
+        }
+      ]
+    },
+    {
+      "Route": "widget.b2yyb0a0xt.css",
+      "AssetFile": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\obj\\Release\\net9.0\\compressed\\krizu72lq1-b2yyb0a0xt.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000905797101"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1103"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"WEcmpaa8WGGzJujoIaKcIFXl63AbvASE7W/kVFxGWk4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 08 May 2025 05:00:57 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"DZRRPopQOeTsCFy9JeyIZ34L6iqY2ZpF7BIKZcKavj8=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "b2yyb0a0xt"
+        },
+        {
+          "Name": "label",
+          "Value": "widget.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-DZRRPopQOeTsCFy9JeyIZ34L6iqY2ZpF7BIKZcKavj8="
+        }
+      ]
+    },
+    {
+      "Route": "widget.b2yyb0a0xt.css",
+      "AssetFile": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\wwwroot\\widget.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3514"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"DZRRPopQOeTsCFy9JeyIZ34L6iqY2ZpF7BIKZcKavj8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 08 May 2025 05:00:57 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "b2yyb0a0xt"
+        },
+        {
+          "Name": "label",
+          "Value": "widget.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-DZRRPopQOeTsCFy9JeyIZ34L6iqY2ZpF7BIKZcKavj8="
+        }
+      ]
+    },
+    {
+      "Route": "widget.b2yyb0a0xt.css.gz",
+      "AssetFile": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\obj\\Release\\net9.0\\compressed\\krizu72lq1-b2yyb0a0xt.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1103"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"WEcmpaa8WGGzJujoIaKcIFXl63AbvASE7W/kVFxGWk4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 08 May 2025 05:00:57 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "b2yyb0a0xt"
+        },
+        {
+          "Name": "label",
+          "Value": "widget.css.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-WEcmpaa8WGGzJujoIaKcIFXl63AbvASE7W/kVFxGWk4="
+        }
+      ]
+    },
+    {
+      "Route": "widget.css",
+      "AssetFile": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\obj\\Release\\net9.0\\compressed\\krizu72lq1-b2yyb0a0xt.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000905797101"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1103"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"WEcmpaa8WGGzJujoIaKcIFXl63AbvASE7W/kVFxGWk4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 08 May 2025 05:00:57 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"DZRRPopQOeTsCFy9JeyIZ34L6iqY2ZpF7BIKZcKavj8=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-DZRRPopQOeTsCFy9JeyIZ34L6iqY2ZpF7BIKZcKavj8="
+        }
+      ]
+    },
+    {
+      "Route": "widget.css",
+      "AssetFile": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\wwwroot\\widget.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3514"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"DZRRPopQOeTsCFy9JeyIZ34L6iqY2ZpF7BIKZcKavj8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 08 May 2025 05:00:57 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-DZRRPopQOeTsCFy9JeyIZ34L6iqY2ZpF7BIKZcKavj8="
+        }
+      ]
+    },
+    {
+      "Route": "widget.css.gz",
+      "AssetFile": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\obj\\Release\\net9.0\\compressed\\krizu72lq1-b2yyb0a0xt.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1103"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"WEcmpaa8WGGzJujoIaKcIFXl63AbvASE7W/kVFxGWk4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 08 May 2025 05:00:57 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-WEcmpaa8WGGzJujoIaKcIFXl63AbvASE7W/kVFxGWk4="
+        }
+      ]
+    },
+    {
+      "Route": "widget.js",
+      "AssetFile": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\obj\\Release\\net9.0\\compressed\\52vqktr4my-lxxjlrzt8t.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000403063281"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2480"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"iV8TnuMNrJPkVBsmbat//Wbc8gmMYFFcOTz7xJ5kaS0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 08 May 2025 05:00:57 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"iSMwfAiKezIzXEGrTs1YALepngfMpjwGGct1+j1pllk=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-iSMwfAiKezIzXEGrTs1YALepngfMpjwGGct1+j1pllk="
+        }
+      ]
+    },
+    {
+      "Route": "widget.js",
+      "AssetFile": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\wwwroot\\widget.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "10586"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"iSMwfAiKezIzXEGrTs1YALepngfMpjwGGct1+j1pllk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 08 May 2025 05:00:57 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-iSMwfAiKezIzXEGrTs1YALepngfMpjwGGct1+j1pllk="
+        }
+      ]
+    },
+    {
+      "Route": "widget.js.gz",
+      "AssetFile": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\obj\\Release\\net9.0\\compressed\\52vqktr4my-lxxjlrzt8t.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2480"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"iV8TnuMNrJPkVBsmbat//Wbc8gmMYFFcOTz7xJ5kaS0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 08 May 2025 05:00:57 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-iV8TnuMNrJPkVBsmbat//Wbc8gmMYFFcOTz7xJ5kaS0="
+        }
+      ]
+    },
+    {
+      "Route": "widget.lxxjlrzt8t.js",
+      "AssetFile": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\obj\\Release\\net9.0\\compressed\\52vqktr4my-lxxjlrzt8t.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000403063281"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2480"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"iV8TnuMNrJPkVBsmbat//Wbc8gmMYFFcOTz7xJ5kaS0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 08 May 2025 05:00:57 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"iSMwfAiKezIzXEGrTs1YALepngfMpjwGGct1+j1pllk=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "lxxjlrzt8t"
+        },
+        {
+          "Name": "label",
+          "Value": "widget.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-iSMwfAiKezIzXEGrTs1YALepngfMpjwGGct1+j1pllk="
+        }
+      ]
+    },
+    {
+      "Route": "widget.lxxjlrzt8t.js",
+      "AssetFile": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\wwwroot\\widget.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "10586"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"iSMwfAiKezIzXEGrTs1YALepngfMpjwGGct1+j1pllk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 08 May 2025 05:00:57 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "lxxjlrzt8t"
+        },
+        {
+          "Name": "label",
+          "Value": "widget.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-iSMwfAiKezIzXEGrTs1YALepngfMpjwGGct1+j1pllk="
+        }
+      ]
+    },
+    {
+      "Route": "widget.lxxjlrzt8t.js.gz",
+      "AssetFile": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\obj\\Release\\net9.0\\compressed\\52vqktr4my-lxxjlrzt8t.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2480"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"iV8TnuMNrJPkVBsmbat//Wbc8gmMYFFcOTz7xJ5kaS0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 08 May 2025 05:00:57 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "lxxjlrzt8t"
+        },
+        {
+          "Name": "label",
+          "Value": "widget.js.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-iV8TnuMNrJPkVBsmbat//Wbc8gmMYFFcOTz7xJ5kaS0="
+        }
+      ]
+    }
+  ]
+}

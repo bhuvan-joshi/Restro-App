@@ -1,0 +1,12 @@
+C:\Users\Vesuvio\source\repos\chatty-widget-ai-pal\ChattyWidgetBackend\ChattyWidget.Models\bin\Debug\net9.0\ChattyWidget.Models.deps.json
+C:\Users\Vesuvio\source\repos\chatty-widget-ai-pal\ChattyWidgetBackend\ChattyWidget.Models\bin\Debug\net9.0\ChattyWidget.Models.dll
+C:\Users\Vesuvio\source\repos\chatty-widget-ai-pal\ChattyWidgetBackend\ChattyWidget.Models\bin\Debug\net9.0\ChattyWidget.Models.pdb
+C:\Users\Vesuvio\source\repos\chatty-widget-ai-pal\ChattyWidgetBackend\ChattyWidget.Models\obj\Debug\net9.0\ChattyWidget.Models.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Vesuvio\source\repos\chatty-widget-ai-pal\ChattyWidgetBackend\ChattyWidget.Models\obj\Debug\net9.0\ChattyWidget.Models.AssemblyInfoInputs.cache
+C:\Users\Vesuvio\source\repos\chatty-widget-ai-pal\ChattyWidgetBackend\ChattyWidget.Models\obj\Debug\net9.0\ChattyWidget.Models.AssemblyInfo.cs
+C:\Users\Vesuvio\source\repos\chatty-widget-ai-pal\ChattyWidgetBackend\ChattyWidget.Models\obj\Debug\net9.0\ChattyWidget.Models.csproj.CoreCompileInputs.cache
+C:\Users\Vesuvio\source\repos\chatty-widget-ai-pal\ChattyWidgetBackend\ChattyWidget.Models\obj\Debug\net9.0\ChattyWidget.Models.sourcelink.json
+C:\Users\Vesuvio\source\repos\chatty-widget-ai-pal\ChattyWidgetBackend\ChattyWidget.Models\obj\Debug\net9.0\ChattyWidget.Models.dll
+C:\Users\Vesuvio\source\repos\chatty-widget-ai-pal\ChattyWidgetBackend\ChattyWidget.Models\obj\Debug\net9.0\refint\ChattyWidget.Models.dll
+C:\Users\Vesuvio\source\repos\chatty-widget-ai-pal\ChattyWidgetBackend\ChattyWidget.Models\obj\Debug\net9.0\ChattyWidget.Models.pdb
+C:\Users\Vesuvio\source\repos\chatty-widget-ai-pal\ChattyWidgetBackend\ChattyWidget.Models\obj\Debug\net9.0\ref\ChattyWidget.Models.dll
