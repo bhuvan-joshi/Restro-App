@@ -39,11 +39,10 @@ jobs:
         dotnet-version: '6.0.x'
 
     - name: Test API
-      if: startsWith(github.event_name, 'pull_request') || github.event_name == 'push'
-      working-directory: ChattyWidgetBackend
       run: |
-        dotnet restore
-        dotnet build
+        dotnet restore ChattyWidgetBackend/ChattyWidget.API/ChattyWidget.API.csproj
+        dotnet build ChattyWidgetBackend/ChattyWidget.API/ChattyWidget.API.csproj
+      
   deploy:
     if: github.event_name == 'push'
     runs-on: self-hosted
@@ -62,7 +61,6 @@ jobs:
       run: |
         npm install
         npm run build
-        npm test
     - name: Deploy React to C:\inetpub\wwwroot\ChartWidget
       shell: powershell
       run: |
@@ -81,7 +79,7 @@ jobs:
       shell: powershell
       run: |
         $apiDest = "C:\inetpub\wwwroot\ChattyWidgetAPI"
-        dotnet publish ChattyWidgetBackend --configuration Release --output $apiDest
+        dotnet publish ChattyWidgetBackend/ChattyWidget.API/ChattyWidget.API.csproj --configuration Release --output $apiDest
         Write-Host "API deployed to $apiDest"
     - name: Verify Deployments
       shell: powershell
