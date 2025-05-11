@@ -3,47 +3,45 @@ name: Build and Deploy
 on:
   pull_request:
     branches:
-      - develop         # Target branch for PR (not source)
+      - develop
     types:
       - opened
       - synchronize
       - reopened
-
   push:
     branches:
-      - develop         # Deployment happens after merge to develop
+      - develop
 
 jobs:
   validate:
-    if: github.event_name == 'pull_request'
     runs-on: windows-latest
-    
+
     steps:
     - uses: actions/checkout@v4
-    
+
     # React Validation
     - name: Setup Node.js
-      if: contains(github.event.pull_request.changed_files, 'src/') || contains(github.event.pull_request.changed_files, 'public/')
+      if: startsWith(github.event_name, 'pull_request') || github.event_name == 'push'
       uses: actions/setup-node@v3
       with:
         node-version: '18.x'
-    
+
     - name: Test React
-      if: contains(github.event.pull_request.changed_files, 'src/') || contains(github.event.pull_request.changed_files, 'public/')
+      if: startsWith(github.event_name, 'pull_request') || github.event_name == 'push'
       run: |
         npm install
         npm run build
         npm test
-    
+
     # .NET Validation  
     - name: Setup .NET
-      if: contains(github.event.pull_request.changed_files, 'ChattyWidgetBackend/')
+      if: startsWith(github.event_name, 'pull_request') || github.event_name == 'push'
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: '6.0.x'
-    
+
     - name: Test API
-      if: contains(github.event.pull_request.changed_files, 'ChattyWidgetBackend/')
+      if: startsWith(github.event_name, 'pull_request') || github.event_name == 'push'
       working-directory: ChattyWidgetBackend
       run: |
         dotnet restore
@@ -54,19 +52,18 @@ jobs:
     if: github.event_name == 'push'
     runs-on: self-hosted
     needs: validate
-    
+
     steps:
     - uses: actions/checkout@v4
-    
-    # React Deployment
+
     - name: Build React (dist)
       uses: actions/setup-node@v3
       with:
         node-version: '18.x'
-        run: |
-          npm install
-          npm run build
-    
+      run: |
+        npm install
+        npm run build
+
     - name: Deploy React to C:\inetpub\wwwroot\ChartWidget
       shell: powershell
       run: |
@@ -75,22 +72,19 @@ jobs:
         Remove-Item "$reactDest\*" -Recurse -Force -ErrorAction SilentlyContinue
         Copy-Item -Path "./dist/*" -Destination $reactDest -Recurse -Force
         Write-Host "React dist/ deployed to $reactDest"
-    
-    # .NET Deployment
-    - name: Deploy API to DC:\inetpub\wwwroot\ChattyWidgetAPI
+
+    - name: Deploy API to C:\inetpub\wwwroot\ChattyWidgetAPI
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: '6.0.x'
-        working-directory: ChattyWidgetBackend
-        shell: powershell
-        run: |
-          $apiDest = "C:\inetpub\wwwroot\ChattyWidgetAPI"
-          dotnet publish --configuration Release --output $apiDest
-          Write-Host "API deployed to $apiDest"
-    
+      run: |
+        $apiDest = "C:\inetpub\wwwroot\ChattyWidgetAPI"
+        dotnet publish ChattyWidgetBackend --configuration Release --output $apiDest
+        Write-Host "API deployed to $apiDest"
+
     - name: Verify Deployments
       shell: powershell
       run: |
-        Write-Host "🔍 Deployment Verification:"
-        Write-Host "React: $(if (Test-Path 'D:\reactAPP\index.html') { '' } else { '' })"
-        Write-Host "API: $(if (Test-Path 'D:\dotnetAPI\*.dll') { '' } else { '' })"
+        Write-Host "Deployment Verification:"
+        Write-Host "React: $(if (Test-Path 'C:\inetpub\wwwroot\ChartWidget\index.html') { 'Found' } else { 'Missing' })"
+        Write-Host "API: $(if (Get-ChildItem 'C:\inetpub\wwwroot\ChattyWidgetAPI\*.dll' -ErrorAction SilentlyContinue) { 'Found' } else { '❌ Missing' })"
