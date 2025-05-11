@@ -2,18 +2,16 @@ name: Build and Deploy
 
 on:
   pull_request:
-    branches: [ "develop" ]
-    paths:
-      - 'src/**'
-      - 'public/**'
-      - 'ChattyWidgetBackend/**'
+    branches:
+      - develop         # Target branch for PR (not source)
+    types:
+      - opened
+      - synchronize
+      - reopened
 
   push:
-    branches: [ "develop" ]
-    paths:
-      - 'src/**'
-      - 'public/**'
-      - 'ChattyWidgetBackend/**'
+    branches:
+      - develop         # Deployment happens after merge to develop
 
 jobs:
   validate:
