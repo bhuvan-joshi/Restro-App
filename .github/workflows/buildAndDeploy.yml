@@ -66,6 +66,7 @@ jobs:
       run: |
         npm install
         npm run build
+        npm test
 
     - name: Deploy React to C:\inetpub\wwwroot\ChartWidget
       shell: powershell
