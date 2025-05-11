@@ -1,0 +1,64 @@
+﻿<Project>
+  <ItemGroup>
+    <StaticWebAssetEndpoint Include="_content/ChattyWidget.API/css/widget.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\widget.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-9QI4\u002BVSqJWWGHOs5i38yGf4UC/JCNRMaCI8L\u002Bd9j/hc="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"5382"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u00229QI4\u002BVSqJWWGHOs5i38yGf4UC/JCNRMaCI8L\u002Bd9j/hc=\u0022"},{"Name":"Last-Modified","Value":"Thu, 08 May 2025 05:00:57 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ChattyWidget.API/css/widget.rol5wgiqs2.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\widget.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"rol5wgiqs2"},{"Name":"integrity","Value":"sha256-9QI4\u002BVSqJWWGHOs5i38yGf4UC/JCNRMaCI8L\u002Bd9j/hc="},{"Name":"label","Value":"_content/ChattyWidget.API/css/widget.css"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"5382"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u00229QI4\u002BVSqJWWGHOs5i38yGf4UC/JCNRMaCI8L\u002Bd9j/hc=\u0022"},{"Name":"Last-Modified","Value":"Thu, 08 May 2025 05:00:57 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ChattyWidget.API/js/chatty-widget.js">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\chatty-widget.js'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-fIti2UUQicRZizCqLrscuAbn4eSYJWAJDHhAgC1P12s="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"11257"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022fIti2UUQicRZizCqLrscuAbn4eSYJWAJDHhAgC1P12s=\u0022"},{"Name":"Last-Modified","Value":"Thu, 08 May 2025 05:00:57 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ChattyWidget.API/js/chatty-widget.wnmj6fnzy3.js">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\chatty-widget.js'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"wnmj6fnzy3"},{"Name":"integrity","Value":"sha256-fIti2UUQicRZizCqLrscuAbn4eSYJWAJDHhAgC1P12s="},{"Name":"label","Value":"_content/ChattyWidget.API/js/chatty-widget.js"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"11257"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022fIti2UUQicRZizCqLrscuAbn4eSYJWAJDHhAgC1P12s=\u0022"},{"Name":"Last-Modified","Value":"Thu, 08 May 2025 05:00:57 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ChattyWidget.API/widget-demo.html">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\widget-demo.html'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-OxBVajUOyh8GS8F2tafw0iQ48WA2oQ4INvX5ndGdOAw="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"6641"},{"Name":"Content-Type","Value":"text/html"},{"Name":"ETag","Value":"\u0022OxBVajUOyh8GS8F2tafw0iQ48WA2oQ4INvX5ndGdOAw=\u0022"},{"Name":"Last-Modified","Value":"Thu, 08 May 2025 05:00:57 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ChattyWidget.API/widget-demo.zem7zgm0xu.html">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\widget-demo.html'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"zem7zgm0xu"},{"Name":"integrity","Value":"sha256-OxBVajUOyh8GS8F2tafw0iQ48WA2oQ4INvX5ndGdOAw="},{"Name":"label","Value":"_content/ChattyWidget.API/widget-demo.html"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"6641"},{"Name":"Content-Type","Value":"text/html"},{"Name":"ETag","Value":"\u0022OxBVajUOyh8GS8F2tafw0iQ48WA2oQ4INvX5ndGdOAw=\u0022"},{"Name":"Last-Modified","Value":"Thu, 08 May 2025 05:00:57 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ChattyWidget.API/widget.b2yyb0a0xt.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\widget.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"b2yyb0a0xt"},{"Name":"integrity","Value":"sha256-DZRRPopQOeTsCFy9JeyIZ34L6iqY2ZpF7BIKZcKavj8="},{"Name":"label","Value":"_content/ChattyWidget.API/widget.css"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"3514"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022DZRRPopQOeTsCFy9JeyIZ34L6iqY2ZpF7BIKZcKavj8=\u0022"},{"Name":"Last-Modified","Value":"Thu, 08 May 2025 05:00:57 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ChattyWidget.API/widget.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\widget.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-DZRRPopQOeTsCFy9JeyIZ34L6iqY2ZpF7BIKZcKavj8="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"3514"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022DZRRPopQOeTsCFy9JeyIZ34L6iqY2ZpF7BIKZcKavj8=\u0022"},{"Name":"Last-Modified","Value":"Thu, 08 May 2025 05:00:57 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ChattyWidget.API/widget.js">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\widget.js'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-iSMwfAiKezIzXEGrTs1YALepngfMpjwGGct1\u002Bj1pllk="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"10586"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022iSMwfAiKezIzXEGrTs1YALepngfMpjwGGct1\u002Bj1pllk=\u0022"},{"Name":"Last-Modified","Value":"Thu, 08 May 2025 05:00:57 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/ChattyWidget.API/widget.lxxjlrzt8t.js">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\widget.js'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"lxxjlrzt8t"},{"Name":"integrity","Value":"sha256-iSMwfAiKezIzXEGrTs1YALepngfMpjwGGct1\u002Bj1pllk="},{"Name":"label","Value":"_content/ChattyWidget.API/widget.js"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"10586"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022iSMwfAiKezIzXEGrTs1YALepngfMpjwGGct1\u002Bj1pllk=\u0022"},{"Name":"Last-Modified","Value":"Thu, 08 May 2025 05:00:57 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+  </ItemGroup>
+</Project>

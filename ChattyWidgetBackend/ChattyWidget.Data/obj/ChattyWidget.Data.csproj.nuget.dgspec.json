@@ -1,0 +1,285 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.Data\\ChattyWidget.Data.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.Core\\ChattyWidget.Core.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.Core\\ChattyWidget.Core.csproj",
+        "projectName": "ChattyWidget.Core",
+        "projectPath": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.Core\\ChattyWidget.Core.csproj",
+        "packagesPath": "C:\\Users\\Vesuvio\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.Core\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Vesuvio\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {
+              "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.Models\\ChattyWidget.Models.csproj": {
+                "projectPath": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.Models\\ChattyWidget.Models.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.200"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.3, )"
+            },
+            "Google.Apis.Docs.v1": {
+              "target": "Package",
+              "version": "[1.62.0.3196, )"
+            },
+            "Google.Apis.Drive.v3": {
+              "target": "Package",
+              "version": "[1.62.0.3155, )"
+            },
+            "HtmlAgilityPack": {
+              "target": "Package",
+              "version": "[1.11.59, )"
+            },
+            "Microsoft.AspNetCore.Http.Features": {
+              "target": "Package",
+              "version": "[5.0.17, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.0-preview.4.24175.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.0-preview.4.24175.3, )"
+            },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[9.0.0-preview.4.24174.9, )"
+            },
+            "Microsoft.IdentityModel.Tokens": {
+              "target": "Package",
+              "version": "[7.5.0, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[7.5.0, )"
+            },
+            "itext7": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "itext7.bouncy-castle-adapter": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.Data\\ChattyWidget.Data.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.Data\\ChattyWidget.Data.csproj",
+        "projectName": "ChattyWidget.Data",
+        "projectPath": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.Data\\ChattyWidget.Data.csproj",
+        "packagesPath": "C:\\Users\\Vesuvio\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.Data\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Vesuvio\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {
+              "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.Core\\ChattyWidget.Core.csproj": {
+                "projectPath": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.Core\\ChattyWidget.Core.csproj"
+              },
+              "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.Models\\ChattyWidget.Models.csproj": {
+                "projectPath": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.Models\\ChattyWidget.Models.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.200"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[9.0.4, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.Models\\ChattyWidget.Models.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.Models\\ChattyWidget.Models.csproj",
+        "projectName": "ChattyWidget.Models",
+        "projectPath": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.Models\\ChattyWidget.Models.csproj",
+        "packagesPath": "C:\\Users\\Vesuvio\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.Models\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Vesuvio\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.200"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

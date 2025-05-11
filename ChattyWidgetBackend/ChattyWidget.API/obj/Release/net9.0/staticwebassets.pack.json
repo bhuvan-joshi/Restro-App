@@ -1,0 +1,45 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\wwwroot\\css\\widget.css",
+      "PackagePath": "staticwebassets\\css\\widget.css"
+    },
+    {
+      "Id": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\wwwroot\\js\\chatty-widget.js",
+      "PackagePath": "staticwebassets\\js\\chatty-widget.js"
+    },
+    {
+      "Id": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\wwwroot\\widget-demo.html",
+      "PackagePath": "staticwebassets\\widget-demo.html"
+    },
+    {
+      "Id": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\wwwroot\\widget.css",
+      "PackagePath": "staticwebassets\\widget.css"
+    },
+    {
+      "Id": "C:\\Users\\Vesuvio\\source\\repos\\chatty-widget-ai-pal\\ChattyWidgetBackend\\ChattyWidget.API\\wwwroot\\widget.js",
+      "PackagePath": "staticwebassets\\widget.js"
+    },
+    {
+      "Id": "obj\\Release\\net9.0\\staticwebassets\\msbuild.ChattyWidget.API.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Release\\net9.0\\staticwebassets\\msbuild.ChattyWidget.API.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Release\\net9.0\\staticwebassets\\msbuild.build.ChattyWidget.API.props",
+      "PackagePath": "build\\ChattyWidget.API.props"
+    },
+    {
+      "Id": "obj\\Release\\net9.0\\staticwebassets\\msbuild.buildMultiTargeting.ChattyWidget.API.props",
+      "PackagePath": "buildMultiTargeting\\ChattyWidget.API.props"
+    },
+    {
+      "Id": "obj\\Release\\net9.0\\staticwebassets\\msbuild.buildTransitive.ChattyWidget.API.props",
+      "PackagePath": "buildTransitive\\ChattyWidget.API.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
