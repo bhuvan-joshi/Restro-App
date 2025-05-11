@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Pagination Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        button {
+            padding: 5px 10px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        pre {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 4px;
+            overflow: auto;
+            max-height: 400px;
+        }
+        .controls {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>API Pagination Test</h1>
+    
+    <div class="controls">
+        <label for="page">Page:</label>
+        <input type="number" id="page" value="1" min="1" style="width: 60px">
+        
+        <label for="pageSize">Page Size:</label>
+        <select id="pageSize">
+            <option value="5">5</option>
+            <option value="10" selected>10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+        </select>
+        
+        <button onclick="fetchData()">Fetch Data</button>
+    </div>
+    
+    <div>
+        <h3>Results:</h3>
+        <div id="pagination-info"></div>
+        <table id="results">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Upload Date</th>
+                    <th>Size</th>
+                </tr>
+            </thead>
+            <tbody id="results-body"></tbody>
+        </table>
+    </div>
+    
+    <div>
+        <h3>API Response:</h3>
+        <pre id="response"></pre>
+    </div>
+    
+    <script>
+        // Get your token from localStorage
+        const token = localStorage.getItem('auth_token');
+        
+        if (!token) {
+            document.body.innerHTML = '<h2>Error: No auth token found in localStorage</h2><p>Please log in to the main application first</p>';
+        }
+        
+        async function fetchData() {
+            const page = document.getElementById('page').value;
+            const pageSize = document.getElementById('pageSize').value;
+            const apiUrl = `https://localhost:7149/api/Documents?page=${page}&pageSize=${pageSize}`;
+            
+            document.getElementById('response').textContent = 'Loading...';
+            document.getElementById('results-body').innerHTML = '<tr><td colspan="4">Loading...</td></tr>';
+            
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                // Display raw response
+                document.getElementById('response').textContent = JSON.stringify(data, null, 2);
+                
+                // Display pagination info
+                document.getElementById('pagination-info').innerHTML = `
+                    <p>Page ${data.page} of ${data.totalPages} | 
+                    Items ${(data.page - 1) * data.pageSize + 1} to ${Math.min(data.page * data.pageSize, data.totalCount)} of ${data.totalCount}</p>
+                `;
+                
+                // Display results in table
+                const tbody = document.getElementById('results-body');
+                tbody.innerHTML = '';
+                
+                if (data.items && data.items.length > 0) {
+                    data.items.forEach(item => {
+                        const row = document.createElement('tr');
+                        
+                        const idCell = document.createElement('td');
+                        idCell.textContent = item.id;
+                        row.appendChild(idCell);
+                        
+                        const nameCell = document.createElement('td');
+                        nameCell.textContent = item.name;
+                        row.appendChild(nameCell);
+                        
+                        const dateCell = document.createElement('td');
+                        dateCell.textContent = new Date(item.uploadDate).toLocaleString();
+                        row.appendChild(dateCell);
+                        
+                        const sizeCell = document.createElement('td');
+                        sizeCell.textContent = formatFileSize(item.size);
+                        row.appendChild(sizeCell);
+                        
+                        tbody.appendChild(row);
+                    });
+                } else {
+                    const row = document.createElement('tr');
+                    const cell = document.createElement('td');
+                    cell.colSpan = 4;
+                    cell.textContent = 'No data found';
+                    row.appendChild(cell);
+                    tbody.appendChild(row);
+                }
+                
+                // Enable/disable pagination controls
+                document.getElementById('page').max = data.totalPages;
+                
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                document.getElementById('response').textContent = `Error: ${error.message}`;
+                document.getElementById('results-body').innerHTML = `<tr><td colspan="4">Error: ${error.message}</td></tr>`;
+            }
+        }
+        
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        // Initial load
+        fetchData();
+    </script>
+</body>
+</html> 

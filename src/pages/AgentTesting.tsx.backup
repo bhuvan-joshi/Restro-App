@@ -1,0 +1,857 @@
+import React, { useState, useRef, useEffect } from 'react';
+import '../styles/agentTesting.css';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Badge } from '@/components/ui/badge';
+import { useToast } from '@/components/ui/use-toast';
+import { 
+  Send, 
+  User, 
+  Bot, 
+  ThumbsUp, 
+  ThumbsDown, 
+  AlertTriangle, 
+  FileText, 
+  RefreshCw,
+  Settings,
+  CheckCircle,
+  XCircle,
+  Info
+} from 'lucide-react';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Switch } from '@/components/ui/switch';
+import { Skeleton } from '@/components/ui/skeleton';
+import { getDocuments } from '@/services/api';
+// Import API services with React Query hooks
+import { useAgentQuery, useAvailableModels, useAgentFeedback, useTestScenarios } from '@/services/agentService';
+import { useQueryClient } from '@tanstack/react-query';
+
+// Types for messages
+interface Message {
+  id: string;
+  content: string;
+  sender: 'user' | 'agent';
+  timestamp: Date;
+  sources?: { title: string; url: string }[];
+  feedback?: 'positive' | 'negative';
+  needsHumanReview?: boolean;
+}
+
+// Types for agent models and test scenarios
+interface AgentModel {
+  id: string;
+  name: string;
+  provider: string;
+  description: string;
+  contextWindowSize: number;
+  knowledgeCutoff: string;
+  capabilities: string[];
+  subscriptionLevel: string;
+}
+
+interface TestScenario {
+  id: string;
+  name: string;
+  description: string;
+  questions: string[];
+}
+
+// Default models and scenarios to use if API calls fail
+const defaultModels: AgentModel[] = [
+  {
+    id: "gpt-4o",
+    name: "GPT-4o",
+    provider: "OpenAI",
+    description: "Latest multimodal model with excellent performance",
+    contextWindowSize: 32768,
+    knowledgeCutoff: "2023-12",
+    capabilities: ["Text Generation", "Q&A", "Summarization", "Code Generation", "Image Understanding"],
+    subscriptionLevel: "premium"
+  }
+];
+
+// No default scenarios needed as we generate them from knowledge base documents
+
+const AgentTesting = () => {
+  const { toast } = useToast();
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const queryClient = useQueryClient();
+  
+  // State for messages, input, and settings
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [inputValue, setInputValue] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
+  
+  // State for models and documents
+  const [selectedModel, setSelectedModel] = useState<string>('');
+  const [selectedDocuments, setSelectedDocuments] = useState<string[]>([]);
+  const [documents, setDocuments] = useState<any[]>([]);
+  const [loadingDocuments, setLoadingDocuments] = useState(false);
+  
+  // State for test scenarios
+  const [selectedScenario, setSelectedScenario] = useState<TestScenario | null>(null);
+  
+  // State for settings
+  const [confidenceThreshold, setConfidenceThreshold] = useState(0.7);
+  const [enableHumanEscalation, setEnableHumanEscalation] = useState(true);
+
+  // React Query hooks
+  const agentQuery = useAgentQuery();
+  const modelsQuery = useAvailableModels();
+  const feedbackMutation = useAgentFeedback();
+  const scenariosQuery = useTestScenarios();
+  
+  // Rename for clarity in the component
+  const { data: models, isLoading: isLoadingModels, error: modelsError } = modelsQuery;
+  
+  // Use React Query for document fetching
+  const documentsQuery = useQuery({
+    queryKey: ['documents'],
+    queryFn: async () => {
+      console.log('Fetching documents with React Query');
+      try {
+        // Use smaller page size for better performance
+        const response = await api.get('/Documents', {
+          params: {
+            page: 1,
+            pageSize: 20, // Reduced from 100 for better performance
+            excludeContent: false
+          }
+        });
+        
+        console.log('Documents API response:', response.data);
+        
+        // Process the response
+        let documents = [];
+        if (response.data.items && Array.isArray(response.data.items)) {
+          documents = response.data.items;
+        } else if (Array.isArray(response.data)) {
+          documents = response.data;
+        } else if (response.data && typeof response.data === 'object') {
+          // Try to extract any array from the response
+          const possibleArrays = Object.values(response.data).filter(value => Array.isArray(value));
+          if (possibleArrays.length > 0) {
+            documents = possibleArrays[0];
+          }
+        }
+        
+        // Preprocess documents to ensure content is available and not too large
+        return documents.map(doc => ({
+          ...doc,
+          // Ensure content is not too large for preview (truncate if needed)
+          contentPreview: doc.content ? 
+            (doc.content.length > 200 ? doc.content.substring(0, 200) + '...' : doc.content) : 
+            'No content available'
+        }));
+      } catch (error: any) {
+        console.error('Error in documentsQuery:', error);
+        throw error;
+      }
+    },
+    staleTime: 2 * 60 * 1000, // 2 minutes
+    retry: 2,
+    onError: (error: any) => {
+      console.error('Documents query error:', error);
+      toast({
+        title: 'API Error',
+        description: `Failed to fetch documents: ${error.message}`,
+        variant: 'destructive',
+      });
+    }
+  });
+  
+  // Set selected model when models are loaded
+  useEffect(() => {
+    if (modelsQuery.data && modelsQuery.data.length > 0 && !selectedModel) {
+      // Select the first model by default
+      setSelectedModel(modelsQuery.data[0].id);
+    } else if (modelsQuery.isError) {
+      console.error('Error fetching models:', modelsQuery.error);
+      toast({
+        title: 'API Error',
+        description: 'Could not load models from the server. Using default model settings.',
+        variant: 'destructive',
+      });
+      // Fallback to default model if API fails
+      setSelectedModel('gpt-4o');
+    }
+  }, [modelsQuery.isError, modelsQuery.error, modelsQuery.data, selectedModel, toast]);
+  
+  // Generate test scenarios from knowledge base documents
+  useEffect(() => {
+    // Generate scenarios when documents are loaded
+    if (documents.length > 0) {
+      console.log('Generating test scenarios from knowledge documents');
+      
+      // Create a map to group questions by document category/type
+      const scenarioMap = new Map();
+      
+      // Process each document to extract potential questions
+      documents.forEach(doc => {
+        // Use document name or type as category
+        const category = doc.name?.split('.')[0] || 'General';
+        
+        if (!scenarioMap.has(category)) {
+          scenarioMap.set(category, {
+            id: `generated-${category.toLowerCase().replace(/\s+/g, '-')}`,
+            name: `${category} Questions`,
+            description: `Questions related to ${category} documents`,
+            questions: []
+          });
+        }
+        
+        // Generate 2-3 questions based on document content if available
+        if (doc.content) {
+          // Simple question generation based on content
+          const questions = [
+            `What information do we have about ${doc.name || category}?`,
+            `Can you summarize the key points from ${doc.name || category}?`
+          ];
+          
+          // Add a third question if document has a specific type or format
+          if (doc.contentType || doc.fileType) {
+            questions.push(`What format is the ${doc.name || category} document in?`);
+          }
+          
+          // Add questions to the scenario
+          scenarioMap.get(category).questions.push(...questions);
+        }
+      });
+      
+      // Convert map to array of scenarios
+      const generatedScenarios = Array.from(scenarioMap.values());
+      
+      // Add a general scenario for testing the agent with the knowledge base
+      generatedScenarios.push({
+        id: 'generated-general',
+        name: 'General Knowledge Questions',
+        description: 'Test how the agent uses the entire knowledge base',
+        questions: [
+          'What are the most important topics in our knowledge base?',
+          'Can you summarize what information we have available?',
+          'What documents do we have in the knowledge base?'
+        ]
+      });
+      
+      console.log('Generated scenarios:', generatedScenarios);
+      
+      // Set the generated scenarios
+      if (generatedScenarios.length > 0) {
+        // Store the generated scenarios in a local state instead of modifying scenariosQuery.data
+        const localScenarios = generatedScenarios;
+        
+        // Use React Query's setQueryData to update the cache properly
+        queryClient.setQueryData(['testScenarios'], localScenarios);
+        
+        // Select the first scenario by default if none is selected
+        if (!selectedScenario) {
+          setSelectedScenario(generatedScenarios[0]);
+        }
+      }
+    }
+  }, [documents, selectedScenario]);
+
+  // Fetch documents on component mount
+  useEffect(() => {
+    fetchDocuments();
+  }, []);
+  
+  // Scroll to bottom when messages change
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, isTyping]);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleSendMessage = () => {
+    if (!inputValue.trim() || isTyping) return;
+    
+    // Add user message
+    const userMessage: Message = {
+      id: Date.now().toString(),
+      content: inputValue,
+      sender: 'user',
+      timestamp: new Date(),
+    };
+    
+    setMessages((prev) => [...prev, userMessage]);
+    setInputValue('');
+    
+    // Generate agent response
+    generateAgentResponse(inputValue);
+  };
+
+  // Replace fetchDocuments with a function that uses the React Query results
+  const fetchDocuments = () => {
+    setLoadingDocuments(true);
+    try {
+      if (documentsQuery.data) {
+        console.log(`Using ${documentsQuery.data.length} documents from React Query cache`);
+        setDocuments(documentsQuery.data);
+      } else if (documentsQuery.isError) {
+        console.error('Error from React Query:', documentsQuery.error);
+        setDocuments([]);
+        toast({
+          title: 'API Error',
+          description: `Failed to fetch documents: ${(documentsQuery.error as Error).message}`,
+          variant: 'destructive',
+        });
+      }
+    } catch (error) {
+      console.error('Error processing documents:', error);
+      setDocuments([]);
+    } finally {
+      setLoadingDocuments(false);
+    }
+  };
+
+// ... (rest of the code remains the same)
+
+const generateAgentResponse = async (userInput: string) => {
+  setIsTyping(true);
+  
+  try {
+    // Validate model before sending
+    if (!modelsQuery.data || !modelsQuery.data.some(model => model.id === selectedModel)) {
+      console.warn(`Selected model ${selectedModel} may not be available, proceeding anyway`);
+    }
+    
+    // Validate documents exist and have content
+    if (selectedDocuments.length > 0) {
+      // Check if we have the documents in our cache
+      const selectedDocs = documents.filter(doc => selectedDocuments.includes(doc.id));
+      console.log(`Found ${selectedDocs.length} of ${selectedDocuments.length} selected documents in cache`);
+      
+      // Log content size for debugging
+      let totalContentSize = 0;
+      selectedDocs.forEach(doc => {
+        if (doc.content) {
+          totalContentSize += doc.content.length;
+          console.log(`Document ${doc.id} (${doc.name}) content length: ${doc.content.length} chars`);
+        } else {
+          console.warn(`Document ${doc.id} (${doc.name}) has no content`);
+        }
+      });
+      console.log(`Total content size for selected documents: ${totalContentSize} chars`);
+    } else {
+      console.log('No documents selected for context');
+    }
+    
+    const request = {
+      query: userInput,
+      modelId: selectedModel,
+      documentIds: selectedDocuments,
+      confidenceThreshold: confidenceThreshold,
+      enableHumanEscalation: enableHumanEscalation
+    };
+    
+    console.log('Sending agent query:', request);
+    const result = await agentQuery.mutateAsync(request);
+    console.log('Received agent response:', result);
+    
+    // Add agent message
+    const agentMessage: Message = {
+      id: result.responseId || Date.now().toString(),
+      content: result.response || 'I processed your query but didn\'t receive a proper response. Please try again.',
+      sender: 'agent',
+      timestamp: result.timestamp ? new Date(result.timestamp) : new Date(),
+      sources: result.sources?.map(source => ({
+        title: source.title || 'Document',
+        url: source.url || `/documents/${source.documentId}`
+      })),
+      needsHumanReview: result.needsHumanReview
+    };
+    
+    setMessages((prev) => [...prev, agentMessage]);
+    
+    // Show notification if human review is needed
+    if (result.needsHumanReview) {
+      toast({
+        title: 'Human Review Needed',
+        description: 'The agent is not confident in its response and has flagged it for human review.',
+        variant: 'destructive',
+      });
+    }
+  } catch (error: any) {
+    console.error('Error generating response:', error);
+    
+    // Get a more specific error message if available
+    let errorMessage = 'Sorry, I encountered an error while processing your request. Please try again later.';
+    let errorDetails = '';
+    
+    if (error.response && error.response.data) {
+      console.error('Response error data:', error.response.data);
+      console.error('Response error status:', error.response.status);
+      
+      if (typeof error.response.data === 'string') {
+        errorMessage = error.response.data;
+      } else if (error.response.data.message) {
+        errorMessage = error.response.data.message;
+      } else if (error.response.data.error) {
+        errorMessage = error.response.data.error;
+      }
+      
+      errorDetails = `Status: ${error.response.status}`;
+    } else if (error.message) {
+      errorMessage = `Error: ${error.message}`;
+    }
+    
+    // Add error message
+    const errorMsg: Message = {
+      id: Date.now().toString(),
+      content: errorMessage + (errorDetails ? `\n\n${errorDetails}` : ''),
+      sender: 'agent',
+      timestamp: new Date(),
+    };
+    
+    setMessages((prev) => [...prev, errorMsg]);
+    
+    if (!message) return;
+    
+    // Update message with feedback
+    setMessages(messages.map(m => 
+      m.id === messageId 
+        ? { ...m, feedback } 
+        : m
+    ));
+    
+    try {
+      // Submit feedback to API
+      await feedbackMutation.mutateAsync({
+        responseId: messageId,
+        feedback: feedback,
+        comments: ''
+      });
+      
+      toast({
+        title: 'Feedback Submitted',
+    setSelectedScenario(scenario);
+  };
+
+  const handleTestQuestion = (question: string) => {
+    setInputValue(question);
+  };
+
+  const clearConversation = () => {
+    setMessages([]);
+    setSelectedScenario(null);
+    toast({
+      title: 'Conversation Cleared',
+      description: 'The conversation has been reset.',
+    });
+  };
+
+  return (
+    <div className="agent-testing-container">
+      <div className="agent-testing-header">
+        <div>
+          <h1 className="text-3xl font-bold agent-testing-title">Agent Testing Lab</h1>
+          <p className="agent-testing-subtitle">Test your AI agent against real knowledge base documents</p>
+        </div>
+        <Button 
+          variant="outline" 
+          onClick={clearConversation}
+          className="flex items-center gap-2"
+        >
+          <RefreshCw className="h-4 w-4" />
+          Reset Conversation
+        </Button>
+      </div>
+      
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="md:col-span-1 space-y-6">
+          <Card className="agent-card model-card">
+            <CardHeader className="card-header">
+              <CardTitle>Model Selection</CardTitle>
+              <CardDescription>Choose an AI model to test</CardDescription>
+            </CardHeader>
+            <CardContent>
+              {modelsQuery.isLoading ? (
+                <div className="space-y-2">
+                  <Skeleton className="h-10 w-full" />
+                  <Skeleton className="h-24 w-full" />
+                </div>
+              ) : (
+                <>
+                  <Select
+                    value={selectedModel}
+                    onValueChange={setSelectedModel}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a model" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {(modelsQuery.data?.length ? modelsQuery.data : defaultModels).map((model) => (
+                        <SelectItem key={model.id} value={model.id} className="scenario-select-item">
+                          {model.name} ({model.provider})
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  
+                  {selectedModel && (
+                    <div className="mt-4 text-sm">
+                      {(modelsQuery.data?.length ? modelsQuery.data : defaultModels).find(m => m.id === selectedModel)?.description}
+                      <div className="mt-2 flex flex-wrap gap-1">
+                        {(modelsQuery.data?.length ? modelsQuery.data : defaultModels).find(m => m.id === selectedModel)?.capabilities.map((capability) => (
+                          <Badge key={capability} variant="outline">{capability}</Badge>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </>
+              )}
+            </CardContent>
+          </Card>
+          
+          <Card className="agent-card knowledge-card">
+            <CardHeader className="card-header">
+              <CardTitle>Knowledge Selection</CardTitle>
+              <CardDescription>Select documents to include in context</CardDescription>
+            </CardHeader>
+            <CardContent>
+              {loadingDocuments ? (
+                <div className="space-y-2">
+                  <Skeleton className="h-8 w-full" />
+                  <Skeleton className="h-8 w-full" />
+                  <Skeleton className="h-8 w-full" />
+                </div>
+              ) : (
+                <div>
+                  {documents.length > 0 ? (
+                    <div className="space-y-2 max-h-40 overflow-y-auto">
+                      {documents.map((doc) => (
+                        <div key={doc.id} className="flex items-center space-x-2">
+                          <input
+                            type="checkbox"
+                            id={`doc-${doc.id}`}
+                            checked={selectedDocuments.includes(doc.id)}
+                            onChange={(e) => {
+                              if (e.target.checked) {
+                                setSelectedDocuments([...selectedDocuments, doc.id]);
+                              } else {
+                                setSelectedDocuments(selectedDocuments.filter(id => id !== doc.id));
+                              }
+                            }}
+                            className="h-4 w-4 rounded border-gray-300"
+                          />
+                          <label htmlFor={`doc-${doc.id}`} className="text-sm flex-1 truncate">
+                            {doc.name}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-center py-4 text-gray-500">
+                      <p>No documents found</p>
+                    </div>
+                  )}
+                  
+                  {selectedDocuments.length > 0 && (
+                    <div className="mt-2 flex justify-between items-center">
+                      <span className="text-xs text-gray-500">{selectedDocuments.length} document(s) selected</span>
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        onClick={() => setSelectedDocuments([])}
+                        className="text-xs h-6 px-2"
+                      >
+                        Clear
+                      </Button>
+                    </div>
+                  )}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+          
+          <Card className="agent-card scenario-card">
+            <CardHeader className="card-header">
+              <CardTitle>Test Scenarios</CardTitle>
+              <CardDescription>Pre-defined test questions</CardDescription>
+            </CardHeader>
+            <CardContent>
+              {scenariosQuery.isLoading ? (
+                <div className="space-y-2">
+                  <Skeleton className="h-10 w-full" />
+                  <Skeleton className="h-24 w-full" />
+                </div>
+              ) : (
+                <>
+                  <Select
+                    value={selectedScenario?.id || ''}
+                    onValueChange={handleScenarioSelect}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a test scenario" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {scenariosQuery.data?.length ? (
+                        // Use dynamically generated scenarios
+                        scenariosQuery.data.map((scenario) => (
+                          <SelectItem key={scenario.id} value={scenario.id} className="scenario-select-item">
+                            {scenario.name}
+                          </SelectItem>
+                        ))
+                      ) : documents.length > 0 ? (
+                        // If we have documents but no scenarios yet, show loading
+                        <SelectItem value="loading" disabled className="scenario-select-item">
+                          Generating scenarios from documents...
+                        </SelectItem>
+                      ) : (
+                        // If no documents and no scenarios, show message
+                        <SelectItem value="no-data" disabled className="scenario-select-item">
+                          No documents available to generate scenarios
+                        </SelectItem>
+                      )}
+                    </SelectContent>
+                  </Select>
+                  
+                  {selectedScenario && (
+                    <div className="mt-4">
+                      <p className="scenario-description">{selectedScenario.description}</p>
+                      <div className="space-y-2">
+                        {selectedScenario.questions.map((question, index) => (
+                          <Button 
+                            key={index} 
+                            variant="outline" 
+                            size="sm" 
+                            className="test-question-button w-full justify-start text-left"
+                            onClick={() => handleTestQuestion(question)}
+                            title={question} // Add title attribute for tooltip on hover
+                          >
+                            {question}
+                          </Button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </>
+              )}
+            </CardContent>
+          </Card>
+          
+          <Card className="agent-card settings-card">
+            <CardHeader className="card-header">
+              <CardTitle>Settings</CardTitle>
+              <CardDescription>Configure agent behavior</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <Label htmlFor="confidenceThreshold">Confidence Threshold</Label>
+                    <span className="text-xs text-muted-foreground">{confidenceThreshold}</span>
+                  </div>
+                  <Input
+                    id="confidenceThreshold"
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.05"
+                    value={confidenceThreshold}
+                    onChange={(e) => setConfidenceThreshold(parseFloat(e.target.value))}
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    Responses below this threshold will be flagged for human review.
+                  </p>
+                </div>
+                
+                <div className="flex items-center justify-between">
+                  <div className="space-y-0.5">
+                    <Label htmlFor="humanEscalation">Human Escalation</Label>
+                    <p className="text-xs text-muted-foreground">
+                      Allow agent to escalate to human support
+                    </p>
+                  </div>
+                  <Switch
+                    id="humanEscalation"
+                    checked={enableHumanEscalation}
+                    onCheckedChange={setEnableHumanEscalation}
+                  />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+        
+        <div className="md:col-span-2">
+          <Card className="agent-card conversation-card h-[calc(100vh-10rem)]">
+            <CardHeader className="card-header">
+              <CardTitle>Conversation</CardTitle>
+              <CardDescription>
+                Test the agent with different queries and settings
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="card-content p-0 flex flex-col h-[calc(100vh-16rem)]">
+              <div className="flex-1 flex flex-col">
+                <ScrollArea className="conversation-scroll-area flex-1 p-4">
+                  {messages.length === 0 ? (
+                    <div className="h-full flex items-center justify-center">
+                      <div className="text-center space-y-2">
+                        <FileText className="h-12 w-12 mx-auto text-muted-foreground" />
+                        <h3 className="text-lg font-medium">No messages yet</h3>
+                        <p className="text-sm text-muted-foreground">
+                          Start a conversation with the agent or select a test scenario.
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="conversation-messages space-y-4">
+                      {messages.map((message) => (
+                        <div 
+                          key={message.id} 
+                          className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+                        >
+                          <div 
+                            className={`message-bubble ${
+                              message.sender === 'user' 
+                                ? 'user-message' 
+                                : 'agent-message'
+                            }`}
+                          >
+                            <div className="flex items-center gap-2 mb-1">
+                              {message.sender === 'user' ? (
+                                <User className="h-4 w-4" />
+                              ) : (
+                                <Bot className="h-4 w-4" />
+                              )}
+                              <span className="text-xs opacity-70">
+                                {message.timestamp.toLocaleTimeString()}
+                              </span>
+                              {message.needsHumanReview && (
+                                <Badge variant="destructive" className="h-5 px-1 text-xs flex items-center gap-1">
+                                  <AlertTriangle className="h-3 w-3" />
+                                  Needs Review
+                                </Badge>
+                              )}
+                            </div>
+                            <div className="whitespace-pre-wrap">{message.content}</div>
+                            
+                            {message.sources && message.sources.length > 0 && (
+                              <div className="mt-2 pt-2 border-t border-gray-200 dark:border-gray-700">
+                                <p className="text-xs font-medium mb-1">Sources:</p>
+                                <ul className="space-y-1">
+                                  {message.sources.map((source, index) => (
+                                    <li key={index} className="text-xs">
+                                      <a 
+                                        href={source.url} 
+                                        className="text-blue-500 hover:underline flex items-center gap-1"
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                      >
+                                        <FileText className="h-3 w-3" />
+                                        {source.title}
+                                      </a>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+                            
+                            {message.sender === 'agent' && (
+                              <div className="mt-2 flex justify-end gap-1">
+                                <Button 
+                                  variant="ghost" 
+                                  size="sm" 
+                                  className="h-6 w-6 p-0 rounded-full"
+                                  onClick={() => handleFeedback(message.id, 'positive')}
+                                  disabled={message.feedback !== undefined}
+                                >
+                                  <ThumbsUp 
+                                    className={`h-4 w-4 ${message.feedback === 'positive' ? 'text-green-500' : ''}`} 
+                                  />
+                                </Button>
+                                <Button 
+                                  variant="ghost" 
+                                  size="sm" 
+                                  className="h-6 w-6 p-0 rounded-full"
+                                  onClick={() => handleFeedback(message.id, 'negative')}
+                                  disabled={message.feedback !== undefined}
+                                >
+                                  <ThumbsDown 
+                                    className={`h-4 w-4 ${message.feedback === 'negative' ? 'text-red-500' : ''}`} 
+                                  />
+                                </Button>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                      
+                      {isTyping && (
+                        <div className="flex justify-start">
+                          <div className="bg-muted rounded-lg p-3 max-w-[80%]">
+                            <div className="flex items-center gap-2 mb-1">
+                              <Bot className="h-4 w-4" />
+                              <span className="text-xs opacity-70">
+                                {new Date().toLocaleTimeString()}
+                              </span>
+                            </div>
+                            <div className="flex items-center space-x-1">
+                              <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse"></div>
+                              <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse delay-100"></div>
+                              <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse delay-200"></div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                      
+                      <div ref={messagesEndRef} />
+                    </div>
+                  )}
+                </ScrollArea>
+                
+                <div className="conversation-input">
+                  <form 
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      handleSendMessage();
+                    }}
+                    className="flex items-end gap-2"
+                  >
+                    <Textarea
+                      value={inputValue}
+                      onChange={(e) => setInputValue(e.target.value)}
+                      placeholder="Type your message..."
+                      className="resize-none min-h-[60px]"
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' && !e.shiftKey) {
+                          e.preventDefault();
+                          handleSendMessage();
+                        }
+                      }}
+                    />
+                    <Button 
+                      type="submit" 
+                      size="icon" 
+                      className="flex-shrink-0"
+                      disabled={!inputValue.trim() || isTyping}
+                    >
+                      <Send className="h-5 w-5" />
+                    </Button>
+                  </form>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default AgentTesting;

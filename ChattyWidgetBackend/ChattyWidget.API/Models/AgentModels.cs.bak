@@ -1,0 +1,59 @@
+using System;
+using System.Collections.Generic;
+
+namespace ChattyWidget.API.Models
+{
+    public class AgentQueryRequest
+    {
+        public string Query { get; set; }
+        public string ModelId { get; set; }
+        public bool EnableHumanEscalation { get; set; } = true;
+        public double ConfidenceThreshold { get; set; } = 0.7;
+        public List<string> DocumentIds { get; set; } = new List<string>();
+    }
+
+    public class AgentQueryResponse
+    {
+        public string ResponseId { get; set; }
+        public string Response { get; set; }
+        public double Confidence { get; set; }
+        public bool NeedsHumanReview { get; set; }
+        public List<DocumentReference> Sources { get; set; } = new List<DocumentReference>();
+        public DateTime Timestamp { get; set; } = DateTime.UtcNow;
+    }
+
+    public class DocumentReference
+    {
+        public string DocumentId { get; set; }
+        public string Title { get; set; }
+        public string Url { get; set; }
+        public double Relevance { get; set; }
+    }
+
+    public class AgentFeedbackRequest
+    {
+        public string ResponseId { get; set; }
+        public string Feedback { get; set; } // "positive", "negative"
+        public string Comments { get; set; }
+    }
+
+    public class AgentModel
+    {
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public string Provider { get; set; }
+        public string Description { get; set; }
+        public int ContextWindowSize { get; set; }
+        public string KnowledgeCutoff { get; set; }
+        public List<string> Capabilities { get; set; }
+        public string SubscriptionLevel { get; set; } // "free", "basic", "premium"
+    }
+
+    public class TestScenario
+    {
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public List<string> Questions { get; set; } = new List<string>();
+    }
+}
