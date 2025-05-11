@@ -47,7 +47,7 @@ jobs:
   deploy:
     if: github.event_name == 'push'
     runs-on: self-hosted
-    needs: validate
+    needs: []
 
     steps:
     - uses: actions/checkout@v4
