@@ -1,0 +1,5 @@
+CollectUserFeedback IsOfflineMode OfflineMessage RequireEmailToStart ShowSources
+------------------- ------------- -------------- ------------------- -----------
+Exists              Exists        Exists         Exists              Exists     
+
+(1 rows affected)

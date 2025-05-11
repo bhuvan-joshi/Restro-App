@@ -1,0 +1,20 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  ChattyWidget.Models -> D:\MIscellaneous\Projects\chatty-widget-ai-pal\ChattyWidgetBackend\ChattyWidget.Models\bin\Debug\net9.0\ChattyWidget.Models.dll
+D:\MIscellaneous\Projects\chatty-widget-ai-pal\ChattyWidgetBackend\ChattyWidget.Core\Services\AgentService.cs(12,33): error CS0535: 'AgentService' does not implement interface member 'IAgentService.GetAvailableModels()' [D:\MIscellaneous\Projects\chatty-widget-ai-pal\ChattyWidgetBackend\ChattyWidget.Core\ChattyWidget.Core.csproj]
+D:\MIscellaneous\Projects\chatty-widget-ai-pal\ChattyWidgetBackend\ChattyWidget.Core\Interfaces\ILLMService.cs(18,72): warning CS8625: Cannot convert null literal to non-nullable reference type. [D:\MIscellaneous\Projects\chatty-widget-ai-pal\ChattyWidgetBackend\ChattyWidget.Core\ChattyWidget.Core.csproj]
+D:\MIscellaneous\Projects\chatty-widget-ai-pal\ChattyWidgetBackend\ChattyWidget.Core\Services\UserService.cs(59,23): error CS0104: 'User' is an ambiguous reference between 'ChattyWidget.Core.Interfaces.User' and 'ChattyWidget.Models.User' [D:\MIscellaneous\Projects\chatty-widget-ai-pal\ChattyWidgetBackend\ChattyWidget.Core\ChattyWidget.Core.csproj]
+D:\MIscellaneous\Projects\chatty-widget-ai-pal\ChattyWidgetBackend\ChattyWidget.Core\Services\LLMService.cs(274,79): warning CS8625: Cannot convert null literal to non-nullable reference type. [D:\MIscellaneous\Projects\chatty-widget-ai-pal\ChattyWidgetBackend\ChattyWidget.Core\ChattyWidget.Core.csproj]
+D:\MIscellaneous\Projects\chatty-widget-ai-pal\ChattyWidgetBackend\ChattyWidget.Core\Services\UserService.cs(10,28): error CS0738: 'UserService' does not implement interface member 'IUserService.GetUserByIdAsync(Guid)'. 'UserService.GetUserByIdAsync(Guid)' cannot implement 'IUserService.GetUserByIdAsync(Guid)' because it does not have the matching return type of 'Task<User>'. [D:\MIscellaneous\Projects\chatty-widget-ai-pal\ChattyWidgetBackend\ChattyWidget.Core\ChattyWidget.Core.csproj]
+
+Build FAILED.
+
+D:\MIscellaneous\Projects\chatty-widget-ai-pal\ChattyWidgetBackend\ChattyWidget.Core\Interfaces\ILLMService.cs(18,72): warning CS8625: Cannot convert null literal to non-nullable reference type. [D:\MIscellaneous\Projects\chatty-widget-ai-pal\ChattyWidgetBackend\ChattyWidget.Core\ChattyWidget.Core.csproj]
+D:\MIscellaneous\Projects\chatty-widget-ai-pal\ChattyWidgetBackend\ChattyWidget.Core\Services\LLMService.cs(274,79): warning CS8625: Cannot convert null literal to non-nullable reference type. [D:\MIscellaneous\Projects\chatty-widget-ai-pal\ChattyWidgetBackend\ChattyWidget.Core\ChattyWidget.Core.csproj]
+D:\MIscellaneous\Projects\chatty-widget-ai-pal\ChattyWidgetBackend\ChattyWidget.Core\Services\AgentService.cs(12,33): error CS0535: 'AgentService' does not implement interface member 'IAgentService.GetAvailableModels()' [D:\MIscellaneous\Projects\chatty-widget-ai-pal\ChattyWidgetBackend\ChattyWidget.Core\ChattyWidget.Core.csproj]
+D:\MIscellaneous\Projects\chatty-widget-ai-pal\ChattyWidgetBackend\ChattyWidget.Core\Services\UserService.cs(59,23): error CS0104: 'User' is an ambiguous reference between 'ChattyWidget.Core.Interfaces.User' and 'ChattyWidget.Models.User' [D:\MIscellaneous\Projects\chatty-widget-ai-pal\ChattyWidgetBackend\ChattyWidget.Core\ChattyWidget.Core.csproj]
+D:\MIscellaneous\Projects\chatty-widget-ai-pal\ChattyWidgetBackend\ChattyWidget.Core\Services\UserService.cs(10,28): error CS0738: 'UserService' does not implement interface member 'IUserService.GetUserByIdAsync(Guid)'. 'UserService.GetUserByIdAsync(Guid)' cannot implement 'IUserService.GetUserByIdAsync(Guid)' because it does not have the matching return type of 'Task<User>'. [D:\MIscellaneous\Projects\chatty-widget-ai-pal\ChattyWidgetBackend\ChattyWidget.Core\ChattyWidget.Core.csproj]
+    2 Warning(s)
+    3 Error(s)
+
+Time Elapsed 00:00:02.16

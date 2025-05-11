@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatty Widget Demo</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1 {
+            color: #3b82f6;
+            margin-bottom: 30px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        h2 {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        code {
+            display: block;
+            background-color: #f9fafb;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+        }
+        
+        button {
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        
+        button:hover {
+            background-color: #2563eb;
+        }
+        
+        .color-picker {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .color-swatch {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Chatty Widget Demo</h1>
+    
+    <div class="section">
+        <h2>About</h2>
+        <p>This is a demonstration of the Chatty Widget, a customizable chat widget that can be easily integrated into any website. The widget provides a simple interface for users to communicate with your AI assistant or support team.</p>
+    </div>
+    
+    <div class="section">
+        <h2>Integration</h2>
+        <p>To add the Chatty Widget to your website, simply include the following script tag:</p>
+        <code>
+&lt;script 
+    src="https://your-domain.com/js/chatty-widget.js" 
+    data-auto-init="true"
+    data-api-url="https://your-api-server.com/api"  &lt;!-- Important: Set your API server URL here --&gt;
+    data-position="bottom-right"
+    data-initially-open="false"
+    data-primary-color="#3b82f6"&gt;
+&lt;/script&gt;
+        </code>
+    </div>
+    
+    <div class="section">
+        <h2>Customize</h2>
+        <p>Try different positions:</p>
+        <div>
+            <button onclick="updatePosition('bottom-right')">Bottom Right</button>
+            <button onclick="updatePosition('bottom-left')">Bottom Left</button>
+            <button onclick="updatePosition('top-right')">Top Right</button>
+            <button onclick="updatePosition('top-left')">Top Left</button>
+        </div>
+        
+        <p>Select a color:</p>
+        <div class="color-picker">
+            <div class="color-swatch" style="background-color: #3b82f6;" onclick="updateColor('#3b82f6')"></div>
+            <div class="color-swatch" style="background-color: #10b981;" onclick="updateColor('#10b981')"></div>
+            <div class="color-swatch" style="background-color: #ef4444;" onclick="updateColor('#ef4444')"></div>
+            <div class="color-swatch" style="background-color: #8b5cf6;" onclick="updateColor('#8b5cf6')"></div>
+            <div class="color-swatch" style="background-color: #f59e0b;" onclick="updateColor('#f59e0b')"></div>
+            <div class="color-swatch" style="background-color: #ec4899;" onclick="updateColor('#ec4899')"></div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Manual Initialization</h2>
+        <p>If you prefer to initialize the widget manually, you can use the following JavaScript code:</p>
+        <code>
+// For production, specify your API server URL explicitly
+const chattyWidget = new ChattyWidget({
+    apiUrl: 'https://your-api-server.com/api',
+    widgetPosition: 'bottom-right',
+    initiallyOpen: false,
+    primaryColor: '#3b82f6'
+});
+
+// Or use the current origin if the widget is served from the same domain as the API
+// const chattyWidget = new ChattyWidget({
+//     apiUrl: window.location.origin + '/api',
+//     widgetPosition: 'bottom-right',
+//     initiallyOpen: false,
+//     primaryColor: '#3b82f6'
+// });
+        </code>
+    </div>
+    
+    <!-- Chatty Widget Script -->
+    <script src="/js/chatty-widget.js"></script>
+    
+    <script>
+        // Initialize the widget
+        let widget;
+        
+        window.onload = function() {
+            widget = new ChattyWidget({
+                apiUrl: window.location.origin + '/api',
+                widgetPosition: 'bottom-right',
+                initiallyOpen: false,
+                primaryColor: '#3b82f6'
+            });
+        };
+        
+        // Update widget position
+        function updatePosition(position) {
+            if (widget) {
+                // Remove existing widget
+                document.getElementById('chatty-widget-container').remove();
+                
+                // Create new widget with updated position
+                widget = new ChattyWidget({
+                    apiUrl: window.location.origin + '/api',
+                    widgetPosition: position,
+                    initiallyOpen: widget.chatWindow.classList.contains('chatty-widget-hidden') ? false : true,
+                    primaryColor: widget.options.primaryColor
+                });
+            }
+        }
+        
+        // Update widget color
+        function updateColor(color) {
+            if (widget) {
+                // Update button color
+                document.getElementById('chatty-widget-button').style.backgroundColor = color;
+                
+                // Update header color
+                document.getElementById('chatty-widget-header').style.backgroundColor = color;
+                
+                // Update send button color
+                document.getElementById('chatty-widget-send').style.backgroundColor = color;
+                
+                // Update primary color in options
+                widget.options.primaryColor = color;
+            }
+        }
+    </script>
+</body>
+</html> 

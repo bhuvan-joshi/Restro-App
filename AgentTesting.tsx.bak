@@ -1,0 +1,842 @@
+import React, { useState, useRef, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Badge } from '@/components/ui/badge';
+import { useToast } from '@/components/ui/use-toast';
+import { 
+  Send, 
+  User, 
+  Bot, 
+  ThumbsUp, 
+  ThumbsDown, 
+  AlertTriangle, 
+  FileText, 
+  RefreshCw,
+  Settings,
+  CheckCircle,
+  XCircle,
+  Info
+} from 'lucide-react';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Switch } from '@/components/ui/switch';
+import { Skeleton } from '@/components/ui/skeleton';
+import { getDocuments } from '@/services/api';
+// Import API services but use mock implementations for now
+// import { queryAgent, getAvailableModels, submitAgentFeedback, getTestScenarios } from '@/services/agentService';
+
+// Types for messages
+interface Message {
+  id: string;
+  content: string;
+  sender: 'user' | 'agent';
+  timestamp: Date;
+  sources?: { title: string; url: string }[];
+  feedback?: 'positive' | 'negative';
+  needsHumanReview?: boolean;
+}
+
+// Types for agent models and test scenarios
+interface AgentModel {
+  id: string;
+  name: string;
+  provider: string;
+  description: string;
+  contextWindowSize: number;
+  knowledgeCutoff: string;
+  capabilities: string[];
+  subscriptionLevel: string;
+}
+
+interface TestScenario {
+  id: string;
+  name: string;
+  description: string;
+  questions: string[];
+}
+
+// Mock data for models
+const mockModels: AgentModel[] = [
+  {
+    id: "llama-3-small",
+    name: "Llama 3 (8B)",
+    provider: "Meta",
+    description: "Open-source model suitable for general tasks",
+    contextWindowSize: 8192,
+    knowledgeCutoff: "2023-07",
+    capabilities: ["Text Generation", "Q&A", "Summarization"],
+    subscriptionLevel: "free"
+  },
+  {
+    id: "mistral-7b",
+    name: "Mistral 7B",
+    provider: "Mistral AI",
+    description: "Open-source model with strong reasoning capabilities",
+    contextWindowSize: 8192,
+    knowledgeCutoff: "2023-06",
+    capabilities: ["Text Generation", "Q&A", "Reasoning"],
+    subscriptionLevel: "free"
+  },
+  {
+    id: "gpt-4o-mini",
+    name: "GPT-4o Mini",
+    provider: "OpenAI",
+    description: "Smaller version of GPT-4o with good performance",
+    contextWindowSize: 16384,
+    knowledgeCutoff: "2023-10",
+    capabilities: ["Text Generation", "Q&A", "Summarization", "Code Generation"],
+    subscriptionLevel: "basic"
+  },
+  {
+    id: "gpt-4o",
+    name: "GPT-4o",
+    provider: "OpenAI",
+    description: "Latest multimodal model with excellent performance",
+    contextWindowSize: 32768,
+    knowledgeCutoff: "2023-12",
+    capabilities: ["Text Generation", "Q&A", "Summarization", "Code Generation", "Image Understanding"],
+    subscriptionLevel: "premium"
+  },
+  {
+    id: "perplexity-online",
+    name: "Perplexity Online",
+    provider: "Perplexity",
+    description: "Online model with real-time web search capabilities",
+    contextWindowSize: 16384,
+    knowledgeCutoff: "Current",
+    capabilities: ["Text Generation", "Q&A", "Web Search", "Real-time Information"],
+    subscriptionLevel: "premium"
+  }
+];
+
+// Mock data for test scenarios
+const mockScenarios: TestScenario[] = [
+  {
+    id: "1",
+    name: "Product Pricing Questions",
+    description: "Test how the agent responds to questions about pricing and plans",
+    questions: [
+      "How much does the premium plan cost?",
+      "What's included in the basic plan?",
+      "Is there a free trial available?",
+      "Do you offer discounts for annual subscriptions?"
+    ]
+  },
+  {
+    id: "2",
+    name: "Technical Support Queries",
+    description: "Test how the agent handles technical support questions",
+    questions: [
+      "How do I reset my password?",
+      "I'm having trouble connecting to the API",
+      "Is there documentation for the REST API?",
+      "What are the system requirements?"
+    ]
+  },
+  {
+    id: "3",
+    name: "Out of Scope Questions",
+    description: "Test how the agent handles questions outside its knowledge domain",
+    questions: [
+      "What's the weather like today?",
+      "Can you book a flight for me?",
+      "What's your opinion on politics?",
+      "Write me a poem about artificial intelligence"
+    ]
+  }
+];
+
+const AgentTesting: React.FC = () => {
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [inputValue, setInputValue] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
+  const [selectedModel, setSelectedModel] = useState('llama-3-small');
+  const [selectedScenario, setSelectedScenario] = useState<string | null>(null);
+  const [documents, setDocuments] = useState<any[]>([]);
+  const [selectedDocuments, setSelectedDocuments] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [showSources, setShowSources] = useState(true);
+  const [enableHumanEscalation, setEnableHumanEscalation] = useState(true);
+  const [confidenceThreshold, setConfidenceThreshold] = useState(0.7);
+  const [availableModels, setAvailableModels] = useState<AgentModel[]>([]);
+  const [testScenarios, setTestScenarios] = useState<TestScenario[]>([]);
+  const [isLoadingModels, setIsLoadingModels] = useState(false);
+  const [isLoadingScenarios, setIsLoadingScenarios] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const { toast } = useToast();
+
+  // Fetch data on component mount
+  useEffect(() => {
+    fetchDocuments();
+    fetchModels();
+    fetchTestScenarios();
+  }, []);
+
+  const fetchDocuments = async () => {
+    try {
+      setIsLoading(true);
+      const response = await getDocuments();
+      setDocuments(response.items || []);
+    } catch (error) {
+      console.error('Error fetching documents:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to fetch documents. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Mock API functions
+  const fetchModels = async () => {
+    try {
+      setIsLoadingModels(true);
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Use mock data instead of API call
+      setAvailableModels(mockModels);
+      // Set default model
+      setSelectedModel(mockModels[0].id);
+    } catch (error) {
+      console.error('Error fetching models:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to fetch available models. Using default models instead.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsLoadingModels(false);
+    }
+  };
+
+  const fetchTestScenarios = async () => {
+    try {
+      setIsLoadingScenarios(true);
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 800));
+      
+      // Use mock data instead of API call
+      setTestScenarios(mockScenarios);
+    } catch (error) {
+      console.error('Error fetching test scenarios:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to fetch test scenarios. Using default scenarios instead.',
+        variant: 'destructive',
+      });
+      // Use empty array if mock fails
+      setTestScenarios([]);
+    } finally {
+      setIsLoadingScenarios(false);
+    }
+  };
+
+  // Scroll to bottom of messages
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleSendMessage = async () => {
+    if (!inputValue.trim()) return;
+
+    // Add user message
+    const userMessage: Message = {
+      id: Date.now().toString(),
+      content: inputValue,
+      sender: 'user',
+      timestamp: new Date()
+    };
+
+    setMessages(prev => [...prev, userMessage]);
+    setInputValue('');
+    setIsTyping(true);
+
+    try {
+      // Call the API to get a response
+      await generateAgentResponse(userMessage.content);
+    } catch (error) {
+      console.error('Error getting agent response:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to get a response from the agent. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsTyping(false);
+    }
+  };
+
+  const generateAgentResponse = async (userInput: string) => {
+    try {
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      // Mock response generation based on query content
+      let response = {
+        responseId: Date.now().toString(),
+        response: '',
+        confidence: 0.0,
+        needsHumanReview: false,
+        sources: [],
+        timestamp: new Date().toISOString()
+      };
+      
+      const query = userInput.toLowerCase();
+      
+      // Generate response based on query content
+      if (query.includes('pricing') || query.includes('cost') || query.includes('subscription') || query.includes('plan')) {
+        response.response = 'Our premium plan costs $19.99/month and includes access to all models including GPT-4o. ' +
+                           'The basic plan is $9.99/month and includes access to GPT-4o Mini. ' +
+                           'We also offer a free plan with access to open-source models like Llama 3.';
+        response.confidence = 0.95;
+        response.sources = [
+          { documentId: 'doc1', title: 'Pricing Page', url: '#pricing', relevance: 0.95 },
+          { documentId: 'doc2', title: 'Subscription Details', url: '#subscription', relevance: 0.85 }
+        ];
+      } else if (query.includes('api') || query.includes('documentation') || query.includes('integration')) {
+        response.response = 'Our REST API uses OAuth 2.0 for authentication. You can find comprehensive documentation at docs.example.com/api. ' +
+                           'The API rate limits are 1000 requests per hour for basic plans and 5000 requests for premium plans.';
+        response.confidence = 0.90;
+        response.sources = [
+          { documentId: 'doc3', title: 'API Documentation', url: '#api-docs', relevance: 0.92 },
+          { documentId: 'doc4', title: 'Developer Guide', url: '#dev-guide', relevance: 0.88 }
+        ];
+      } else if (query.includes('password') || query.includes('reset') || query.includes('login')) {
+        response.response = 'To reset your password, please go to the login page and click on \'Forgot Password\'. ' +
+                           'You will receive an email with instructions to reset your password. ' +
+                           'If you don\'t receive the email, please check your spam folder or contact support.';
+        response.confidence = 0.85;
+        response.sources = [
+          { documentId: 'doc5', title: 'User Guide', url: '#user-guide', relevance: 0.90 }
+        ];
+      } else if (query.includes('weather') || query.includes('flight') || query.includes('politics')) {
+        response.response = 'I apologize, but I\'m designed to provide information about our products and services only. ' +
+                           'I don\'t have the capability to check the weather, book flights, or discuss politics. ' +
+                           'Is there something about our product I can help you with?';
+        response.confidence = 0.30;
+        response.needsHumanReview = true;
+      } else {
+        response.response = 'I\'m not sure I have enough information about that in my knowledge base. ' +
+                           'Let me connect you with a human agent who can better assist you.';
+        response.confidence = 0.20;
+        response.needsHumanReview = true;
+      }
+      
+      // Check confidence threshold
+      if (response.confidence < confidenceThreshold && enableHumanEscalation) {
+        response.needsHumanReview = true;
+      }
+      
+      // Create a message from the response
+      const agentMessage: Message = {
+        id: response.responseId,
+        content: response.response,
+        sender: 'agent',
+        timestamp: new Date(response.timestamp),
+        sources: response.sources?.map(source => ({
+          title: source.title,
+          url: source.url
+        })),
+        needsHumanReview: response.needsHumanReview
+      };
+      
+      setMessages(prev => [...prev, agentMessage]);
+      
+      // Show toast if human review is needed
+      if (response.needsHumanReview && enableHumanEscalation) {
+        toast({
+          title: 'Human Review Required',
+          description: 'This query has been flagged for human review due to low confidence or content restrictions.',
+          variant: 'default',
+        });
+      }
+    } catch (error) {
+      console.error('Error generating response:', error);
+      
+      // Add a fallback error message
+      const errorMessage: Message = {
+        id: Date.now().toString(),
+        content: 'I apologize, but I encountered an error while processing your request. Please try again later.',
+        sender: 'agent',
+        timestamp: new Date(),
+        needsHumanReview: true
+      };
+      
+      setMessages(prev => [...prev, errorMessage]);
+      
+      toast({
+        title: 'Error',
+        description: 'Failed to generate a response.',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const handleFeedback = async (messageId: string, feedback: 'positive' | 'negative') => {
+    try {
+      // Update the UI immediately
+      setMessages(prev => 
+        prev.map(message => 
+          message.id === messageId 
+            ? { ...message, feedback } 
+            : message
+        )
+      );
+      
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      // Mock feedback submission - would normally call API
+      console.log(`Feedback submitted: ${feedback} for message ${messageId}`);
+      
+      toast({
+        title: feedback === 'positive' ? 'Positive Feedback Recorded' : 'Negative Feedback Recorded',
+        description: 'Thank you for your feedback. This helps improve the agent\'s responses.',
+      });
+    } catch (error) {
+      console.error('Error submitting feedback:', error);
+      
+      toast({
+        title: 'Error',
+        description: 'Failed to submit feedback. Please try again.',
+        variant: 'destructive',
+      });
+      
+      // Revert the UI change if mock fails
+      setMessages(prev => 
+        prev.map(message => 
+          message.id === messageId 
+            ? { ...message, feedback: undefined } 
+            : message
+        )
+      );
+    }
+  };
+
+  const handleScenarioSelect = (scenarioId: string) => {
+    setSelectedScenario(scenarioId);
+    const scenario = testScenarios.find(s => s.id === scenarioId);
+    
+    if (scenario) {
+      toast({
+        title: `Loaded: ${scenario.name}`,
+        description: scenario.description,
+      });
+    }
+  };
+
+  const handleTestQuestion = (question: string) => {
+    setInputValue(question);
+  };
+
+  const clearConversation = () => {
+    setMessages([]);
+    setSelectedScenario(null);
+    toast({
+      title: 'Conversation Cleared',
+      description: 'The conversation has been reset.',
+    });
+  };
+
+  return (
+    <div className="container mx-auto py-8">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold">Agent Testing</h1>
+        <Button 
+          variant="outline" 
+          onClick={clearConversation}
+          className="flex items-center gap-2"
+        >
+          <RefreshCw className="h-4 w-4" />
+          Clear Conversation
+        </Button>
+      </div>
+      
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="md:col-span-1">
+          <Card>
+            <CardHeader>
+              <CardTitle>Test Configuration</CardTitle>
+              <CardDescription>Configure the agent for testing</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="model-select">AI Model</Label>
+                {isLoadingModels ? (
+                  <Skeleton className="h-10 w-full" />
+                ) : (
+                  <Select
+                    value={selectedModel}
+                    onValueChange={setSelectedModel}
+                  >
+                    <SelectTrigger id="model-select">
+                      <SelectValue placeholder="Select a model" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {availableModels.length > 0 ? (
+                        availableModels.map(model => (
+                          <SelectItem key={model.id} value={model.id}>
+                            {model.name} - {model.subscriptionLevel.charAt(0).toUpperCase() + model.subscriptionLevel.slice(1)}
+                          </SelectItem>
+                        ))
+                      ) : (
+                        <>
+                          <SelectItem value="llama-3-small">Llama 3 (8B) - Free</SelectItem>
+                          <SelectItem value="mistral-7b">Mistral 7B - Free</SelectItem>
+                          <SelectItem value="gpt-4o-mini">GPT-4o Mini - Basic</SelectItem>
+                          <SelectItem value="gpt-4o">GPT-4o - Premium</SelectItem>
+                          <SelectItem value="perplexity-online">Perplexity Online - Premium</SelectItem>
+                        </>
+                      )}
+                    </SelectContent>
+                  </Select>
+                )}
+              </div>
+              
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="sources-toggle">Show Sources</Label>
+                  <Switch 
+                    id="sources-toggle" 
+                    checked={showSources}
+                    onCheckedChange={setShowSources}
+                  />
+                </div>
+              </div>
+              
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="escalation-toggle">Enable Human Escalation</Label>
+                  <Switch 
+                    id="escalation-toggle" 
+                    checked={enableHumanEscalation}
+                    onCheckedChange={setEnableHumanEscalation}
+                  />
+                </div>
+              </div>
+              
+              <div className="space-y-2">
+                <Label htmlFor="confidence-threshold">
+                  Confidence Threshold: {confidenceThreshold}
+                </Label>
+                <Input 
+                  id="confidence-threshold"
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.1"
+                  value={confidenceThreshold}
+                  onChange={(e) => setConfidenceThreshold(parseFloat(e.target.value))}
+                  className="w-full"
+                />
+                <div className="flex justify-between text-xs text-gray-500">
+                  <span>Low (More Answers)</span>
+                  <span>High (More Escalations)</span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+          
+          <Card className="mt-6">
+            <CardHeader>
+              <CardTitle>Test Scenarios</CardTitle>
+              <CardDescription>Pre-defined test cases</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="scenario-select">Select a Scenario</Label>
+                  {isLoadingScenarios ? (
+                    <Skeleton className="h-10 w-full" />
+                  ) : (
+                    <Select
+                      value={selectedScenario || ''}
+                      onValueChange={handleScenarioSelect}
+                    >
+                      <SelectTrigger id="scenario-select">
+                        <SelectValue placeholder="Choose a test scenario" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {testScenarios.map(scenario => (
+                          <SelectItem key={scenario.id} value={scenario.id}>
+                            {scenario.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  )}
+                </div>
+                
+                {selectedScenario && (
+                  <div className="space-y-3 mt-4">
+                    <h3 className="text-sm font-medium">Test Questions</h3>
+                    {testScenarios
+                      .find(s => s.id === selectedScenario)
+                      ?.questions.map((question, index) => (
+                        <Button 
+                          key={index} 
+                          variant="outline" 
+                          className="w-full justify-start text-left h-auto py-2 px-3"
+                          onClick={() => handleTestQuestion(question)}
+                        >
+                          {question}
+                        </Button>
+                      ))}
+                  </div>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+          
+          <Card className="mt-6">
+            <CardHeader>
+              <CardTitle>Knowledge Sources</CardTitle>
+              <CardDescription>Available documents for testing</CardDescription>
+            </CardHeader>
+            <CardContent>
+              {isLoading ? (
+                <div className="space-y-2">
+                  <Skeleton className="h-5 w-full" />
+                  <Skeleton className="h-5 w-full" />
+                  <Skeleton className="h-5 w-full" />
+                </div>
+              ) : (
+                <div className="space-y-2 max-h-[200px] overflow-y-auto pr-2">
+                  {documents.length > 0 ? (
+                    documents.map((doc, index) => (
+                      <div 
+                        key={doc.id || index} 
+                        className={`flex items-center gap-2 p-2 rounded-md border ${selectedDocuments.includes(doc.id) ? 'bg-primary/10 border-primary' : ''}`}
+                        onClick={() => {
+                          if (selectedDocuments.includes(doc.id)) {
+                            setSelectedDocuments(prev => prev.filter(id => id !== doc.id));
+                          } else {
+                            setSelectedDocuments(prev => [...prev, doc.id]);
+                          }
+                        }}
+                        style={{ cursor: 'pointer' }}
+                      >
+                        <FileText className={`h-4 w-4 ${selectedDocuments.includes(doc.id) ? 'text-primary' : 'text-blue-500'} flex-shrink-0`} />
+                        <div className="text-sm truncate flex-1">
+                          {doc.name || `Document ${index + 1}`}
+                        </div>
+                        {selectedDocuments.includes(doc.id) && (
+                          <CheckCircle className="h-4 w-4 text-primary" />
+                        )}
+                      </div>
+                    ))
+                  ) : (
+                    <div className="text-center py-4 text-gray-500">
+                      <p>No documents found</p>
+                    </div>
+                  )}
+                </div>
+                {selectedDocuments.length > 0 && (
+                  <div className="mt-2 flex justify-between items-center">
+                    <span className="text-xs text-gray-500">{selectedDocuments.length} document(s) selected</span>
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      onClick={() => setSelectedDocuments([])}
+                      className="text-xs h-6 px-2"
+                    >
+                      Clear
+                    </Button>
+                  </div>
+                )}
+              )}
+            </CardContent>
+          </Card>
+        </div>
+        
+        <div className="md:col-span-2">
+          <Card className="h-[calc(100vh-10rem)]">
+            <CardHeader className="border-b">
+              <div className="flex justify-between items-center">
+                <div>
+                  <CardTitle>Chat Interface</CardTitle>
+                  <CardDescription>Test the agent's responses</CardDescription>
+                </div>
+                <Badge variant="outline" className="flex items-center gap-1">
+                  <Settings className="h-3 w-3" />
+                  {selectedModel}
+                </Badge>
+              </div>
+            </CardHeader>
+            <CardContent className="p-0">
+              <div className="flex flex-col h-[calc(100vh-16rem)]">
+                <ScrollArea className="flex-1 p-4">
+                  {messages.length === 0 ? (
+                    <div className="h-full flex flex-col items-center justify-center text-center p-4 text-gray-500">
+                      <Bot className="h-12 w-12 mb-4 text-gray-400" />
+                      <h3 className="text-lg font-medium">Start Testing the Agent</h3>
+                      <p className="max-w-md mt-2">
+                        Send a message to see how the agent responds. You can use the test scenarios or ask your own questions.
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      {messages.map(message => (
+                        <div 
+                          key={message.id} 
+                          className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+                        >
+                          <div 
+                            className={`
+                              max-w-[80%] rounded-lg p-3 
+                              ${message.sender === 'user' 
+                                ? 'bg-primary text-primary-foreground' 
+                                : 'bg-muted'
+                              }
+                              ${message.needsHumanReview ? 'border-l-4 border-amber-500' : ''}
+                            `}
+                          >
+                            <div className="flex items-center gap-2 mb-1">
+                              {message.sender === 'user' ? (
+                                <User className="h-4 w-4" />
+                              ) : (
+                                <Bot className="h-4 w-4" />
+                              )}
+                              <span className="text-xs opacity-70">
+                                {message.timestamp.toLocaleTimeString()}
+                              </span>
+                              {message.needsHumanReview && (
+                                <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200">
+                                  <AlertTriangle className="h-3 w-3 mr-1" />
+                                  Needs Human Review
+                                </Badge>
+                              )}
+                            </div>
+                            
+                            <p className="text-sm">{message.content}</p>
+                            
+                            {message.sender === 'agent' && message.sources && showSources && (
+                              <div className="mt-2 text-xs opacity-80">
+                                <div className="font-semibold">Sources:</div>
+                                <ul className="list-disc pl-4">
+                                  {message.sources.map((source, index) => (
+                                    <li key={index}>
+                                      <a 
+                                        href={source.url} 
+                                        target="_blank" 
+                                        rel="noreferrer"
+                                        className="underline"
+                                      >
+                                        {source.title}
+                                      </a>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+                            
+                            {message.sender === 'agent' && (
+                              <div className="flex items-center gap-2 mt-2 justify-end">
+                                <Button 
+                                  variant="ghost" 
+                                  size="sm" 
+                                  className="h-6 w-6 p-0 rounded-full"
+                                  onClick={() => handleFeedback(message.id, 'positive')}
+                                  disabled={message.feedback !== undefined}
+                                >
+                                  <ThumbsUp 
+                                    className={`h-4 w-4 ${message.feedback === 'positive' ? 'text-green-500' : ''}`} 
+                                  />
+                                </Button>
+                                <Button 
+                                  variant="ghost" 
+                                  size="sm" 
+                                  className="h-6 w-6 p-0 rounded-full"
+                                  onClick={() => handleFeedback(message.id, 'negative')}
+                                  disabled={message.feedback !== undefined}
+                                >
+                                  <ThumbsDown 
+                                    className={`h-4 w-4 ${message.feedback === 'negative' ? 'text-red-500' : ''}`} 
+                                  />
+                                </Button>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                      
+                      {isTyping && (
+                        <div className="flex justify-start">
+                          <div className="bg-muted rounded-lg p-3 max-w-[80%]">
+                            <div className="flex items-center gap-2 mb-1">
+                              <Bot className="h-4 w-4" />
+                              <span className="text-xs opacity-70">
+                                {new Date().toLocaleTimeString()}
+                              </span>
+                            </div>
+                            <div className="flex items-center space-x-1">
+                              <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse"></div>
+                              <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse delay-100"></div>
+                              <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse delay-200"></div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                      
+                      <div ref={messagesEndRef} />
+                    </div>
+                  )}
+                </ScrollArea>
+                
+                <div className="p-4 border-t">
+                  <form 
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      handleSendMessage();
+                    }}
+                    className="flex items-end gap-2"
+                  >
+                    <Textarea
+                      value={inputValue}
+                      onChange={(e) => setInputValue(e.target.value)}
+                      placeholder="Type your message..."
+                      className="resize-none min-h-[60px]"
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' && !e.shiftKey) {
+                          e.preventDefault();
+                          handleSendMessage();
+                        }
+                      }}
+                    />
+                    <Button 
+                      type="submit" 
+                      size="icon" 
+                      className="flex-shrink-0"
+                      disabled={!inputValue.trim() || isTyping}
+                    >
+                      <Send className="h-5 w-5" />
+                    </Button>
+                  </form>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default AgentTesting;
