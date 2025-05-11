@@ -92,9 +92,17 @@ jobs:
             Write-Output "Permission setting failed: $_"
         }
 
-        if (-not (Test-Path $reactDest)) { New-Item -ItemType Directory -Path $reactDest -Force }
-        Remove-Item "$reactDest\*" -Recurse -Force -ErrorAction SilentlyContinue
+        if (-not (Test-Path $reactDest)) { 
+            New-Item -ItemType Directory -Path $reactDest -Force 
+        }
+
+        # Remove everything except web.config or files starting with 'web'
+        Get-ChildItem -Path $reactDest -Recurse | Where-Object {
+            $_.Name -notlike "web.config" -and $_.Name -notlike "web*"
+        } | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+
         Copy-Item -Path "./dist/*" -Destination $reactDest -Recurse -Force
+
         Write-Host "React dist/ deployed to $reactDest"
     # .NET Deployment
     - name: Setup .NET
