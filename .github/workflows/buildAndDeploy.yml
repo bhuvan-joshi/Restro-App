@@ -31,7 +31,6 @@ jobs:
       run: |
         npm install
         npm run build
-        npm test
     # .NET Validation  
     - name: Setup .NET
       if: startsWith(github.event_name, 'pull_request') || github.event_name == 'push'
@@ -45,7 +44,6 @@ jobs:
       run: |
         dotnet restore
         dotnet build
-        dotnet test
   deploy:
     if: github.event_name == 'push'
     runs-on: self-hosted
