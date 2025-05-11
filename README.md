@@ -1,137 +1,162 @@
-# Arper Inventory Management System
+# Chatty Widget AI Pal
 
-A comprehensive inventory management system for Arper, designed to track products, inventory levels, and transactions across multiple locations.
+<p align="center">
+  <img src="./src/assets/chatty-logo.png" alt="Chatty Widget AI Pal Logo" width="200"/>
+</p>
 
-## Features
+## Overview
 
-- **Product Management**: Create, update, and delete products with details like SKU, price, cost, and category
-- **Category Management**: Organize products with hierarchical categories
-- **Location Management**: Manage multiple warehouses and storage locations
-- **Inventory Tracking**: Track inventory levels across locations with min/max quantities
-- **Transaction History**: Record all inventory movements with detailed audit trail
-- **User Management**: Role-based access control (Admin, Manager, Staff)
-- **Reporting**: Generate reports on inventory status, value, and movement
+Chatty Widget AI Pal is an enterprise-grade AI-powered chat widget solution developed by Creatrix Technologies. This system integrates advanced language models with document processing capabilities to provide intelligent, context-aware responses to user queries.
 
-## Technology Stack
+## Key Features
 
-- **Backend**: Node.js with Express
-- **Database**: SQLite (easy to set up, can be migrated to PostgreSQL/MySQL for production)
-- **Authentication**: JWT (JSON Web Tokens)
-- **Frontend**: React (to be implemented)
+- **Advanced AI Integration**: Seamless integration with DeepSeek and other LLM providers
+- **Document Intelligence**: Process and analyze Excel files, PDFs, and other document formats
+- **Streaming Responses**: Real-time typewriter-style response rendering
+- **Markdown Support**: Rich text formatting with tables, code blocks, and more
+- **Customizable Widget**: Easily embed and style the widget for any website
+- **Secure Authentication**: Role-based access control system
+- **Document Management**: Upload, organize, and process training documents
+- **Subscription Management**: Integrated payment processing with Stripe and PayPal
+
+## Architecture
+
+### Frontend
+- **React 18** with TypeScript for type-safe component development
+- **Vite** for optimized build and development experience
+- **Tailwind CSS** with shadcn-ui for consistent, responsive design
+- **React Query** for efficient data fetching and state management
+- **React Markdown** with remark-gfm for rich content rendering
+- **Axios** for streamlined API communication
+
+### Backend
+- **.NET 7** Web API with clean architecture principles
+- **Entity Framework Core** for database operations
+- **SQL Server** for reliable data persistence
+- **DeepSeek API Integration** for advanced language processing
+- **JWT Authentication** for secure API access
 
 ## Getting Started
 
 ### Prerequisites
-
-- Node.js (v14 or higher)
-- npm (v6 or higher)
+- Node.js 16+ and npm
+- .NET 7 SDK
+- SQL Server (or SQL Server Express)
+- API keys for DeepSeek (optional for AI features)
 
 ### Installation
 
-1. Clone the repository
-   ```
-   git clone https://github.com/arper/inventory-management.git
-   cd inventory-management
-   ```
+```bash
+# Clone the repository
+git clone https://github.com/creatrix-technologies/chatty-widget-ai-pal.git
 
-2. Install dependencies
-   ```
-   npm install
-   ```
+# Navigate to project directory
+cd chatty-widget-ai-pal
 
-3. Initialize the database with sample data
-   ```
-   npm run init-db
-   ```
+# Install frontend dependencies
+npm install
 
-4. Start the server
-   ```
-   npm start
-   ```
+# Configure environment variables
+cp .env.example .env
+# Edit .env with your configuration
 
-The server will start on port 5000 by default. You can change this by setting the PORT environment variable.
+# Start frontend development server
+npm run dev
 
-### Default Admin User
+# In a separate terminal, start the backend
+cd ChattyWidgetBackend
+dotnet restore
+dotnet run --project ChattyWidget.API
+```
 
-After initializing the database, a default admin user will be created:
+The frontend will be available at http://localhost:5173 and the backend API at http://localhost:5122. All API URLs and ports are now configured through environment variables in the `.env` files.
 
-- Username: `admin`
-- Password: `admin123`
+## Widget Integration
 
-**Important**: Change the default password after first login in a production environment.
+Embed the Chatty Widget into any website with a single script tag:
 
-## API Endpoints
+```html
+<script 
+  src="https://widget.creatrix-tech.com/chatty-widget.js" 
+  id="chatty-widget" 
+  data-widget-id="YOUR_WIDGET_ID"
+  data-theme="light"
+  data-position="bottom-right">
+</script>
+```
 
-### Authentication
+### Configuration Options
 
-- `POST /api/users/login` - Login and get JWT token
-- `GET /api/users/me` - Get current user info
+| Attribute | Description | Default |
+|-----------|-------------|--------|
+| `data-widget-id` | Your unique widget identifier | *Required* |
+| `data-theme` | Widget theme (light/dark/custom) | `"light"` |
+| `data-position` | Widget position on page | `"bottom-right"` |
+| `data-initial-message` | First message shown to users | `"How can I help you today?"` |
+| `data-custom-css` | URL to custom CSS file | `null` |
 
-### Users
+## Documentation
 
-- `POST /api/users/register` - Register a new user (Admin only)
-- `GET /api/users` - Get all users (Admin only)
-- `GET /api/users/:id` - Get user by ID
-- `PUT /api/users/:id` - Update user
-- `PUT /api/users/:id/password` - Change user password
+### API Documentation
 
-### Categories
+API documentation is available at `/swagger` when running the backend server. This provides a comprehensive interface for testing and exploring the available endpoints.
 
-- `GET /api/categories` - Get all categories
-- `GET /api/categories/:id` - Get category by ID
-- `POST /api/categories` - Create a new category
-- `PUT /api/categories/:id` - Update a category
-- `DELETE /api/categories/:id` - Delete a category
+### Configuration
 
-### Products
+The system can be configured through:
 
-- `GET /api/products` - Get all products with pagination
-- `GET /api/products/:id` - Get product by ID
-- `POST /api/products` - Create a new product
-- `PUT /api/products/:id` - Update a product
-- `DELETE /api/products/:id` - Delete a product
+- Frontend: `.env` file for environment variables
+- Backend: `appsettings.json` for application settings including:
+  - Database connection strings
+  - API keys for LLM providers
+  - Authentication settings
+  - System prompts for AI models
 
-### Locations
+## Deployment
 
-- `GET /api/locations` - Get all locations
-- `GET /api/locations/:id` - Get location by ID
-- `POST /api/locations` - Create a new location
-- `PUT /api/locations/:id` - Update a location
-- `DELETE /api/locations/:id` - Delete a location
+### Frontend Deployment
 
-### Inventory
+```bash
+# Build the production-ready frontend
+npm run build
 
-- `GET /api/inventory` - Get inventory levels
-- `GET /api/inventory/:id` - Get inventory item by ID
-- `POST /api/inventory` - Create a new inventory record
-- `PUT /api/inventory/:id` - Update inventory settings
-- `POST /api/inventory/adjust` - Adjust inventory quantity
-- `POST /api/inventory/transfer` - Transfer inventory between locations
+# The build output will be in the 'dist' directory
+# Deploy these files to your web server or CDN
+```
 
-### Transactions
+### Backend Deployment
 
-- `GET /api/transactions` - Get all transactions
-- `GET /api/transactions/:id` - Get transaction by ID
-- `GET /api/transactions/summary/daily` - Get daily transaction summary
-- `GET /api/transactions/summary/product` - Get product transaction summary
-- `GET /api/transactions/summary/user` - Get user transaction summary
+```bash
+# Publish the .NET application
+cd ChattyWidgetBackend
+dotnet publish -c Release -o ./publish
 
-### Reports
+# Deploy the published files to your server
+```
 
-- `GET /api/reports/inventory/status` - Get inventory status report
-- `GET /api/reports/inventory/value` - Get inventory value report
-- `GET /api/reports/inventory/movement` - Get inventory movement report
-- `GET /api/reports/activity/user` - Get user activity report
+## Project Structure
 
-## Environment Variables
+The project follows a clean architecture approach:
 
-The application can be configured using the following environment variables:
-
-- `PORT` - Server port (default: 5000)
-- `JWT_SECRET` - Secret key for JWT signing (default: 'arper_inventory_secret_key')
-- `DB_FILENAME` - SQLite database file path (default: './data/inventory.db')
-- `NODE_ENV` - Environment mode ('development' or 'production')
+```
+├── src/                  # Frontend React application
+│   ├── components/       # Reusable UI components
+│   ├── hooks/            # Custom React hooks
+│   ├── pages/            # Page components
+│   ├── styles/           # CSS and styling
+│   └── utils/            # Utility functions
+│
+├── ChattyWidgetBackend/  # .NET backend
+│   ├── ChattyWidget.API/       # API controllers and endpoints
+│   ├── ChattyWidget.Core/      # Business logic and services
+│   ├── ChattyWidget.Data/      # Data access and repositories
+│   └── ChattyWidget.Models/    # Shared data models
+```
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details. 
+Copyright © 2025 Creatrix Technologies. All rights reserved.
+
+## Contact
+
+For inquiries about this project, please contact Creatrix Technologies at info@creatrix-tech.com.

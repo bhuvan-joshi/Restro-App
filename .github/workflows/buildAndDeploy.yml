@@ -2,46 +2,50 @@ name: Build and Deploy
 
 on:
   pull_request:
-    branches:
-      - develop
-    types:
-      - opened
-      - synchronize
-      - reopened
+    branches: [ "develop" ]
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'ChattyWidgetBackend/**'
+
   push:
-    branches:
-      - develop
+    branches: [ "develop" ]
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'ChattyWidgetBackend/**'
 
 jobs:
   validate:
+    if: github.event_name == 'pull_request'
     runs-on: windows-latest
-
+    
     steps:
     - uses: actions/checkout@v4
-
+    
     # React Validation
     - name: Setup Node.js
-      if: startsWith(github.event_name, 'pull_request') || github.event_name == 'push'
+      if: contains(github.event.pull_request.changed_files, 'src/') || contains(github.event.pull_request.changed_files, 'public/')
       uses: actions/setup-node@v3
       with:
         node-version: '18.x'
-
+    
     - name: Test React
-      if: startsWith(github.event_name, 'pull_request') || github.event_name == 'push'
+      if: contains(github.event.pull_request.changed_files, 'src/') || contains(github.event.pull_request.changed_files, 'public/')
       run: |
         npm install
         npm run build
         npm test
-
+    
     # .NET Validation  
     - name: Setup .NET
-      if: startsWith(github.event_name, 'pull_request') || github.event_name == 'push'
+      if: contains(github.event.pull_request.changed_files, 'ChattyWidgetBackend/')
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: '6.0.x'
-
+    
     - name: Test API
-      if: startsWith(github.event_name, 'pull_request') || github.event_name == 'push'
+      if: contains(github.event.pull_request.changed_files, 'ChattyWidgetBackend/')
       working-directory: ChattyWidgetBackend
       run: |
         dotnet restore
@@ -52,47 +56,43 @@ jobs:
     if: github.event_name == 'push'
     runs-on: self-hosted
     needs: validate
-
+    
     steps:
     - uses: actions/checkout@v4
-
+    
     # React Deployment
-    - name: Setup Node.js
+    - name: Build React (dist)
       uses: actions/setup-node@v3
       with:
         node-version: '18.x'
-
-    - name: Build React (dist)
-      run: |
-        npm install
-        npm run build
-        npm test
-
-    - name: Deploy React to C:\inetpub\wwwroot\ChartWidget
+        run: |
+          npm install
+          npm run build
+    
+    - name: Deploy React to D:\ChartWidgetUI
       shell: powershell
       run: |
-        $reactDest = "C:\inetpub\wwwroot\ChartWidget"
+        $reactDest = "D:\ChartWidgetUI"
         if (-not (Test-Path $reactDest)) { New-Item -ItemType Directory -Path $reactDest -Force }
         Remove-Item "$reactDest\*" -Recurse -Force -ErrorAction SilentlyContinue
         Copy-Item -Path "./dist/*" -Destination $reactDest -Recurse -Force
         Write-Host "React dist/ deployed to $reactDest"
-
+    
     # .NET Deployment
-    - name: Setup .NET
+    - name: Deploy API to D:\ChattyWidgetAPI
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: '6.0.x'
-
-    - name: Deploy API to C:\inetpub\wwwroot\ChattyWidgetAPI
-      shell: powershell
-      run: |
-        $apiDest = "C:\inetpub\wwwroot\ChattyWidgetAPI"
-        dotnet publish ChattyWidgetBackend --configuration Release --output $apiDest
-        Write-Host "API deployed to $apiDest"
-
+        working-directory: ChattyWidgetBackend
+        shell: powershell
+        run: |
+          $apiDest = "D:\ChattyWidgetAPI"
+          dotnet publish --configuration Release --output $apiDest
+          Write-Host "API deployed to $apiDest"
+    
     - name: Verify Deployments
       shell: powershell
       run: |
-        Write-Host "Deployment Verification:"
-        Write-Host "React: $(if (Test-Path 'C:\inetpub\wwwroot\ChartWidget\index.html') { 'Found' } else { 'Missing' })"
-        Write-Host "API: $(if (Get-ChildItem 'C:\inetpub\wwwroot\ChattyWidgetAPI\*.dll' -ErrorAction SilentlyContinue) { 'Found' } else { '❌ Missing' })"
+        Write-Host "🔍 Deployment Verification:"
+        Write-Host "React: $(if (Test-Path 'D:\reactAPP\index.html') { '' } else { '' })"
+        Write-Host "API: $(if (Test-Path 'D:\dotnetAPI\*.dll') { '' } else { '' })"
