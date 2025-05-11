@@ -56,10 +56,13 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Build React (dist)
+    # React Deployment
+    - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
         node-version: '18.x'
+
+    - name: Build React (dist)
       run: |
         npm install
         npm run build
@@ -73,10 +76,14 @@ jobs:
         Copy-Item -Path "./dist/*" -Destination $reactDest -Recurse -Force
         Write-Host "React dist/ deployed to $reactDest"
 
-    - name: Deploy API to C:\inetpub\wwwroot\ChattyWidgetAPI
+    # .NET Deployment
+    - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: '6.0.x'
+
+    - name: Deploy API to C:\inetpub\wwwroot\ChattyWidgetAPI
+      shell: powershell
       run: |
         $apiDest = "C:\inetpub\wwwroot\ChattyWidgetAPI"
         dotnet publish ChattyWidgetBackend --configuration Release --output $apiDest
