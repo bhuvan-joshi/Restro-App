@@ -156,8 +156,11 @@ builder.Services.AddScoped<IEmbeddingService>(provider =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
     app.UseSwagger();
     app.UseSwaggerUI();
+}
 
 // app.UseHttpsRedirection();
 

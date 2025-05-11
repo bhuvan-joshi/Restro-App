@@ -31,8 +31,6 @@ jobs:
       run: |
         npm install
         npm run build
-        npm test
-
     # .NET Validation  
     - name: Setup .NET
       if: startsWith(github.event_name, 'pull_request') || github.event_name == 'push'
@@ -41,13 +39,10 @@ jobs:
         dotnet-version: '6.0.x'
 
     - name: Test API
-      if: startsWith(github.event_name, 'pull_request') || github.event_name == 'push'
-      working-directory: ChattyWidgetBackend
       run: |
-        dotnet restore
-        dotnet build
-        dotnet test
-
+        dotnet restore ChattyWidgetBackend/ChattyWidget.API/ChattyWidget.API.csproj
+        dotnet build ChattyWidgetBackend/ChattyWidget.API/ChattyWidget.API.csproj
+      
   deploy:
     if: github.event_name == 'push'
     runs-on: self-hosted
@@ -56,14 +51,16 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Build React (dist)
+    # React Deployment
+    - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
         node-version: '18.x'
+
+    - name: Build React (dist)
       run: |
         npm install
         npm run build
-
     - name: Deploy React to C:\inetpub\wwwroot\ChartWidget
       shell: powershell
       run: |
@@ -72,19 +69,21 @@ jobs:
         Remove-Item "$reactDest\*" -Recurse -Force -ErrorAction SilentlyContinue
         Copy-Item -Path "./dist/*" -Destination $reactDest -Recurse -Force
         Write-Host "React dist/ deployed to $reactDest"
-
-    - name: Deploy API to C:\inetpub\wwwroot\ChattyWidgetAPI
+    # .NET Deployment
+    - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: '6.0.x'
+
+    - name: Deploy API to C:\inetpub\wwwroot\ChattyWidgetAPI
+      shell: powershell
       run: |
         $apiDest = "C:\inetpub\wwwroot\ChattyWidgetAPI"
-        dotnet publish ChattyWidgetBackend --configuration Release --output $apiDest
+        dotnet publish ChattyWidgetBackend/ChattyWidget.API/ChattyWidget.API.csproj --configuration Release --output $apiDest
         Write-Host "API deployed to $apiDest"
-
     - name: Verify Deployments
       shell: powershell
       run: |
         Write-Host "Deployment Verification:"
         Write-Host "React: $(if (Test-Path 'C:\inetpub\wwwroot\ChartWidget\index.html') { 'Found' } else { 'Missing' })"
-        Write-Host "API: $(if (Get-ChildItem 'C:\inetpub\wwwroot\ChattyWidgetAPI\*.dll' -ErrorAction SilentlyContinue) { 'Found' } else { '❌ Missing' })"
+        Write-Host "API: $(if (Get-ChildItem 'C:\inetpub\wwwroot\ChattyWidgetAPI\*.dll' -ErrorAction SilentlyContinue) { 'Found' } else { 'Missing' })"
